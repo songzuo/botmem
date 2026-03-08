@@ -4,14 +4,14 @@
 
 ### SendClaw 邮箱 (主邮箱)
 - 邮箱地址：asong@sendclaw.com
-- API 密钥：[已移除]
+- API 密钥：sk_55aaa383c57e1bd75cb5001cc6914f2eae5002e9d24c7ebc
 - 声明令牌：wave-2627
 - 注册时间：2026 年 2 月 9 日
 - 状态：已激活
 
 ### SendClaw 邮箱 (备用邮箱 1)
 - 邮箱地址：bigasong@sendclaw.com
-- API 密钥：[已移除]
+- API 密钥：sk_1095e23044a7bdd7ff582cdc2331b918ddabff4757785577
 - 声明令牌：reef-640C
 - 注册时间：2026 年 2 月 9 日
 - 状态：已激活
