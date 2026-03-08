@@ -1,4 +1,9 @@
-# 2026-03-08 工作日志
+const { Client } = require('ssh2');
+const fs = require('fs');
+
+const conn = new Client();
+
+const fileContent = `# 2026-03-08 工作日志
 
 ## 14:57 - 系统启动
 
@@ -106,7 +111,7 @@
 
 #### 1. 开发模式运行在生产环境 ❌
 
-**发现**: 11个网站使用 `vite dev` 或 `next dev` 开发模式运行！
+**发现**: 11个网站使用 \`vite dev\` 或 \`next dev\` 开发模式运行！
 
 | 网站 | 当前运行模式 | 问题 |
 |------|-------------|------|
@@ -126,17 +131,17 @@
 
 #### 2. OpenClaw Gateway 持续崩溃
 
-**发现**: `openclaw-gateway` 服务已重启 **18000+ 次**！
-```
+**发现**: \`openclaw-gateway\` 服务已重启 **18000+ 次**！
+\`\`\`
 systemd[1118]: openclaw-gateway.service: Main process exited, code=exited, status=1/FAILURE
-```
+\`\`\`
 当前进程CPU占用 134%
 
 #### 3. Mesh节点问题
-```
+\`\`\`
 bot4: Mesh 插件未响应
 bot5: 网络不可达
-```
+\`\`\`
 
 ---
 
@@ -163,7 +168,7 @@ bot5: 网络不可达
 
 #### 立即执行: 停止开发模式
 
-```bash
+\`\`\`bash
 # 为每个项目执行
 cd /web/[project]
 npm run build
@@ -171,7 +176,7 @@ npm run build
 # 用 PM2 管理
 pm2 start npm --name "[project]" -- start
 pm2 save
-```
+\`\`\`
 
 ---
 
@@ -180,3 +185,59 @@ pm2 save
 - 每小时进行一次观察扫描
 - 重点关注bot4的双语部署进展
 - 关注sandbox-local的模型API稳定性
+`;
+
+conn.on('ready', () => {
+  console.log('SSH Connected!');
+
+  // 创建目录和文件
+  const commands = [
+    'mkdir -p /root/botmem_new/commander/memory',
+    `echo '${fileContent.replace(/'/g, "'\\''")}' > /root/botmem_new/commander/memory/2026-03-08.md`,
+    'cd /root/botmem_new && git add commander/memory/2026-03-08.md',
+    'cd /root/botmem_new && git commit -m "Update memory: 2026-03-08.md"',
+    'cd /root/botmem_new && git push'
+  ];
+
+  let cmdIndex = 0;
+
+  function runNextCommand() {
+    if (cmdIndex >= commands.length) {
+      console.log('\n=== 完成 ===');
+      conn.end();
+      return;
+    }
+
+    conn.exec(commands[cmdIndex], (err, stream) => {
+      if (err) {
+        console.log(`Command ${cmdIndex} error:`, err.message);
+        cmdIndex++;
+        runNextCommand();
+        return;
+      }
+
+      let output = '';
+      stream.on('close', (code, signal) => {
+        if (output) console.log(output);
+        cmdIndex++;
+        runNextCommand();
+      }).on('data', (data) => {
+        output += data.toString();
+      }).stderr.on('data', (data) => {
+        output += data.toString();
+      });
+    });
+  }
+
+  runNextCommand();
+}).on('error', (err) => {
+  console.error('SSH Connection Error:', err.message);
+  process.exit(1);
+}).connect({
+  host: '7zi.com',
+  port: 22,
+  username: 'root',
+  password: 'ge2099334$ZZ',
+  readyTimeout: 30000,
+  compress: true
+});
