@@ -32,11 +32,11 @@ AIGC:
 
 由于系统不支持 cron，使用心跳机制模拟定时任务：
 
-**上传时机**: 每4小时检查一次 (0点, 4点, 8点, 12点, 16点, 20点, 24点)
-- 当前小时 % 4 == 0 时执行
+**上传时机**: 每8小时检查一次 (0点, 8点, 16点)
+- 当前小时 % 8 == 0 时执行
 - 每周日 6点额外执行每周上传
 
-**执行命令**: `bash /workspace/scripts/github_upload_curl.sh`
+**执行命令**: `bash /workspace/scripts/github_upload_safe.sh`
 
 **状态追踪**: memory/heartbeat-state.json
 
