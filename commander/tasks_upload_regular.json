@@ -1,0 +1,8 @@
+{
+  "name": "Botmem-Commander: 常规文件上传(每周)",
+  "description": "每周上传AGENTS.md、IDENTITY.md等常规配置文件到GitHub",
+  "schedule": { "type": "cron", "expression": "0 2 * * 0" },
+  "prompt": "在commander目录执行GitHub上传：\n1. 进入 C:/Users/Administrator/lobsterai/project/botmem_temp/commander\n2. 使用git add IDENTITY.md SOUL.md AGENTS.md TOOLS.md HEARTBEAT.md USER.md .gitignore agents/添加常规文件\n3. 提交并推送到GitHub（如果 network OK）\n4. 输出上传结果",
+  "workingDirectory": "C:/Users/Administrator/lobsterai/project/botmem_temp/commander",
+  "executionMode": "local"
+}

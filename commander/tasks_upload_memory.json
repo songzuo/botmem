@@ -1,0 +1,8 @@
+{
+  "name": "Botmem-Commander: Memory文件上传(每4小时)",
+  "description": "每4小时上传memory目录和MEMORY.md到GitHub",
+  "schedule": { "type": "cron", "expression": "0 0,4,8,12,16,20 * * *" },
+  "prompt": "在commander目录执行GitHub上传：\n1. 进入 C:/Users/Administrator/lobsterai/project/botmem_temp/commander\n2. 使用git add memory/ MEMORY.md添加memory文件\n3. 提交并推送到GitHub（如果 network OK）\n4. 输出上传结果",
+  "workingDirectory": "C:/Users/Administrator/lobsterai/project/botmem_temp/commander",
+  "executionMode": "local"
+}
