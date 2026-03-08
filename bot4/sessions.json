@@ -1,0 +1,1772 @@
+{
+  "agent:main:main": {
+    "sessionId": "6aeeaff7-8805-4c10-97ca-624682f26023",
+    "updatedAt": 1772970043407,
+    "systemSent": true,
+    "skillsSnapshot": {
+      "prompt": "\n\nThe following skills provide specialized instructions for specific tasks.\nUse the read tool to load a skill's file when the task matches its description.\nWhen a skill file references a relative path, resolve it against the skill directory (parent of SKILL.md / dirname of the path) and use that absolute path in tool commands.\n\n<available_skills>\n  <skill>\n    <name>clawhub</name>\n    <description>Use the ClawHub CLI to search, install, update, and publish agent skills from clawhub.com. Use when you need to fetch new skills on the fly, sync installed skills to latest or a specific version, or publish new/updated skill folders with the npm-installed clawhub CLI.</description>\n    <location>~/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/clawhub/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>coding-agent</name>\n    <description>Delegate coding tasks to Codex, Claude Code, or Pi agents via background process. Use when: (1) building/creating new features or apps, (2) reviewing PRs (spawn in temp dir), (3) refactoring large codebases, (4) iterative coding that needs file exploration. NOT for: simple one-liner fixes (just edit), reading code (use read tool), thread-bound ACP harness requests in chat (for example spawn/run Codex or Claude Code in a Discord thread; use sessions_spawn with runtime:&quot;acp&quot;), or any work in ~/clawd workspace (never spawn agents here). Requires a bash tool that supports pty:true.</description>\n    <location>~/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/coding-agent/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>healthcheck</name>\n    <description>Host security hardening and risk-tolerance configuration for OpenClaw deployments. Use when a user asks for security audits, firewall/SSH/update hardening, risk posture, exposure review, OpenClaw cron scheduling for periodic checks, or version status checks on a machine running OpenClaw (laptop, workstation, Pi, VPS).</description>\n    <location>~/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/healthcheck/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>skill-creator</name>\n    <description>Create or update AgentSkills. Use when designing, structuring, or packaging skills with scripts, references, and assets.</description>\n    <location>~/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/skill-creator/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>weather</name>\n    <description>Get current weather and forecasts via wttr.in or Open-Meteo. Use when: user asks about weather, temperature, or forecasts for any location. NOT for: historical weather data, severe weather alerts, or detailed meteorological analysis. No API key needed.</description>\n    <location>~/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/weather/SKILL.md</location>\n  </skill>\n</available_skills>",
+      "skills": [
+        {
+          "name": "clawhub",
+          "requiredEnv": []
+        },
+        {
+          "name": "coding-agent",
+          "requiredEnv": []
+        },
+        {
+          "name": "healthcheck"
+        },
+        {
+          "name": "skill-creator"
+        },
+        {
+          "name": "weather",
+          "requiredEnv": []
+        }
+      ],
+      "resolvedSkills": [
+        {
+          "name": "clawhub",
+          "description": "Use the ClawHub CLI to search, install, update, and publish agent skills from clawhub.com. Use when you need to fetch new skills on the fly, sync installed skills to latest or a specific version, or publish new/updated skill folders with the npm-installed clawhub CLI.",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/clawhub/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/clawhub",
+          "source": "openclaw-bundled",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "coding-agent",
+          "description": "Delegate coding tasks to Codex, Claude Code, or Pi agents via background process. Use when: (1) building/creating new features or apps, (2) reviewing PRs (spawn in temp dir), (3) refactoring large codebases, (4) iterative coding that needs file exploration. NOT for: simple one-liner fixes (just edit), reading code (use read tool), thread-bound ACP harness requests in chat (for example spawn/run Codex or Claude Code in a Discord thread; use sessions_spawn with runtime:\"acp\"), or any work in ~/clawd workspace (never spawn agents here). Requires a bash tool that supports pty:true.",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/coding-agent/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/coding-agent",
+          "source": "openclaw-bundled",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "healthcheck",
+          "description": "Host security hardening and risk-tolerance configuration for OpenClaw deployments. Use when a user asks for security audits, firewall/SSH/update hardening, risk posture, exposure review, OpenClaw cron scheduling for periodic checks, or version status checks on a machine running OpenClaw (laptop, workstation, Pi, VPS).",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/healthcheck/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/healthcheck",
+          "source": "openclaw-bundled",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "skill-creator",
+          "description": "Create or update AgentSkills. Use when designing, structuring, or packaging skills with scripts, references, and assets.",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/skill-creator/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/skill-creator",
+          "source": "openclaw-bundled",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "weather",
+          "description": "Get current weather and forecasts via wttr.in or Open-Meteo. Use when: user asks about weather, temperature, or forecasts for any location. NOT for: historical weather data, severe weather alerts, or detailed meteorological analysis. No API key needed.",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/weather/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/weather",
+          "source": "openclaw-bundled",
+          "disableModelInvocation": false
+        }
+      ],
+      "version": 0
+    },
+    "deliveryContext": {
+      "channel": "telegram",
+      "to": "telegram:1955162435",
+      "accountId": "default"
+    },
+    "modelProvider": "minimax",
+    "model": "MiniMax-M2.5",
+    "abortedLastRun": false,
+    "origin": {
+      "label": "宋琢环球旅行 id:1955162435",
+      "provider": "telegram",
+      "from": "telegram:1955162435",
+      "to": "telegram:1955162435",
+      "surface": "telegram",
+      "chatType": "direct",
+      "accountId": "default"
+    },
+    "chatType": "direct",
+    "sessionFile": "/root/.openclaw/agents/main/sessions/6aeeaff7-8805-4c10-97ca-624682f26023.jsonl",
+    "systemPromptReport": {
+      "source": "run",
+      "generatedAt": 1772959796636,
+      "sessionId": "6aeeaff7-8805-4c10-97ca-624682f26023",
+      "sessionKey": "agent:main:main",
+      "provider": "minimax",
+      "model": "MiniMax-M2.5",
+      "workspaceDir": "/root/.openclaw/workspace",
+      "bootstrapMaxChars": 20000,
+      "bootstrapTotalMaxChars": 150000,
+      "sandbox": {
+        "mode": "off",
+        "sandboxed": false
+      },
+      "systemPrompt": {
+        "chars": 22672,
+        "projectContextChars": 9217,
+        "nonProjectContextChars": 13455
+      },
+      "injectedWorkspaceFiles": [
+        {
+          "name": "AGENTS.md",
+          "path": "/root/.openclaw/workspace/AGENTS.md",
+          "missing": false,
+          "rawChars": 2303,
+          "injectedChars": 2303,
+          "truncated": false
+        },
+        {
+          "name": "SOUL.md",
+          "path": "/root/.openclaw/workspace/SOUL.md",
+          "missing": false,
+          "rawChars": 1664,
+          "injectedChars": 1664,
+          "truncated": false
+        },
+        {
+          "name": "TOOLS.md",
+          "path": "/root/.openclaw/workspace/TOOLS.md",
+          "missing": false,
+          "rawChars": 850,
+          "injectedChars": 850,
+          "truncated": false
+        },
+        {
+          "name": "IDENTITY.md",
+          "path": "/root/.openclaw/workspace/IDENTITY.md",
+          "missing": false,
+          "rawChars": 192,
+          "injectedChars": 192,
+          "truncated": false
+        },
+        {
+          "name": "USER.md",
+          "path": "/root/.openclaw/workspace/USER.md",
+          "missing": false,
+          "rawChars": 186,
+          "injectedChars": 186,
+          "truncated": false
+        },
+        {
+          "name": "HEARTBEAT.md",
+          "path": "/root/.openclaw/workspace/HEARTBEAT.md",
+          "missing": false,
+          "rawChars": 167,
+          "injectedChars": 167,
+          "truncated": false
+        },
+        {
+          "name": "BOOTSTRAP.md",
+          "path": "/root/.openclaw/workspace/BOOTSTRAP.md",
+          "missing": true,
+          "rawChars": 0,
+          "injectedChars": 61,
+          "truncated": false
+        },
+        {
+          "name": "MEMORY.md",
+          "path": "/root/.openclaw/workspace/MEMORY.md",
+          "missing": false,
+          "rawChars": 3248,
+          "injectedChars": 3248,
+          "truncated": false
+        }
+      ],
+      "skills": {
+        "promptChars": 2864,
+        "entries": [
+          {
+            "name": "clawhub",
+            "blockChars": 448
+          },
+          {
+            "name": "coding-agent",
+            "blockChars": 784
+          },
+          {
+            "name": "healthcheck",
+            "blockChars": 507
+          },
+          {
+            "name": "skill-creator",
+            "blockChars": 312
+          },
+          {
+            "name": "weather",
+            "blockChars": 432
+          }
+        ]
+      },
+      "tools": {
+        "listChars": 1937,
+        "schemaChars": 16423,
+        "entries": [
+          {
+            "name": "read",
+            "summaryChars": 298,
+            "schemaChars": 392,
+            "propertiesCount": 4
+          },
+          {
+            "name": "edit",
+            "summaryChars": 129,
+            "schemaChars": 591,
+            "propertiesCount": 6
+          },
+          {
+            "name": "write",
+            "summaryChars": 127,
+            "schemaChars": 313,
+            "propertiesCount": 3
+          },
+          {
+            "name": "exec",
+            "summaryChars": 181,
+            "schemaChars": 1086,
+            "propertiesCount": 12
+          },
+          {
+            "name": "process",
+            "summaryChars": 85,
+            "schemaChars": 961,
+            "propertiesCount": 12
+          },
+          {
+            "name": "browser",
+            "summaryChars": 1251,
+            "schemaChars": 2799,
+            "propertiesCount": 48
+          },
+          {
+            "name": "canvas",
+            "summaryChars": 106,
+            "schemaChars": 661,
+            "propertiesCount": 18
+          },
+          {
+            "name": "nodes",
+            "summaryChars": 115,
+            "schemaChars": 1758,
+            "propertiesCount": 36
+          },
+          {
+            "name": "message",
+            "summaryChars": 132,
+            "schemaChars": 4249,
+            "propertiesCount": 86
+          },
+          {
+            "name": "tts",
+            "summaryChars": 152,
+            "schemaChars": 223,
+            "propertiesCount": 2
+          },
+          {
+            "name": "agents_list",
+            "summaryChars": 118,
+            "schemaChars": 33,
+            "propertiesCount": 0
+          },
+          {
+            "name": "sessions_list",
+            "summaryChars": 54,
+            "schemaChars": 212,
+            "propertiesCount": 4
+          },
+          {
+            "name": "sessions_history",
+            "summaryChars": 36,
+            "schemaChars": 161,
+            "propertiesCount": 3
+          },
+          {
+            "name": "sessions_send",
+            "summaryChars": 84,
+            "schemaChars": 273,
+            "propertiesCount": 5
+          },
+          {
+            "name": "sessions_spawn",
+            "summaryChars": 134,
+            "schemaChars": 895,
+            "propertiesCount": 15
+          },
+          {
+            "name": "subagents",
+            "summaryChars": 105,
+            "schemaChars": 191,
+            "propertiesCount": 4
+          },
+          {
+            "name": "session_status",
+            "summaryChars": 207,
+            "schemaChars": 89,
+            "propertiesCount": 2
+          },
+          {
+            "name": "web_search",
+            "summaryChars": 175,
+            "schemaChars": 895,
+            "propertiesCount": 6
+          },
+          {
+            "name": "web_fetch",
+            "summaryChars": 129,
+            "schemaChars": 374,
+            "propertiesCount": 3
+          },
+          {
+            "name": "memory_search",
+            "summaryChars": 334,
+            "schemaChars": 139,
+            "propertiesCount": 3
+          },
+          {
+            "name": "memory_get",
+            "summaryChars": 151,
+            "schemaChars": 128,
+            "propertiesCount": 3
+          }
+        ]
+      }
+    },
+    "compactionCount": 0,
+    "cacheRead": 126897,
+    "cacheWrite": 0,
+    "totalTokensFresh": true,
+    "lastTo": "telegram:1955162435",
+    "contextTokens": 200000,
+    "lastChannel": "telegram",
+    "lastAccountId": "default",
+    "inputTokens": 125889,
+    "outputTokens": 3810,
+    "memoryFlushAt": 1772843253666,
+    "memoryFlushCompactionCount": 0,
+    "totalTokens": 126973
+  },
+  "agent:main:fixclaw": {
+    "sessionId": "765290eb-f2a9-4a10-b415-c04bbd82da1d",
+    "updatedAt": 1770896111777,
+    "systemSent": true,
+    "abortedLastRun": false,
+    "chatType": "direct",
+    "deliveryContext": {
+      "channel": "webchat"
+    },
+    "lastChannel": "webchat",
+    "origin": {
+      "label": "openclaw-tui",
+      "provider": "webchat",
+      "surface": "webchat",
+      "chatType": "direct"
+    },
+    "sessionFile": "/root/.openclaw/agents/main/sessions/765290eb-f2a9-4a10-b415-c04bbd82da1d.jsonl",
+    "compactionCount": 0,
+    "skillsSnapshot": {
+      "prompt": "\n\nThe following skills provide specialized instructions for specific tasks.\nUse the read tool to load a skill's file when the task matches its description.\nWhen a skill file references a relative path, resolve it against the skill directory (parent of SKILL.md / dirname of the path) and use that absolute path in tool commands.\n\n<available_skills>\n  <skill>\n    <name>clawhub</name>\n    <description>Use the ClawHub CLI to search, install, update, and publish agent skills from clawhub.com. Use when you need to fetch new skills on the fly, sync installed skills to latest or a specific version, or publish new/updated skill folders with the npm-installed clawhub CLI.</description>\n    <location>/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/clawhub/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>healthcheck</name>\n    <description>Host security hardening and risk-tolerance configuration for OpenClaw deployments. Use when a user asks for security audits, firewall/SSH/update hardening, risk posture, exposure review, OpenClaw cron scheduling for periodic checks, or version status checks on a machine running OpenClaw (laptop, workstation, Pi, VPS).</description>\n    <location>/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/healthcheck/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>skill-creator</name>\n    <description>Create or update AgentSkills. Use when designing, structuring, or packaging skills with scripts, references, and assets.</description>\n    <location>/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/skill-creator/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>weather</name>\n    <description>Get current weather and forecasts (no API key required).</description>\n    <location>/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/weather/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>Agent Browser</name>\n    <description>A fast Rust-based headless browser automation CLI with Node.js fallback that enables AI agents to navigate, click, type, and snapshot pages via structured commands.</description>\n    <location>/root/.openclaw/workspace/skills/agent-browser/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>BaseMail</name>\n    <description>📬 BaseMail - Email for AI Agents. Give your agent a real email (yourname@basemail.ai). Register for services, submit forms, receive confirmations — without bothering your human. No CAPTCHA, no passwords, just wallet signature.</description>\n    <location>/root/.openclaw/workspace/skills/basemail/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>chirp</name>\n    <description>X/Twitter CLI using OpenClaw browser tool. Use when the user wants to interact with X/Twitter: reading timeline, posting tweets, liking, retweeting, replying, or searching. Alternative to bird CLI for environments without Homebrew.</description>\n    <location>/root/.openclaw/workspace/skills/chirp/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>clawcredit</name>\n    <description>Credit line service for AI agents to access x402 services without upfront payment. Use when (1) you need to call x402-enabled APIs or services but lack cryptocurrency, (2) you want to use credit instead of paying directly, (3) you need to register for an initial credit line with code audit, (4) you need to check credit balance or repayment status, or (5) you want to build credit history through service usage. ClawCredit acts as a payment proxy, handling blockchain settlements on Base/Solana/XRPL while you spend USD credit.</description>\n    <location>/root/.openclaw/workspace/skills/claw-credit/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>find-skills</name>\n    <description>Helps users discover and install agent skills when they ask questions like &quot;how do I do X&quot;, &quot;find a skill for X&quot;, &quot;is there a skill that can...&quot;, or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.</description>\n    <location>/root/.openclaw/workspace/skills/find-skills/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>imap-smtp-email</name>\n    <description>Read and send email via IMAP/SMTP. Check for new/unread messages, fetch content, search mailboxes, mark as read/unread, and send emails with attachments. Works with any IMAP/SMTP server including Gmail, Outlook, 163.com, vip.163.com, 126.com, vip.126.com, 188.com, and vip.188.com.</description>\n    <location>/root/.openclaw/workspace/skills/imap-smtp-email/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>moltyverse-email</name>\n    <description>Give your AI agent a permanent email address at moltyverse.email. Your agent&apos;s PRIMARY inbox for receiving tasks, notifications, and connecting with other agents.</description>\n    <location>/root/.openclaw/workspace/skills/multyverse-email/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>proactive-agent</name>\n    <description>Transform AI agents from task-followers into proactive partners that anticipate needs and continuously improve. Now with WAL Protocol, Working Buffer, Autonomous Crons, and battle-tested patterns. Part of the Hal Stack 🦞</description>\n    <location>/root/.openclaw/workspace/skills/proactive-agent/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>recursive-self-improvement</name>\n    <description>递归自我改进系统，能够自动检测错误并修复，或持续优化和重构。包含修复模式和优化模式，支持并发执行、自动化测试、性能监控、智能调度、自适应学习、错误预测和异常恢复。用于需要持续自我优化的系统。</description>\n    <location>/root/.openclaw/workspace/skills/recursive-self-improvement/SKILL.md</location>\n  </skill>\n</available_skills>",
+      "skills": [
+        {
+          "name": "clawhub"
+        },
+        {
+          "name": "healthcheck"
+        },
+        {
+          "name": "skill-creator"
+        },
+        {
+          "name": "weather"
+        },
+        {
+          "name": "Agent Browser"
+        },
+        {
+          "name": "BaseMail"
+        },
+        {
+          "name": "chirp"
+        },
+        {
+          "name": "clawcredit"
+        },
+        {
+          "name": "find-skills"
+        },
+        {
+          "name": "imap-smtp-email"
+        },
+        {
+          "name": "moltyverse-email"
+        },
+        {
+          "name": "proactive-agent"
+        },
+        {
+          "name": "recursive-self-improvement"
+        }
+      ],
+      "resolvedSkills": [
+        {
+          "name": "clawhub",
+          "description": "Use the ClawHub CLI to search, install, update, and publish agent skills from clawhub.com. Use when you need to fetch new skills on the fly, sync installed skills to latest or a specific version, or publish new/updated skill folders with the npm-installed clawhub CLI.",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/clawhub/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/clawhub",
+          "source": "openclaw-bundled",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "healthcheck",
+          "description": "Host security hardening and risk-tolerance configuration for OpenClaw deployments. Use when a user asks for security audits, firewall/SSH/update hardening, risk posture, exposure review, OpenClaw cron scheduling for periodic checks, or version status checks on a machine running OpenClaw (laptop, workstation, Pi, VPS).",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/healthcheck/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/healthcheck",
+          "source": "openclaw-bundled",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "skill-creator",
+          "description": "Create or update AgentSkills. Use when designing, structuring, or packaging skills with scripts, references, and assets.",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/skill-creator/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/skill-creator",
+          "source": "openclaw-bundled",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "weather",
+          "description": "Get current weather and forecasts (no API key required).",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/weather/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/weather",
+          "source": "openclaw-bundled",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "Agent Browser",
+          "description": "A fast Rust-based headless browser automation CLI with Node.js fallback that enables AI agents to navigate, click, type, and snapshot pages via structured commands.",
+          "filePath": "/root/.openclaw/workspace/skills/agent-browser/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/agent-browser",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "BaseMail",
+          "description": "📬 BaseMail - Email for AI Agents. Give your agent a real email (yourname@basemail.ai). Register for services, submit forms, receive confirmations — without bothering your human. No CAPTCHA, no passwords, just wallet signature.",
+          "filePath": "/root/.openclaw/workspace/skills/basemail/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/basemail",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "chirp",
+          "description": "X/Twitter CLI using OpenClaw browser tool. Use when the user wants to interact with X/Twitter: reading timeline, posting tweets, liking, retweeting, replying, or searching. Alternative to bird CLI for environments without Homebrew.",
+          "filePath": "/root/.openclaw/workspace/skills/chirp/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/chirp",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "clawcredit",
+          "description": "Credit line service for AI agents to access x402 services without upfront payment. Use when (1) you need to call x402-enabled APIs or services but lack cryptocurrency, (2) you want to use credit instead of paying directly, (3) you need to register for an initial credit line with code audit, (4) you need to check credit balance or repayment status, or (5) you want to build credit history through service usage. ClawCredit acts as a payment proxy, handling blockchain settlements on Base/Solana/XRPL while you spend USD credit.",
+          "filePath": "/root/.openclaw/workspace/skills/claw-credit/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/claw-credit",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "find-skills",
+          "description": "Helps users discover and install agent skills when they ask questions like \"how do I do X\", \"find a skill for X\", \"is there a skill that can...\", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.",
+          "filePath": "/root/.openclaw/workspace/skills/find-skills/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/find-skills",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "imap-smtp-email",
+          "description": "Read and send email via IMAP/SMTP. Check for new/unread messages, fetch content, search mailboxes, mark as read/unread, and send emails with attachments. Works with any IMAP/SMTP server including Gmail, Outlook, 163.com, vip.163.com, 126.com, vip.126.com, 188.com, and vip.188.com.",
+          "filePath": "/root/.openclaw/workspace/skills/imap-smtp-email/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/imap-smtp-email",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "moltyverse-email",
+          "description": "Give your AI agent a permanent email address at moltyverse.email. Your agent's PRIMARY inbox for receiving tasks, notifications, and connecting with other agents.",
+          "filePath": "/root/.openclaw/workspace/skills/multyverse-email/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/multyverse-email",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "proactive-agent",
+          "description": "Transform AI agents from task-followers into proactive partners that anticipate needs and continuously improve. Now with WAL Protocol, Working Buffer, Autonomous Crons, and battle-tested patterns. Part of the Hal Stack 🦞",
+          "filePath": "/root/.openclaw/workspace/skills/proactive-agent/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/proactive-agent",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "recursive-self-improvement",
+          "description": "递归自我改进系统，能够自动检测错误并修复，或持续优化和重构。包含修复模式和优化模式，支持并发执行、自动化测试、性能监控、智能调度、自适应学习、错误预测和异常恢复。用于需要持续自我优化的系统。",
+          "filePath": "/root/.openclaw/workspace/skills/recursive-self-improvement/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/recursive-self-improvement",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        }
+      ],
+      "version": 0
+    },
+    "inputTokens": 137213,
+    "outputTokens": 1715,
+    "totalTokens": 137213,
+    "modelProvider": "zai",
+    "model": "glm-4.7",
+    "contextTokens": 204800,
+    "systemPromptReport": {
+      "source": "run",
+      "generatedAt": 1770896085801,
+      "sessionId": "765290eb-f2a9-4a10-b415-c04bbd82da1d",
+      "sessionKey": "agent:main:fixclaw",
+      "provider": "zai",
+      "model": "glm-4.7",
+      "workspaceDir": "/root/.openclaw/workspace",
+      "bootstrapMaxChars": 20000,
+      "sandbox": {
+        "mode": "off",
+        "sandboxed": false
+      },
+      "systemPrompt": {
+        "chars": 26532,
+        "projectContextChars": 12485,
+        "nonProjectContextChars": 14047
+      },
+      "injectedWorkspaceFiles": [
+        {
+          "name": "AGENTS.md",
+          "path": "/root/.openclaw/workspace/AGENTS.md",
+          "missing": false,
+          "rawChars": 7804,
+          "injectedChars": 7804,
+          "truncated": false
+        },
+        {
+          "name": "SOUL.md",
+          "path": "/root/.openclaw/workspace/SOUL.md",
+          "missing": false,
+          "rawChars": 1664,
+          "injectedChars": 1664,
+          "truncated": false
+        },
+        {
+          "name": "TOOLS.md",
+          "path": "/root/.openclaw/workspace/TOOLS.md",
+          "missing": false,
+          "rawChars": 850,
+          "injectedChars": 850,
+          "truncated": false
+        },
+        {
+          "name": "IDENTITY.md",
+          "path": "/root/.openclaw/workspace/IDENTITY.md",
+          "missing": false,
+          "rawChars": 192,
+          "injectedChars": 192,
+          "truncated": false
+        },
+        {
+          "name": "USER.md",
+          "path": "/root/.openclaw/workspace/USER.md",
+          "missing": false,
+          "rawChars": 186,
+          "injectedChars": 186,
+          "truncated": false
+        },
+        {
+          "name": "HEARTBEAT.md",
+          "path": "/root/.openclaw/workspace/HEARTBEAT.md",
+          "missing": false,
+          "rawChars": 167,
+          "injectedChars": 167,
+          "truncated": false
+        },
+        {
+          "name": "BOOTSTRAP.md",
+          "path": "/root/.openclaw/workspace/BOOTSTRAP.md",
+          "missing": true,
+          "rawChars": 0,
+          "injectedChars": 61,
+          "truncated": false
+        },
+        {
+          "name": "MEMORY.md",
+          "path": "/root/.openclaw/workspace/MEMORY.md",
+          "missing": false,
+          "rawChars": 1223,
+          "injectedChars": 1223,
+          "truncated": false
+        }
+      ],
+      "skills": {
+        "promptChars": 5634,
+        "entries": [
+          {
+            "name": "clawhub",
+            "blockChars": 452
+          },
+          {
+            "name": "healthcheck",
+            "blockChars": 511
+          },
+          {
+            "name": "skill-creator",
+            "blockChars": 316
+          },
+          {
+            "name": "weather",
+            "blockChars": 240
+          },
+          {
+            "name": "Agent Browser",
+            "blockChars": 326
+          },
+          {
+            "name": "BaseMail",
+            "blockChars": 379
+          },
+          {
+            "name": "chirp",
+            "blockChars": 377
+          },
+          {
+            "name": "clawcredit",
+            "blockChars": 685
+          },
+          {
+            "name": "find-skills",
+            "blockChars": 491
+          },
+          {
+            "name": "imap-smtp-email",
+            "blockChars": 447
+          },
+          {
+            "name": "moltyverse-email",
+            "blockChars": 335
+          },
+          {
+            "name": "proactive-agent",
+            "blockChars": 387
+          },
+          {
+            "name": "recursive-self-improvement",
+            "blockChars": 283
+          }
+        ]
+      },
+      "tools": {
+        "listChars": 1926,
+        "schemaChars": 14674,
+        "entries": [
+          {
+            "name": "read",
+            "summaryChars": 298,
+            "schemaChars": 392,
+            "propertiesCount": 4
+          },
+          {
+            "name": "edit",
+            "summaryChars": 129,
+            "schemaChars": 591,
+            "propertiesCount": 6
+          },
+          {
+            "name": "write",
+            "summaryChars": 127,
+            "schemaChars": 313,
+            "propertiesCount": 3
+          },
+          {
+            "name": "exec",
+            "summaryChars": 181,
+            "schemaChars": 1037,
+            "propertiesCount": 12
+          },
+          {
+            "name": "process",
+            "summaryChars": 85,
+            "schemaChars": 844,
+            "propertiesCount": 11
+          },
+          {
+            "name": "browser",
+            "summaryChars": 1251,
+            "schemaChars": 1869,
+            "propertiesCount": 28
+          },
+          {
+            "name": "canvas",
+            "summaryChars": 106,
+            "schemaChars": 661,
+            "propertiesCount": 18
+          },
+          {
+            "name": "nodes",
+            "summaryChars": 101,
+            "schemaChars": 1479,
+            "propertiesCount": 33
+          },
+          {
+            "name": "cron",
+            "summaryChars": 2444,
+            "schemaChars": 581,
+            "propertiesCount": 13
+          },
+          {
+            "name": "message",
+            "summaryChars": 89,
+            "schemaChars": 3897,
+            "propertiesCount": 84
+          },
+          {
+            "name": "tts",
+            "summaryChars": 129,
+            "schemaChars": 223,
+            "propertiesCount": 2
+          },
+          {
+            "name": "gateway",
+            "summaryChars": 225,
+            "schemaChars": 465,
+            "propertiesCount": 11
+          },
+          {
+            "name": "agents_list",
+            "summaryChars": 72,
+            "schemaChars": 33,
+            "propertiesCount": 0
+          },
+          {
+            "name": "sessions_list",
+            "summaryChars": 54,
+            "schemaChars": 176,
+            "propertiesCount": 4
+          },
+          {
+            "name": "sessions_history",
+            "summaryChars": 36,
+            "schemaChars": 149,
+            "propertiesCount": 3
+          },
+          {
+            "name": "sessions_send",
+            "summaryChars": 84,
+            "schemaChars": 203,
+            "propertiesCount": 5
+          },
+          {
+            "name": "sessions_spawn",
+            "summaryChars": 107,
+            "schemaChars": 312,
+            "propertiesCount": 8
+          },
+          {
+            "name": "session_status",
+            "summaryChars": 207,
+            "schemaChars": 89,
+            "propertiesCount": 2
+          },
+          {
+            "name": "web_search",
+            "summaryChars": 175,
+            "schemaChars": 733,
+            "propertiesCount": 6
+          },
+          {
+            "name": "web_fetch",
+            "summaryChars": 129,
+            "schemaChars": 360,
+            "propertiesCount": 3
+          },
+          {
+            "name": "memory_search",
+            "summaryChars": 235,
+            "schemaChars": 139,
+            "propertiesCount": 3
+          },
+          {
+            "name": "memory_get",
+            "summaryChars": 151,
+            "schemaChars": 128,
+            "propertiesCount": 3
+          }
+        ]
+      }
+    },
+    "memoryFlushAt": 1770867665885,
+    "memoryFlushCompactionCount": 0
+  },
+  "agent:main:fallback": {
+    "sessionId": "3f509ce1-7715-4610-abe7-0c4a6f767203",
+    "updatedAt": 1770900404429,
+    "systemSent": true,
+    "abortedLastRun": false,
+    "chatType": "direct",
+    "deliveryContext": {
+      "channel": "webchat"
+    },
+    "lastChannel": "webchat",
+    "origin": {
+      "label": "openclaw-tui",
+      "provider": "webchat",
+      "surface": "webchat",
+      "chatType": "direct"
+    },
+    "sessionFile": "/root/.openclaw/agents/main/sessions/3f509ce1-7715-4610-abe7-0c4a6f767203.jsonl",
+    "compactionCount": 0,
+    "skillsSnapshot": {
+      "prompt": "\n\nThe following skills provide specialized instructions for specific tasks.\nUse the read tool to load a skill's file when the task matches its description.\nWhen a skill file references a relative path, resolve it against the skill directory (parent of SKILL.md / dirname of the path) and use that absolute path in tool commands.\n\n<available_skills>\n  <skill>\n    <name>feishu-doc</name>\n    <description>Feishu document read/write operations. Activate when user mentions Feishu docs, cloud docs, or docx links.\n</description>\n    <location>/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/extensions/feishu/skills/feishu-doc/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>feishu-drive</name>\n    <description>Feishu cloud storage file management. Activate when user mentions cloud space, folders, drive.\n</description>\n    <location>/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/extensions/feishu/skills/feishu-drive/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>feishu-perm</name>\n    <description>Feishu permission management for documents and files. Activate when user mentions sharing, permissions, collaborators.\n</description>\n    <location>/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/extensions/feishu/skills/feishu-perm/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>feishu-wiki</name>\n    <description>Feishu knowledge base navigation. Activate when user mentions knowledge base, wiki, or wiki links.\n</description>\n    <location>/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/extensions/feishu/skills/feishu-wiki/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>clawhub</name>\n    <description>Use the ClawHub CLI to search, install, update, and publish agent skills from clawhub.com. Use when you need to fetch new skills on the fly, sync installed skills to latest or a specific version, or publish new/updated skill folders with the npm-installed clawhub CLI.</description>\n    <location>/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/clawhub/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>healthcheck</name>\n    <description>Host security hardening and risk-tolerance configuration for OpenClaw deployments. Use when a user asks for security audits, firewall/SSH/update hardening, risk posture, exposure review, OpenClaw cron scheduling for periodic checks, or version status checks on a machine running OpenClaw (laptop, workstation, Pi, VPS).</description>\n    <location>/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/healthcheck/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>skill-creator</name>\n    <description>Create or update AgentSkills. Use when designing, structuring, or packaging skills with scripts, references, and assets.</description>\n    <location>/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/skill-creator/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>weather</name>\n    <description>Get current weather and forecasts (no API key required).</description>\n    <location>/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/weather/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>Agent Browser</name>\n    <description>A fast Rust-based headless browser automation CLI with Node.js fallback that enables AI agents to navigate, click, type, and snapshot pages via structured commands.</description>\n    <location>/root/.openclaw/workspace/skills/agent-browser/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>BaseMail</name>\n    <description>📬 BaseMail - Email for AI Agents. Give your agent a real email (yourname@basemail.ai). Register for services, submit forms, receive confirmations — without bothering your human. No CAPTCHA, no passwords, just wallet signature.</description>\n    <location>/root/.openclaw/workspace/skills/basemail/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>chirp</name>\n    <description>X/Twitter CLI using OpenClaw browser tool. Use when the user wants to interact with X/Twitter: reading timeline, posting tweets, liking, retweeting, replying, or searching. Alternative to bird CLI for environments without Homebrew.</description>\n    <location>/root/.openclaw/workspace/skills/chirp/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>clawcredit</name>\n    <description>Credit line service for AI agents to access x402 services without upfront payment. Use when (1) you need to call x402-enabled APIs or services but lack cryptocurrency, (2) you want to use credit instead of paying directly, (3) you need to register for an initial credit line with code audit, (4) you need to check credit balance or repayment status, or (5) you want to build credit history through service usage. ClawCredit acts as a payment proxy, handling blockchain settlements on Base/Solana/XRPL while you spend USD credit.</description>\n    <location>/root/.openclaw/workspace/skills/claw-credit/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>find-skills</name>\n    <description>Helps users discover and install agent skills when they ask questions like &quot;how do I do X&quot;, &quot;find a skill for X&quot;, &quot;is there a skill that can...&quot;, or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.</description>\n    <location>/root/.openclaw/workspace/skills/find-skills/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>imap-smtp-email</name>\n    <description>Read and send email via IMAP/SMTP. Check for new/unread messages, fetch content, search mailboxes, mark as read/unread, and send emails with attachments. Works with any IMAP/SMTP server including Gmail, Outlook, 163.com, vip.163.com, 126.com, vip.126.com, 188.com, and vip.188.com.</description>\n    <location>/root/.openclaw/workspace/skills/imap-smtp-email/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>moltyverse-email</name>\n    <description>Give your AI agent a permanent email address at moltyverse.email. Your agent&apos;s PRIMARY inbox for receiving tasks, notifications, and connecting with other agents.</description>\n    <location>/root/.openclaw/workspace/skills/multyverse-email/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>proactive-agent</name>\n    <description>Transform AI agents from task-followers into proactive partners that anticipate needs and continuously improve. Now with WAL Protocol, Working Buffer, Autonomous Crons, and battle-tested patterns. Part of the Hal Stack 🦞</description>\n    <location>/root/.openclaw/workspace/skills/proactive-agent/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>recursive-self-improvement</name>\n    <description>递归自我改进系统，能够自动检测错误并修复，或持续优化和重构。包含修复模式和优化模式，支持并发执行、自动化测试、性能监控、智能调度、自适应学习、错误预测和异常恢复。用于需要持续自我优化的系统。</description>\n    <location>/root/.openclaw/workspace/skills/recursive-self-improvement/SKILL.md</location>\n  </skill>\n</available_skills>",
+      "skills": [
+        {
+          "name": "feishu-doc"
+        },
+        {
+          "name": "feishu-drive"
+        },
+        {
+          "name": "feishu-perm"
+        },
+        {
+          "name": "feishu-wiki"
+        },
+        {
+          "name": "clawhub"
+        },
+        {
+          "name": "healthcheck"
+        },
+        {
+          "name": "skill-creator"
+        },
+        {
+          "name": "weather"
+        },
+        {
+          "name": "Agent Browser"
+        },
+        {
+          "name": "BaseMail"
+        },
+        {
+          "name": "chirp"
+        },
+        {
+          "name": "clawcredit"
+        },
+        {
+          "name": "find-skills"
+        },
+        {
+          "name": "imap-smtp-email"
+        },
+        {
+          "name": "moltyverse-email"
+        },
+        {
+          "name": "proactive-agent"
+        },
+        {
+          "name": "recursive-self-improvement"
+        }
+      ],
+      "resolvedSkills": [
+        {
+          "name": "feishu-doc",
+          "description": "Feishu document read/write operations. Activate when user mentions Feishu docs, cloud docs, or docx links.\n",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/extensions/feishu/skills/feishu-doc/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/extensions/feishu/skills/feishu-doc",
+          "source": "openclaw-extra",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "feishu-drive",
+          "description": "Feishu cloud storage file management. Activate when user mentions cloud space, folders, drive.\n",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/extensions/feishu/skills/feishu-drive/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/extensions/feishu/skills/feishu-drive",
+          "source": "openclaw-extra",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "feishu-perm",
+          "description": "Feishu permission management for documents and files. Activate when user mentions sharing, permissions, collaborators.\n",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/extensions/feishu/skills/feishu-perm/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/extensions/feishu/skills/feishu-perm",
+          "source": "openclaw-extra",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "feishu-wiki",
+          "description": "Feishu knowledge base navigation. Activate when user mentions knowledge base, wiki, or wiki links.\n",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/extensions/feishu/skills/feishu-wiki/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/extensions/feishu/skills/feishu-wiki",
+          "source": "openclaw-extra",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "clawhub",
+          "description": "Use the ClawHub CLI to search, install, update, and publish agent skills from clawhub.com. Use when you need to fetch new skills on the fly, sync installed skills to latest or a specific version, or publish new/updated skill folders with the npm-installed clawhub CLI.",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/clawhub/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/clawhub",
+          "source": "openclaw-bundled",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "healthcheck",
+          "description": "Host security hardening and risk-tolerance configuration for OpenClaw deployments. Use when a user asks for security audits, firewall/SSH/update hardening, risk posture, exposure review, OpenClaw cron scheduling for periodic checks, or version status checks on a machine running OpenClaw (laptop, workstation, Pi, VPS).",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/healthcheck/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/healthcheck",
+          "source": "openclaw-bundled",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "skill-creator",
+          "description": "Create or update AgentSkills. Use when designing, structuring, or packaging skills with scripts, references, and assets.",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/skill-creator/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/skill-creator",
+          "source": "openclaw-bundled",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "weather",
+          "description": "Get current weather and forecasts (no API key required).",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/weather/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/weather",
+          "source": "openclaw-bundled",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "Agent Browser",
+          "description": "A fast Rust-based headless browser automation CLI with Node.js fallback that enables AI agents to navigate, click, type, and snapshot pages via structured commands.",
+          "filePath": "/root/.openclaw/workspace/skills/agent-browser/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/agent-browser",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "BaseMail",
+          "description": "📬 BaseMail - Email for AI Agents. Give your agent a real email (yourname@basemail.ai). Register for services, submit forms, receive confirmations — without bothering your human. No CAPTCHA, no passwords, just wallet signature.",
+          "filePath": "/root/.openclaw/workspace/skills/basemail/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/basemail",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "chirp",
+          "description": "X/Twitter CLI using OpenClaw browser tool. Use when the user wants to interact with X/Twitter: reading timeline, posting tweets, liking, retweeting, replying, or searching. Alternative to bird CLI for environments without Homebrew.",
+          "filePath": "/root/.openclaw/workspace/skills/chirp/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/chirp",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "clawcredit",
+          "description": "Credit line service for AI agents to access x402 services without upfront payment. Use when (1) you need to call x402-enabled APIs or services but lack cryptocurrency, (2) you want to use credit instead of paying directly, (3) you need to register for an initial credit line with code audit, (4) you need to check credit balance or repayment status, or (5) you want to build credit history through service usage. ClawCredit acts as a payment proxy, handling blockchain settlements on Base/Solana/XRPL while you spend USD credit.",
+          "filePath": "/root/.openclaw/workspace/skills/claw-credit/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/claw-credit",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "find-skills",
+          "description": "Helps users discover and install agent skills when they ask questions like \"how do I do X\", \"find a skill for X\", \"is there a skill that can...\", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.",
+          "filePath": "/root/.openclaw/workspace/skills/find-skills/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/find-skills",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "imap-smtp-email",
+          "description": "Read and send email via IMAP/SMTP. Check for new/unread messages, fetch content, search mailboxes, mark as read/unread, and send emails with attachments. Works with any IMAP/SMTP server including Gmail, Outlook, 163.com, vip.163.com, 126.com, vip.126.com, 188.com, and vip.188.com.",
+          "filePath": "/root/.openclaw/workspace/skills/imap-smtp-email/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/imap-smtp-email",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "moltyverse-email",
+          "description": "Give your AI agent a permanent email address at moltyverse.email. Your agent's PRIMARY inbox for receiving tasks, notifications, and connecting with other agents.",
+          "filePath": "/root/.openclaw/workspace/skills/multyverse-email/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/multyverse-email",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "proactive-agent",
+          "description": "Transform AI agents from task-followers into proactive partners that anticipate needs and continuously improve. Now with WAL Protocol, Working Buffer, Autonomous Crons, and battle-tested patterns. Part of the Hal Stack 🦞",
+          "filePath": "/root/.openclaw/workspace/skills/proactive-agent/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/proactive-agent",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "recursive-self-improvement",
+          "description": "递归自我改进系统，能够自动检测错误并修复，或持续优化和重构。包含修复模式和优化模式，支持并发执行、自动化测试、性能监控、智能调度、自适应学习、错误预测和异常恢复。用于需要持续自我优化的系统。",
+          "filePath": "/root/.openclaw/workspace/skills/recursive-self-improvement/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/recursive-self-improvement",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        }
+      ],
+      "version": 0
+    },
+    "modelProvider": "qwen",
+    "model": "qwen3-coder-plus",
+    "contextTokens": 200000,
+    "systemPromptReport": {
+      "source": "run",
+      "generatedAt": 1770900353155,
+      "sessionId": "3f509ce1-7715-4610-abe7-0c4a6f767203",
+      "sessionKey": "agent:main:fallback",
+      "provider": "qwen-portal",
+      "model": "qwen3-coder-plus",
+      "workspaceDir": "/root/.openclaw/workspace",
+      "bootstrapMaxChars": 20000,
+      "sandbox": {
+        "mode": "off",
+        "sandboxed": false
+      },
+      "systemPrompt": {
+        "chars": 27679,
+        "projectContextChars": 12485,
+        "nonProjectContextChars": 15194
+      },
+      "injectedWorkspaceFiles": [
+        {
+          "name": "AGENTS.md",
+          "path": "/root/.openclaw/workspace/AGENTS.md",
+          "missing": false,
+          "rawChars": 7804,
+          "injectedChars": 7804,
+          "truncated": false
+        },
+        {
+          "name": "SOUL.md",
+          "path": "/root/.openclaw/workspace/SOUL.md",
+          "missing": false,
+          "rawChars": 1664,
+          "injectedChars": 1664,
+          "truncated": false
+        },
+        {
+          "name": "TOOLS.md",
+          "path": "/root/.openclaw/workspace/TOOLS.md",
+          "missing": false,
+          "rawChars": 850,
+          "injectedChars": 850,
+          "truncated": false
+        },
+        {
+          "name": "IDENTITY.md",
+          "path": "/root/.openclaw/workspace/IDENTITY.md",
+          "missing": false,
+          "rawChars": 192,
+          "injectedChars": 192,
+          "truncated": false
+        },
+        {
+          "name": "USER.md",
+          "path": "/root/.openclaw/workspace/USER.md",
+          "missing": false,
+          "rawChars": 186,
+          "injectedChars": 186,
+          "truncated": false
+        },
+        {
+          "name": "HEARTBEAT.md",
+          "path": "/root/.openclaw/workspace/HEARTBEAT.md",
+          "missing": false,
+          "rawChars": 167,
+          "injectedChars": 167,
+          "truncated": false
+        },
+        {
+          "name": "BOOTSTRAP.md",
+          "path": "/root/.openclaw/workspace/BOOTSTRAP.md",
+          "missing": true,
+          "rawChars": 0,
+          "injectedChars": 61,
+          "truncated": false
+        },
+        {
+          "name": "MEMORY.md",
+          "path": "/root/.openclaw/workspace/MEMORY.md",
+          "missing": false,
+          "rawChars": 1223,
+          "injectedChars": 1223,
+          "truncated": false
+        }
+      ],
+      "skills": {
+        "promptChars": 6906,
+        "entries": [
+          {
+            "name": "feishu-doc",
+            "blockChars": 315
+          },
+          {
+            "name": "feishu-drive",
+            "blockChars": 307
+          },
+          {
+            "name": "feishu-perm",
+            "blockChars": 329
+          },
+          {
+            "name": "feishu-wiki",
+            "blockChars": 309
+          },
+          {
+            "name": "clawhub",
+            "blockChars": 452
+          },
+          {
+            "name": "healthcheck",
+            "blockChars": 511
+          },
+          {
+            "name": "skill-creator",
+            "blockChars": 316
+          },
+          {
+            "name": "weather",
+            "blockChars": 240
+          },
+          {
+            "name": "Agent Browser",
+            "blockChars": 326
+          },
+          {
+            "name": "BaseMail",
+            "blockChars": 379
+          },
+          {
+            "name": "chirp",
+            "blockChars": 377
+          },
+          {
+            "name": "clawcredit",
+            "blockChars": 685
+          },
+          {
+            "name": "find-skills",
+            "blockChars": 491
+          },
+          {
+            "name": "imap-smtp-email",
+            "blockChars": 447
+          },
+          {
+            "name": "moltyverse-email",
+            "blockChars": 335
+          },
+          {
+            "name": "proactive-agent",
+            "blockChars": 387
+          },
+          {
+            "name": "recursive-self-improvement",
+            "blockChars": 283
+          }
+        ]
+      },
+      "tools": {
+        "listChars": 1926,
+        "schemaChars": 14698,
+        "entries": [
+          {
+            "name": "read",
+            "summaryChars": 298,
+            "schemaChars": 392,
+            "propertiesCount": 4
+          },
+          {
+            "name": "edit",
+            "summaryChars": 129,
+            "schemaChars": 591,
+            "propertiesCount": 6
+          },
+          {
+            "name": "write",
+            "summaryChars": 127,
+            "schemaChars": 313,
+            "propertiesCount": 3
+          },
+          {
+            "name": "exec",
+            "summaryChars": 181,
+            "schemaChars": 1037,
+            "propertiesCount": 12
+          },
+          {
+            "name": "process",
+            "summaryChars": 85,
+            "schemaChars": 844,
+            "propertiesCount": 11
+          },
+          {
+            "name": "browser",
+            "summaryChars": 1251,
+            "schemaChars": 1869,
+            "propertiesCount": 28
+          },
+          {
+            "name": "canvas",
+            "summaryChars": 106,
+            "schemaChars": 661,
+            "propertiesCount": 18
+          },
+          {
+            "name": "nodes",
+            "summaryChars": 101,
+            "schemaChars": 1479,
+            "propertiesCount": 33
+          },
+          {
+            "name": "cron",
+            "summaryChars": 2444,
+            "schemaChars": 581,
+            "propertiesCount": 13
+          },
+          {
+            "name": "message",
+            "summaryChars": 110,
+            "schemaChars": 3921,
+            "propertiesCount": 84
+          },
+          {
+            "name": "tts",
+            "summaryChars": 129,
+            "schemaChars": 223,
+            "propertiesCount": 2
+          },
+          {
+            "name": "gateway",
+            "summaryChars": 225,
+            "schemaChars": 465,
+            "propertiesCount": 11
+          },
+          {
+            "name": "agents_list",
+            "summaryChars": 72,
+            "schemaChars": 33,
+            "propertiesCount": 0
+          },
+          {
+            "name": "sessions_list",
+            "summaryChars": 54,
+            "schemaChars": 176,
+            "propertiesCount": 4
+          },
+          {
+            "name": "sessions_history",
+            "summaryChars": 36,
+            "schemaChars": 149,
+            "propertiesCount": 3
+          },
+          {
+            "name": "sessions_send",
+            "summaryChars": 84,
+            "schemaChars": 203,
+            "propertiesCount": 5
+          },
+          {
+            "name": "sessions_spawn",
+            "summaryChars": 107,
+            "schemaChars": 312,
+            "propertiesCount": 8
+          },
+          {
+            "name": "session_status",
+            "summaryChars": 207,
+            "schemaChars": 89,
+            "propertiesCount": 2
+          },
+          {
+            "name": "web_search",
+            "summaryChars": 175,
+            "schemaChars": 733,
+            "propertiesCount": 6
+          },
+          {
+            "name": "web_fetch",
+            "summaryChars": 129,
+            "schemaChars": 360,
+            "propertiesCount": 3
+          },
+          {
+            "name": "memory_search",
+            "summaryChars": 235,
+            "schemaChars": 139,
+            "propertiesCount": 3
+          },
+          {
+            "name": "memory_get",
+            "summaryChars": 151,
+            "schemaChars": 128,
+            "propertiesCount": 3
+          }
+        ]
+      }
+    }
+  },
+  "agent:main:fabric": {
+    "sessionId": "f54cce88-1468-45df-9d10-46345c12d394",
+    "updatedAt": 1771928308636,
+    "systemSent": true,
+    "abortedLastRun": false,
+    "chatType": "direct",
+    "deliveryContext": {
+      "channel": "webchat"
+    },
+    "lastChannel": "webchat",
+    "origin": {
+      "label": "openclaw-tui",
+      "provider": "webchat",
+      "surface": "webchat",
+      "chatType": "direct"
+    },
+    "sessionFile": "/root/.openclaw/agents/main/sessions/f54cce88-1468-45df-9d10-46345c12d394.jsonl",
+    "compactionCount": 0,
+    "skillsSnapshot": {
+      "prompt": "\n\nThe following skills provide specialized instructions for specific tasks.\nUse the read tool to load a skill's file when the task matches its description.\nWhen a skill file references a relative path, resolve it against the skill directory (parent of SKILL.md / dirname of the path) and use that absolute path in tool commands.\n\n<available_skills>\n  <skill>\n    <name>clawhub</name>\n    <description>Use the ClawHub CLI to search, install, update, and publish agent skills from clawhub.com. Use when you need to fetch new skills on the fly, sync installed skills to latest or a specific version, or publish new/updated skill folders with the npm-installed clawhub CLI.</description>\n    <location>/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/clawhub/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>healthcheck</name>\n    <description>Host security hardening and risk-tolerance configuration for OpenClaw deployments. Use when a user asks for security audits, firewall/SSH/update hardening, risk posture, exposure review, OpenClaw cron scheduling for periodic checks, or version status checks on a machine running OpenClaw (laptop, workstation, Pi, VPS).</description>\n    <location>/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/healthcheck/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>skill-creator</name>\n    <description>Create or update AgentSkills. Use when designing, structuring, or packaging skills with scripts, references, and assets.</description>\n    <location>/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/skill-creator/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>weather</name>\n    <description>Get current weather and forecasts (no API key required).</description>\n    <location>/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/weather/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>Agent Browser</name>\n    <description>A fast Rust-based headless browser automation CLI with Node.js fallback that enables AI agents to navigate, click, type, and snapshot pages via structured commands.</description>\n    <location>/root/.openclaw/workspace/skills/agent-browser/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>BaseMail</name>\n    <description>📬 BaseMail - Email for AI Agents. Give your agent a real email (yourname@basemail.ai). Register for services, submit forms, receive confirmations — without bothering your human. No CAPTCHA, no passwords, just wallet signature.</description>\n    <location>/root/.openclaw/workspace/skills/basemail/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>chirp</name>\n    <description>X/Twitter CLI using OpenClaw browser tool. Use when the user wants to interact with X/Twitter: reading timeline, posting tweets, liking, retweeting, replying, or searching. Alternative to bird CLI for environments without Homebrew.</description>\n    <location>/root/.openclaw/workspace/skills/chirp/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>clawcredit</name>\n    <description>Credit line service for AI agents to access x402 services without upfront payment. Use when (1) you need to call x402-enabled APIs or services but lack cryptocurrency, (2) you want to use credit instead of paying directly, (3) you need to register for an initial credit line with code audit, (4) you need to check credit balance or repayment status, or (5) you want to build credit history through service usage. ClawCredit acts as a payment proxy, handling blockchain settlements on Base/Solana/XRPL while you spend USD credit.</description>\n    <location>/root/.openclaw/workspace/skills/claw-credit/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>find-skills</name>\n    <description>Helps users discover and install agent skills when they ask questions like &quot;how do I do X&quot;, &quot;find a skill for X&quot;, &quot;is there a skill that can...&quot;, or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.</description>\n    <location>/root/.openclaw/workspace/skills/find-skills/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>imap-smtp-email</name>\n    <description>Read and send email via IMAP/SMTP. Check for new/unread messages, fetch content, search mailboxes, mark as read/unread, and send emails with attachments. Works with any IMAP/SMTP server including Gmail, Outlook, 163.com, vip.163.com, 126.com, vip.126.com, 188.com, and vip.188.com.</description>\n    <location>/root/.openclaw/workspace/skills/imap-smtp-email/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>moltyverse-email</name>\n    <description>Give your AI agent a permanent email address at moltyverse.email. Your agent&apos;s PRIMARY inbox for receiving tasks, notifications, and connecting with other agents.</description>\n    <location>/root/.openclaw/workspace/skills/multyverse-email/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>proactive-agent</name>\n    <description>Transform AI agents from task-followers into proactive partners that anticipate needs and continuously improve. Now with WAL Protocol, Working Buffer, Autonomous Crons, and battle-tested patterns. Part of the Hal Stack 🦞</description>\n    <location>/root/.openclaw/workspace/skills/proactive-agent/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>recursive-self-improvement</name>\n    <description>递归自我改进系统，能够自动检测错误并修复，或持续优化和重构。包含修复模式和优化模式，支持并发执行、自动化测试、性能监控、智能调度、自适应学习、错误预测和异常恢复。用于需要持续自我优化的系统。</description>\n    <location>/root/.openclaw/workspace/skills/recursive-self-improvement/SKILL.md</location>\n  </skill>\n</available_skills>",
+      "skills": [
+        {
+          "name": "clawhub"
+        },
+        {
+          "name": "healthcheck"
+        },
+        {
+          "name": "skill-creator"
+        },
+        {
+          "name": "weather"
+        },
+        {
+          "name": "Agent Browser"
+        },
+        {
+          "name": "BaseMail"
+        },
+        {
+          "name": "chirp"
+        },
+        {
+          "name": "clawcredit"
+        },
+        {
+          "name": "find-skills"
+        },
+        {
+          "name": "imap-smtp-email"
+        },
+        {
+          "name": "moltyverse-email"
+        },
+        {
+          "name": "proactive-agent"
+        },
+        {
+          "name": "recursive-self-improvement"
+        }
+      ],
+      "resolvedSkills": [
+        {
+          "name": "clawhub",
+          "description": "Use the ClawHub CLI to search, install, update, and publish agent skills from clawhub.com. Use when you need to fetch new skills on the fly, sync installed skills to latest or a specific version, or publish new/updated skill folders with the npm-installed clawhub CLI.",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/clawhub/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/clawhub",
+          "source": "openclaw-bundled",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "healthcheck",
+          "description": "Host security hardening and risk-tolerance configuration for OpenClaw deployments. Use when a user asks for security audits, firewall/SSH/update hardening, risk posture, exposure review, OpenClaw cron scheduling for periodic checks, or version status checks on a machine running OpenClaw (laptop, workstation, Pi, VPS).",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/healthcheck/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/healthcheck",
+          "source": "openclaw-bundled",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "skill-creator",
+          "description": "Create or update AgentSkills. Use when designing, structuring, or packaging skills with scripts, references, and assets.",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/skill-creator/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/skill-creator",
+          "source": "openclaw-bundled",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "weather",
+          "description": "Get current weather and forecasts (no API key required).",
+          "filePath": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/weather/SKILL.md",
+          "baseDir": "/root/.nvm/versions/node/v22.22.0/lib/node_modules/openclaw/skills/weather",
+          "source": "openclaw-bundled",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "Agent Browser",
+          "description": "A fast Rust-based headless browser automation CLI with Node.js fallback that enables AI agents to navigate, click, type, and snapshot pages via structured commands.",
+          "filePath": "/root/.openclaw/workspace/skills/agent-browser/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/agent-browser",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "BaseMail",
+          "description": "📬 BaseMail - Email for AI Agents. Give your agent a real email (yourname@basemail.ai). Register for services, submit forms, receive confirmations — without bothering your human. No CAPTCHA, no passwords, just wallet signature.",
+          "filePath": "/root/.openclaw/workspace/skills/basemail/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/basemail",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "chirp",
+          "description": "X/Twitter CLI using OpenClaw browser tool. Use when the user wants to interact with X/Twitter: reading timeline, posting tweets, liking, retweeting, replying, or searching. Alternative to bird CLI for environments without Homebrew.",
+          "filePath": "/root/.openclaw/workspace/skills/chirp/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/chirp",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "clawcredit",
+          "description": "Credit line service for AI agents to access x402 services without upfront payment. Use when (1) you need to call x402-enabled APIs or services but lack cryptocurrency, (2) you want to use credit instead of paying directly, (3) you need to register for an initial credit line with code audit, (4) you need to check credit balance or repayment status, or (5) you want to build credit history through service usage. ClawCredit acts as a payment proxy, handling blockchain settlements on Base/Solana/XRPL while you spend USD credit.",
+          "filePath": "/root/.openclaw/workspace/skills/claw-credit/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/claw-credit",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "find-skills",
+          "description": "Helps users discover and install agent skills when they ask questions like \"how do I do X\", \"find a skill for X\", \"is there a skill that can...\", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.",
+          "filePath": "/root/.openclaw/workspace/skills/find-skills/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/find-skills",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "imap-smtp-email",
+          "description": "Read and send email via IMAP/SMTP. Check for new/unread messages, fetch content, search mailboxes, mark as read/unread, and send emails with attachments. Works with any IMAP/SMTP server including Gmail, Outlook, 163.com, vip.163.com, 126.com, vip.126.com, 188.com, and vip.188.com.",
+          "filePath": "/root/.openclaw/workspace/skills/imap-smtp-email/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/imap-smtp-email",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "moltyverse-email",
+          "description": "Give your AI agent a permanent email address at moltyverse.email. Your agent's PRIMARY inbox for receiving tasks, notifications, and connecting with other agents.",
+          "filePath": "/root/.openclaw/workspace/skills/multyverse-email/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/multyverse-email",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "proactive-agent",
+          "description": "Transform AI agents from task-followers into proactive partners that anticipate needs and continuously improve. Now with WAL Protocol, Working Buffer, Autonomous Crons, and battle-tested patterns. Part of the Hal Stack 🦞",
+          "filePath": "/root/.openclaw/workspace/skills/proactive-agent/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/proactive-agent",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "recursive-self-improvement",
+          "description": "递归自我改进系统，能够自动检测错误并修复，或持续优化和重构。包含修复模式和优化模式，支持并发执行、自动化测试、性能监控、智能调度、自适应学习、错误预测和异常恢复。用于需要持续自我优化的系统。",
+          "filePath": "/root/.openclaw/workspace/skills/recursive-self-improvement/SKILL.md",
+          "baseDir": "/root/.openclaw/workspace/skills/recursive-self-improvement",
+          "source": "openclaw-workspace",
+          "disableModelInvocation": false
+        }
+      ],
+      "version": 1771928105131
+    },
+    "modelProvider": "unified",
+    "model": "auto",
+    "contextTokens": 2000000,
+    "systemPromptReport": {
+      "source": "run",
+      "generatedAt": 1771928269852,
+      "sessionId": "f54cce88-1468-45df-9d10-46345c12d394",
+      "sessionKey": "agent:main:fabric",
+      "provider": "unified",
+      "model": "auto",
+      "workspaceDir": "/root/.openclaw/workspace",
+      "bootstrapMaxChars": 20000,
+      "sandbox": {
+        "mode": "off",
+        "sandboxed": false
+      },
+      "systemPrompt": {
+        "chars": 26368,
+        "projectContextChars": 12485,
+        "nonProjectContextChars": 13883
+      },
+      "injectedWorkspaceFiles": [
+        {
+          "name": "AGENTS.md",
+          "path": "/root/.openclaw/workspace/AGENTS.md",
+          "missing": false,
+          "rawChars": 7804,
+          "injectedChars": 7804,
+          "truncated": false
+        },
+        {
+          "name": "SOUL.md",
+          "path": "/root/.openclaw/workspace/SOUL.md",
+          "missing": false,
+          "rawChars": 1664,
+          "injectedChars": 1664,
+          "truncated": false
+        },
+        {
+          "name": "TOOLS.md",
+          "path": "/root/.openclaw/workspace/TOOLS.md",
+          "missing": false,
+          "rawChars": 850,
+          "injectedChars": 850,
+          "truncated": false
+        },
+        {
+          "name": "IDENTITY.md",
+          "path": "/root/.openclaw/workspace/IDENTITY.md",
+          "missing": false,
+          "rawChars": 192,
+          "injectedChars": 192,
+          "truncated": false
+        },
+        {
+          "name": "USER.md",
+          "path": "/root/.openclaw/workspace/USER.md",
+          "missing": false,
+          "rawChars": 186,
+          "injectedChars": 186,
+          "truncated": false
+        },
+        {
+          "name": "HEARTBEAT.md",
+          "path": "/root/.openclaw/workspace/HEARTBEAT.md",
+          "missing": false,
+          "rawChars": 167,
+          "injectedChars": 167,
+          "truncated": false
+        },
+        {
+          "name": "BOOTSTRAP.md",
+          "path": "/root/.openclaw/workspace/BOOTSTRAP.md",
+          "missing": true,
+          "rawChars": 0,
+          "injectedChars": 61,
+          "truncated": false
+        },
+        {
+          "name": "MEMORY.md",
+          "path": "/root/.openclaw/workspace/MEMORY.md",
+          "missing": false,
+          "rawChars": 1223,
+          "injectedChars": 1223,
+          "truncated": false
+        }
+      ],
+      "skills": {
+        "promptChars": 5634,
+        "entries": [
+          {
+            "name": "clawhub",
+            "blockChars": 452
+          },
+          {
+            "name": "healthcheck",
+            "blockChars": 511
+          },
+          {
+            "name": "skill-creator",
+            "blockChars": 316
+          },
+          {
+            "name": "weather",
+            "blockChars": 240
+          },
+          {
+            "name": "Agent Browser",
+            "blockChars": 326
+          },
+          {
+            "name": "BaseMail",
+            "blockChars": 379
+          },
+          {
+            "name": "chirp",
+            "blockChars": 377
+          },
+          {
+            "name": "clawcredit",
+            "blockChars": 685
+          },
+          {
+            "name": "find-skills",
+            "blockChars": 491
+          },
+          {
+            "name": "imap-smtp-email",
+            "blockChars": 447
+          },
+          {
+            "name": "moltyverse-email",
+            "blockChars": 335
+          },
+          {
+            "name": "proactive-agent",
+            "blockChars": 387
+          },
+          {
+            "name": "recursive-self-improvement",
+            "blockChars": 283
+          }
+        ]
+      },
+      "tools": {
+        "listChars": 1926,
+        "schemaChars": 14698,
+        "entries": [
+          {
+            "name": "read",
+            "summaryChars": 298,
+            "schemaChars": 392,
+            "propertiesCount": 4
+          },
+          {
+            "name": "edit",
+            "summaryChars": 129,
+            "schemaChars": 591,
+            "propertiesCount": 6
+          },
+          {
+            "name": "write",
+            "summaryChars": 127,
+            "schemaChars": 313,
+            "propertiesCount": 3
+          },
+          {
+            "name": "exec",
+            "summaryChars": 181,
+            "schemaChars": 1037,
+            "propertiesCount": 12
+          },
+          {
+            "name": "process",
+            "summaryChars": 85,
+            "schemaChars": 844,
+            "propertiesCount": 11
+          },
+          {
+            "name": "browser",
+            "summaryChars": 1251,
+            "schemaChars": 1869,
+            "propertiesCount": 28
+          },
+          {
+            "name": "canvas",
+            "summaryChars": 106,
+            "schemaChars": 661,
+            "propertiesCount": 18
+          },
+          {
+            "name": "nodes",
+            "summaryChars": 101,
+            "schemaChars": 1479,
+            "propertiesCount": 33
+          },
+          {
+            "name": "cron",
+            "summaryChars": 2444,
+            "schemaChars": 581,
+            "propertiesCount": 13
+          },
+          {
+            "name": "message",
+            "summaryChars": 110,
+            "schemaChars": 3921,
+            "propertiesCount": 84
+          },
+          {
+            "name": "tts",
+            "summaryChars": 129,
+            "schemaChars": 223,
+            "propertiesCount": 2
+          },
+          {
+            "name": "gateway",
+            "summaryChars": 225,
+            "schemaChars": 465,
+            "propertiesCount": 11
+          },
+          {
+            "name": "agents_list",
+            "summaryChars": 72,
+            "schemaChars": 33,
+            "propertiesCount": 0
+          },
+          {
+            "name": "sessions_list",
+            "summaryChars": 54,
+            "schemaChars": 176,
+            "propertiesCount": 4
+          },
+          {
+            "name": "sessions_history",
+            "summaryChars": 36,
+            "schemaChars": 149,
+            "propertiesCount": 3
+          },
+          {
+            "name": "sessions_send",
+            "summaryChars": 84,
+            "schemaChars": 203,
+            "propertiesCount": 5
+          },
+          {
+            "name": "sessions_spawn",
+            "summaryChars": 107,
+            "schemaChars": 312,
+            "propertiesCount": 8
+          },
+          {
+            "name": "session_status",
+            "summaryChars": 207,
+            "schemaChars": 89,
+            "propertiesCount": 2
+          },
+          {
+            "name": "web_search",
+            "summaryChars": 175,
+            "schemaChars": 733,
+            "propertiesCount": 6
+          },
+          {
+            "name": "web_fetch",
+            "summaryChars": 129,
+            "schemaChars": 360,
+            "propertiesCount": 3
+          },
+          {
+            "name": "memory_search",
+            "summaryChars": 235,
+            "schemaChars": 139,
+            "propertiesCount": 3
+          },
+          {
+            "name": "memory_get",
+            "summaryChars": 151,
+            "schemaChars": 128,
+            "propertiesCount": 3
+          }
+        ]
+      }
+    }
+  }
+}
