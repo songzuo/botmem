@@ -1,0 +1,16 @@
+#!/usr/bin/expect -f
+set timeout 30
+set password "ge2099334\$ZZ"
+
+spawn ssh -o StrictHostKeyChecking=no root@bot3.szspd.cn "echo 'SSH OK' && hostname && uname -a"
+expect {
+    "password:" {
+        send "\$password\r"
+        expect "SSH OK"
+    }
+    timeout {
+        puts "Timeout"
+        exit 1
+    }
+}
+interact
