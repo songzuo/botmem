@@ -48,7 +48,7 @@ switch ($Action) {
     }
     
     "sync" {
-        # Sync workspace to botmem repo and push
+        # Sync workspace to botmem repo (main branch, inspector/ dir)
         # 1. Copy workspace
         Copy-Item "$ws\AGENTS.md" "$botmem\inspector\workspace\" -Force -ErrorAction SilentlyContinue
         Copy-Item "$ws\IDENTITY.md" "$botmem\inspector\workspace\" -Force -ErrorAction SilentlyContinue
@@ -59,15 +59,21 @@ switch ($Action) {
         Copy-Item "$ws\SOUL.md" "$botmem\inspector\workspace\" -Force -ErrorAction SilentlyContinue
         Copy-Item "$ws\memory\*" "$botmem\inspector\workspace\memory\" -Force -ErrorAction SilentlyContinue
         Copy-Item "$ws\monitor\*" "$botmem\inspector\monitor\" -Recurse -Force -ErrorAction SilentlyContinue
+        Copy-Item "$ws\scripts\*" "$botmem\inspector\scripts\" -Force -ErrorAction SilentlyContinue
         
-        # 2. Commit and push
+        # 2. Commit and push to main
         Set-Location $botmem
         git add -A
         $changes = git status --porcelain
         if ($changes) {
             git commit -m "inspector: sync $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
-            git push origin inspector 2>&1 | Select-Object -Last 3
-            echo "Synced to GitHub"
+            # Retry push on network issues
+            for ($i = 1; $i -le 3; $i++) {
+                $result = git push origin main 2>&1
+                if ($LASTEXITCODE -eq 0) { echo "Synced to main"; break }
+                echo "Push failed, retry ($i/3)..."
+                Start-Sleep -Seconds 5
+            }
         } else {
             echo "No changes to sync"
         }
