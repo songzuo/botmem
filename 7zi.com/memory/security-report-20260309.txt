@@ -1,0 +1,123 @@
+=== 安全加固 ===
+时间: Mon Mar  9 01:22:39 UTC 2026
+
+1. SSH 配置检查:
+Port 22
+PermitRootLogin yes
+PasswordAuthentication yes
+
+2. 防火墙状态:
+Status: active
+
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW       Anywhere                   # SSH
+80/tcp                     ALLOW       Anywhere                   # HTTP
+443/tcp                    ALLOW       Anywhere                  
+10086/tcp                  ALLOW       Anywhere                   # 1Panel
+8080/tcp                   ALLOW       Anywhere                   # Telegram API Proxy
+8081/tcp                   ALLOW       Anywhere                   # Telegram HTTP API Proxy
+8082/tcp                   ALLOW       Anywhere                   # Telegram HTTP API Proxy
+8443/tcp                   ALLOW       Anywhere                  
+9100/tcp                   ALLOW       Anywhere                   # Allow cluster-agent communication
+6379/tcp                   ALLOW       Anywhere                  
+11434/tcp                  ALLOW       Anywhere                  
+18789/tcp                  ALLOW       Anywhere                   # OpenClaw Gateway
+18795/tcp                  ALLOW       Anywhere                   # picoclaw gateway
+18789                      ALLOW       10.0.0.0/8                 # WireGuard cluster
+18789                      ALLOW       172.16.0.0/12              # WireGuard cluster
+18795                      ALLOW       10.0.0.0/8                
+18795                      ALLOW       172.16.0.0/12             
+19000/tcp                  ALLOW       Anywhere                  
+19001/tcp                  ALLOW       Anywhere                  
+22/tcp (v6)                ALLOW       Anywhere (v6)              # SSH
+80/tcp (v6)                ALLOW       Anywhere (v6)              # HTTP
+443/tcp (v6)               ALLOW       Anywhere (v6)             
+10086/tcp (v6)             ALLOW       Anywhere (v6)              # 1Panel
+8080/tcp (v6)              ALLOW       Anywhere (v6)              # Telegram API Proxy
+8081/tcp (v6)              ALLOW       Anywhere (v6)              # Telegram HTTP API Proxy
+8082/tcp (v6)              ALLOW       Anywhere (v6)              # Telegram HTTP API Proxy
+8443/tcp (v6)              ALLOW       Anywhere (v6)             
+9100/tcp (v6)              ALLOW       Anywhere (v6)              # Allow cluster-agent communication
+6379/tcp (v6)              ALLOW       Anywhere (v6)             
+11434/tcp (v6)             ALLOW       Anywhere (v6)             
+18789/tcp (v6)             ALLOW       Anywhere (v6)              # OpenClaw Gateway
+18795/tcp (v6)             ALLOW       Anywhere (v6)              # picoclaw gateway
+19000/tcp (v6)             ALLOW       Anywhere (v6)             
+19001/tcp (v6)             ALLOW       Anywhere (v6)             
+
+
+3. 开放端口:
+*:18795 users:(("picoclaw",pid=890,fd=6))
+*:3001 users:(("node",pid=1440411,fd=32))
+*:3002 users:(("next-server
+*:3003 users:(("next-server
+*:3010 users:(("next-server
+*:5000 users:(("next-server
+*:8081 users:(("node",pid=1174410,fd=21))
+*:9101 users:(("node_exporter",pid=886,fd=3))
+0.0.0.0:10086 users:(("1panel",pid=3294,fd=23))
+0.0.0.0:10087 users:(("node",pid=1428655,fd=34))
+0.0.0.0:10088 users:(("node",pid=1174467,fd=34))
+0.0.0.0:10089 users:(("node",pid=1174473,fd=34))
+0.0.0.0:18089 users:(("nginx",pid=1565744,fd=48),("nginx",pid=1565743,fd=48),("nginx",pid=1565742,fd=48),("nginx",pid=1565741,fd=48),("nginx",pid=1565740,fd=48),("nginx",pid=1565739,fd=48),("nginx",pid=1565738,fd=48),("nginx",pid=1565737,fd=48),("nginx",pid=1565736,fd=48))
+0.0.0.0:19000 users:(("node",pid=1174279,fd=21))
+0.0.0.0:2000 users:(("docker-proxy",pid=3063,fd=7))
+0.0.0.0:22 users:(("sshd",pid=411438,fd=3))
+0.0.0.0:3000 users:(("next-server
+0.0.0.0:443 users:(("nginx",pid=1565744,fd=46),("nginx",pid=1565743,fd=46),("nginx",pid=1565742,fd=46),("nginx",pid=1565741,fd=46),("nginx",pid=1565740,fd=46),("nginx",pid=1565739,fd=46),("nginx",pid=1565738,fd=46),("nginx",pid=1565737,fd=46),("nginx",pid=1565736,fd=46))
+0.0.0.0:5171 users:(("node",pid=1421743,fd=19))
+0.0.0.0:5172 users:(("node",pid=1421724,fd=21))
+0.0.0.0:5174 users:(("node",pid=1421725,fd=21))
+0.0.0.0:5175 users:(("node",pid=1421726,fd=19))
+0.0.0.0:5176 users:(("node",pid=1421747,fd=21))
+0.0.0.0:5177 users:(("node",pid=1421754,fd=19))
+0.0.0.0:631 users:(("cupsd",pid=2772,fd=9))
+0.0.0.0:6379 users:(("redis-server",pid=900,fd=6))
+0.0.0.0:80 users:(("nginx",pid=1565744,fd=44),("nginx",pid=1565743,fd=44),("nginx",pid=1565742,fd=44),("nginx",pid=1565741,fd=44),("nginx",pid=1565740,fd=44),("nginx",pid=1565739,fd=44),("nginx",pid=1565738,fd=44),("nginx",pid=1565737,fd=44),("nginx",pid=1565736,fd=44))
+0.0.0.0:8000 users:(("docker-proxy",pid=2976,fd=7))
+0.0.0.0:8080 users:(("nginx",pid=1565744,fd=50),("nginx",pid=1565743,fd=50),("nginx",pid=1565742,fd=50),("nginx",pid=1565741,fd=50),("nginx",pid=1565740,fd=50),("nginx",pid=1565739,fd=50),("nginx",pid=1565738,fd=50),("nginx",pid=1565737,fd=50),("nginx",pid=1565736,fd=50))
+0.0.0.0:8082 users:(("nginx",pid=1565744,fd=49),("nginx",pid=1565743,fd=49),("nginx",pid=1565742,fd=49),("nginx",pid=1565741,fd=49),("nginx",pid=1565740,fd=49),("nginx",pid=1565739,fd=49),("nginx",pid=1565738,fd=49),("nginx",pid=1565737,fd=49),("nginx",pid=1565736,fd=49))
+0.0.0.0:8317 users:(("docker-proxy",pid=3031,fd=7))
+0.0.0.0:8443 users:(("ss-server",pid=648900,fd=5))
+0.0.0.0:9000 users:(("docker-proxy",pid=3001,fd=7))
+0.0.0.0:9100 users:(("python3",pid=1684,fd=3))
+127.0.0.1:18789 users:(("openclaw-gatewa",pid=1022241,fd=22))
+127.0.0.1:18791 users:(("openclaw-gatewa",pid=1022241,fd=33))
+127.0.0.1:18792 users:(("openclaw-gatewa",pid=1022241,fd=34))
+127.0.0.1:19001 users:(("node",pid=1174279,fd=23))
+127.0.0.1:5432 users:(("postgres",pid=144336,fd=6))
+127.0.0.1:8001 users:(("python3",pid=1189,fd=3),("python3",pid=1187,fd=3),("python3",pid=860,fd=3))
+127.0.0.53%lo:53 users:(("systemd-resolve",pid=821,fd=14))
+[::1]:18789 users:(("openclaw-gatewa",pid=1022241,fd=23))
+[::1]:5432 users:(("postgres",pid=144336,fd=5))
+[::1]:6379 users:(("redis-server",pid=900,fd=7))
+[::]:2000 users:(("docker-proxy",pid=3069,fd=7))
+[::]:22 users:(("sshd",pid=411438,fd=4))
+[::]:443 users:(("nginx",pid=1565744,fd=47),("nginx",pid=1565743,fd=47),("nginx",pid=1565742,fd=47),("nginx",pid=1565741,fd=47),("nginx",pid=1565740,fd=47),("nginx",pid=1565739,fd=47),("nginx",pid=1565738,fd=47),("nginx",pid=1565737,fd=47),("nginx",pid=1565736,fd=47))
+[::]:631 users:(("cupsd",pid=2772,fd=10))
+[::]:80 users:(("nginx",pid=1565744,fd=45),("nginx",pid=1565743,fd=45),("nginx",pid=1565742,fd=45),("nginx",pid=1565741,fd=45),("nginx",pid=1565740,fd=45),("nginx",pid=1565739,fd=45),("nginx",pid=1565738,fd=45),("nginx",pid=1565737,fd=45),("nginx",pid=1565736,fd=45))
+[::]:8000 users:(("docker-proxy",pid=2983,fd=7))
+[::]:8317 users:(("docker-proxy",pid=3040,fd=7))
+[::]:9000 users:(("docker-proxy",pid=3007,fd=7))
+
+4. 失败登录尝试:
+root     ssh:notty    170.64.178.47    Mon Mar  9 01:14 - 01:14  (00:00)
+root     ssh:notty    170.64.178.47    Mon Mar  9 01:13 - 01:13  (00:00)
+root     ssh:notty    170.64.178.47    Mon Mar  9 01:12 - 01:12  (00:00)
+root     ssh:notty    170.64.178.47    Mon Mar  9 01:11 - 01:11  (00:00)
+astra    ssh:notty    134.199.150.108  Mon Mar  9 01:11 - 01:11  (00:00)
+astra    ssh:notty    134.199.150.108  Mon Mar  9 01:11 - 01:11  (00:00)
+root     ssh:notty    170.64.178.47    Mon Mar  9 01:10 - 01:10  (00:00)
+mcserver ssh:notty    34.45.60.30      Mon Mar  9 01:09 - 01:09  (00:00)
+mcserver ssh:notty    34.45.60.30      Mon Mar  9 01:09 - 01:09  (00:00)
+admin    ssh:notty    34.45.60.30      Mon Mar  9 01:09 - 01:09  (00:00)
+
+5. 安全建议:
+- 启用防火墙
+- 禁用 root SSH 登录
+- 使用密钥认证
+- 定期更新系统
+- 启用 fail2ban
+
+✅ 安全检查完成

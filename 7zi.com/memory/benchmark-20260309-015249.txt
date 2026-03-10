@@ -1,0 +1,29 @@
+=== 性能基准测试 ===
+时间: Mon Mar  9 01:52:49 UTC 2026
+
+1. 网络延迟测试:
+5 packets transmitted, 5 received, 0% packet loss, time 4006ms
+rtt min/avg/max/mdev = 2.326/2.543/3.262/0.360 ms
+
+2. 磁盘写入速度:
+104857600 bytes (105 MB, 100 MiB) copied, 0.236333 s, 444 MB/s
+
+3. 内存使用:
+               total        used        free      shared  buff/cache   available
+Mem:            7936        4189         724          12        3022        3423
+Swap:              0           0           0
+
+4. 系统负载:
+ 01:52:53 up 2 days, 21:36,  2 users,  load average: 0.85, 0.96, 0.99
+
+5. 网络连接数:
+Total: 429
+TCP:   88 (estab 23, closed 14, orphaned 0, timewait 5)
+
+Transport Total     IP        IPv6
+RAW	  1         0         1        
+UDP	  7         6         1        
+TCP	  74        55        19       
+INET	  82        61        21       
+FRAG	  0         0         0        
+
