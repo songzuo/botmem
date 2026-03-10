@@ -9,8 +9,9 @@
 
 ### Git 配置
 - **本地仓库**: C:\Users\Administrator\.openclaw-autoclaw\workspace (.git)
-- **远程仓库**: https://github.com/songzuo/botmem.git (branch: inspector)
+- **远程仓库**: https://github.com/songzuo/botmem.git (branch: **main**)
 - **同步目录**: C:\Users\Administrator\.openclaw-autoclaw\botmem-inspector
+- **目标路径**: botmem-inspector/inspector/
 - **Git路径**: D:\Git\bin\git.exe
 - **重要变更后执行同步**: 复制 workspace → botmem-inspector/inspector/ → git add/commit/push
 
@@ -18,11 +19,14 @@
 ```powershell
 $env:Path += ";D:\Git\bin;D:\Git\cmd"
 # 1. 复制变更
-Copy-Item "workspace\*" "botmem-inspector\inspector\workspace\" -Recurse -Force
+Copy-Item "workspace\IDENTITY.md" "botmem-inspector\inspector\workspace\" -Force
+Copy-Item "workspace\MEMORY.md" "botmem-inspector\inspector\workspace\" -Force
+Copy-Item "workspace\memory\YYYY-MM-DD.md" "botmem-inspector\inspector\workspace\memory\" -Force
 Copy-Item "monitor\*" "botmem-inspector\inspector\monitor\" -Recurse -Force
+Copy-Item "scripts\*" "botmem-inspector\inspector\scripts\" -Force
 # 2. 提交推送
 Set-Location botmem-inspector
-git add -A; git commit -m "..."; git push origin inspector
+git add -A; git commit -m "inspector: ..."; git push origin main
 ```
 
 ### 预防措施
