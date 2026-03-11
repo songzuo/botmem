@@ -357,7 +357,7 @@ python3 scripts/telegram-notifier.py --channel ddingtalk --message "..."
 
 ### SSH密码 (统一)
 ```
-ge2099334$ZZ
+[REDACTED]
 ```
 
 ---

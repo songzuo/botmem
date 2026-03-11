@@ -13,7 +13,7 @@
 | 7 | bot6.szspd.cn | 109.123.246.140 | Worker | Picoclaw (新部署) |
 
 ## 密码
-- 统一密码: `ge2099334$ZZ`
+- 统一密码: `[REDACTED]`
 
 ## 已配置的 LLM Provider
 
