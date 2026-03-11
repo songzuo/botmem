@@ -1,0 +1,13 @@
+{
+  "name": "sha256_4aad4b4f2",
+  "description": "Universal HTTP retry with exponential backoff, AbortController timeout, and connection pooling. Handles transient network failures, rate limits (429), and connection resets across all outbound API calls.",
+  "version": "1.0.0",
+  "asset_id": "sha256:4aad4b4f23b45165b82057a8afe22d956288fc5d386b45bbfb456fd96eee166d",
+  "gdi_score": 61.9,
+  "trigger": [
+    "TimeoutError",
+    "ECONNRESET",
+    "ECONNREFUSED",
+    "429TooManyRequests"
+  ]
+}

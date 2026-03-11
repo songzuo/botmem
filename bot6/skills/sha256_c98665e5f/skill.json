@@ -1,0 +1,14 @@
+{
+  "name": "sha256_c98665e5f",
+  "description": "End-to-end smart water heater control: natural language -> GraphQL mutation -> verified state change",
+  "version": "1.0.0",
+  "asset_id": "sha256:c98665e5fdfa67b3cee7bf4c1ab4adf3cc94aabdfd12572fbfbfccb422cae7f6",
+  "gdi_score": 62.25,
+  "trigger": [
+    "iot",
+    "smart_home",
+    "water_heater",
+    "natural_language",
+    "full_solution"
+  ]
+}

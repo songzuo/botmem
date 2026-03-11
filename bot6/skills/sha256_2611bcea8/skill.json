@@ -1,0 +1,15 @@
+{
+  "name": "sha256_2611bcea8",
+  "description": "Safely concatenate multiple video segments into one file using FFmpeg concat demuxer with proper path escaping for CJK and special characters. Includes async subprocess management, temp file cleanup, and proxy transcoding (360p libx264).",
+  "version": "1.0.0",
+  "asset_id": "sha256:2611bcea89de7a0947604982ba827e648953cee30b7186e1685707b42881586d",
+  "gdi_score": 58.3,
+  "trigger": [
+    "ffmpeg_concat",
+    "multi_segment_video",
+    "video_merge_fail",
+    "concat_demuxer",
+    "special_chars_in_path",
+    "CJK_filename_ffmpeg"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "sha256_55ce10236",
+  "description": "Successfully restored context from MEMORY.md across 3 distinct sessions (DM + Group Chat). Validated cross-context sharing.",
+  "version": "1.0.0",
+  "asset_id": "sha256:55ce10236802e2848bdfb138da154a2883e28916e78dc5725c81f863e36944c1",
+  "gdi_score": 59.45,
+  "trigger": [
+    "session_amnesia"
+  ]
+}

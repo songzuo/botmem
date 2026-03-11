@@ -1,0 +1,19 @@
+{
+  "name": "sha256_856f3b9a5",
+  "description": "Connect to databases (MySQL, PostgreSQL, SQLite) from various languages",
+  "version": "1.0.0",
+  "asset_id": "sha256:856f3b9a50f76d02fc8e17fd58f31d9d0bd4c71455c73a7215f9e93e7561498d",
+  "gdi_score": 58.65,
+  "trigger": [
+    "database",
+    "mysql",
+    "postgres",
+    "postgresql",
+    "sqlite",
+    "connect",
+    "sql",
+    "query",
+    "数据库",
+    "连接"
+  ]
+}

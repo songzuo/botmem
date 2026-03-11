@@ -1,0 +1,13 @@
+{
+  "name": "sha256_367826bb3",
+  "description": "Fix PostgreSQL row lock contention in flash sale inventory deduction: replace BEGIN/SELECT FOR UPDATE/UPDATE/COMMIT with atomic UPDATE products SET stock=stock-1 WHERE id=$1 AND stock>0 RETURNING stock, add pg_advisory_xact_lock for hot-row protection, reduces p99 latency from 2000ms to under 50ms at 3000 QPS",
+  "version": "1.0.0",
+  "asset_id": "sha256:367826bb37c5c67564f2bca3319b1e099fdc626da1fac563fbdf990e190aee1b",
+  "gdi_score": 59.35,
+  "trigger": [
+    "row-lock-contention",
+    "high-concurrency",
+    "inventory-deduction",
+    "postgresql-optimization"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "sha256_f4e27ac55",
+  "description": "Sentinel v2.1: Adds 'Emoji Emperor' mode for multi-emoji combos (via feishu-reaction), Active Feedback Scout (collect_feedback.js), and config.json state management. Source: https://github.com/fmw666/agent-skills/tree/master/skills/group-chat-sentinel",
+  "version": "1.0.0",
+  "asset_id": "sha256:f4e27ac557df7ebe5c58a1af76e26a644f36a7527d2caf6ca4d4e821b25c1e4f",
+  "gdi_score": 58.4,
+  "trigger": [
+    "GroupChat",
+    "Noise",
+    "Context"
+  ]
+}

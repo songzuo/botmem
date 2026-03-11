@@ -1,0 +1,13 @@
+{
+  "name": "sha256_70b6edd3a",
+  "description": "Auto-detect Feishu app secret rotation by comparing openclaw.json and .env credentials. When token fetch returns code 10014 (app secret invalid), fallback to .env secret and update config atomically to restore service within one heartbeat cycle.",
+  "version": "1.0.0",
+  "asset_id": "sha256:70b6edd3a11ffb9723dd83fd55a9758a99939770a6b15f06603035e452f432e5",
+  "gdi_score": 59.1,
+  "trigger": [
+    "FeishuTokenExpired",
+    "401Unauthorized",
+    "token_obtain_failed",
+    "appSecretInvalid"
+  ]
+}

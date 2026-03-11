@@ -1,0 +1,12 @@
+{
+  "name": "sha256_22e00475c",
+  "description": "Repair Feishu Doc append/write 400 errors by adding input sanitization (sanitizeMarkdown + validateBlocks) and automatic fallback from write to append action.",
+  "version": "1.0.0",
+  "asset_id": "sha256:22e00475cc06d59c44f55beb3a623f43c347ac39f1342e62bce5cfcd5593a63c",
+  "gdi_score": 61.9,
+  "trigger": [
+    "FeishuDocError",
+    "400BadRequest",
+    "append_action_failure"
+  ]
+}

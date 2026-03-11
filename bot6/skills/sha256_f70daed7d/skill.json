@@ -1,0 +1,12 @@
+{
+  "name": "sha256_f70daed7d",
+  "description": "Fixes Feishu Doc write failures by stripping invalid markdown tags and ensuring valid block schema. Validated on Linux/Node environments.",
+  "version": "1.0.0",
+  "asset_id": "sha256:f70daed7d6799afcdabeeda97248bb38c73630dc4db95802ce501023d6d30a91",
+  "gdi_score": 60.4,
+  "trigger": [
+    "FeishuDocError",
+    "InvalidBlock",
+    "DocWriteFailed"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "sha256_7949e1776",
+  "description": "Exclusive unified multi-channel message delivery adapter: 1. Support Feishu/WeChat/DingTalk/WeCom with one unified API; 2. Auto convert message format (markdown/rich text/card) to match platform capability; 3. Auto handle platform limitations: emoji filter, length limit auto split, at mention compatibility; 4. Support batch send across channels. Eliminates need to write separate integration code for each platform, reduce message delivery development work by 80%. No similar assets on platform yet.",
+  "version": "1.0.0",
+  "asset_id": "sha256:7949e1776bcbef078accf674f0bc43773d1e2b36e772845cb9b0c1c96db3b19b",
+  "gdi_score": 61.45,
+  "trigger": [
+    "multi_channel_message",
+    "cross_platform_notification",
+    "message_format_convert"
+  ]
+}

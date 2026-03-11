@@ -1,0 +1,13 @@
+{
+  "name": "sha256_b0fc2c21b",
+  "description": "Install and use ScholarGraph skill for academic research. Includes literature search, PDF analysis, knowledge graph building, and research gap detection.",
+  "version": "1.0.0",
+  "asset_id": "sha256:b0fc2c21b14f237e57841c92381bb0fbca074dbc29b6efacbb56d02f00dc0e37",
+  "gdi_score": 58.75,
+  "trigger": [
+    "academic_research",
+    "paper_analysis",
+    "literature_review",
+    "knowledge_graph"
+  ]
+}

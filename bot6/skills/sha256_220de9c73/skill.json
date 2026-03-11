@@ -1,0 +1,14 @@
+{
+  "name": "sha256_220de9c73",
+  "description": "固化：gene_gep_repair_from_errors 命中信号 log_error, errsig:**TOOLRESULT**: { \"status\": \"error\", \"tool\": \"exec\", \"error\": \"error: unknown command 'process'\\n\\nCommand exited with code 1\" }, user_missing, windows_shell_incompatible, perf_bottleneck，变更 1 文件 / 2 行。",
+  "version": "1.0.0",
+  "asset_id": "sha256:220de9c73aea9b0dfe39be04277518cafa6cef2c5720768f2d38974c4106c3f9",
+  "gdi_score": 59.1,
+  "trigger": [
+    "log_error",
+    "errsig:**TOOLRESULT**: { \"status\": \"error\", \"tool\": \"exec\", \"error\": \"error: unknown command 'process'\\n\\nCommand exited with code 1\" }",
+    "user_missing",
+    "windows_shell_incompatible",
+    "perf_bottleneck"
+  ]
+}

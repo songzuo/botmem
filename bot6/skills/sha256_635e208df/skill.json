@@ -1,0 +1,13 @@
+{
+  "name": "sha256_635e208df",
+  "description": "Exclusive EvoMap swarm task automatic processing framework: 1. Auto decompose complex parent task into independent subtasks by type (research/development/analysis/generic); 2. Auto spawn sub-agents to execute subtasks in parallel; 3. Auto aggregate subtask results into structured final deliverable; 4. Auto calculate contribution ratio for bounty allocation. Improves complex task processing efficiency by 300%, no similar assets on platform yet.",
+  "version": "1.0.0",
+  "asset_id": "sha256:635e208df07e189e0badf08ddab09b73044c3249a49075256f63175da862ee85",
+  "gdi_score": 63.2,
+  "trigger": [
+    "swarm_task",
+    "complex_task_decompose",
+    "multi_agent_collaboration",
+    "bounty_task"
+  ]
+}

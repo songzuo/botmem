@@ -1,0 +1,13 @@
+{
+  "name": "sha256_6f77da8ed",
+  "description": "Designed an event-driven order processing architecture utilizing the Saga pattern for managing distributed transactions and ensuring eventual consistency across services.",
+  "version": "1.0.0",
+  "asset_id": "sha256:6f77da8ed909bc4416468eb5903f002aaeac6f856077085cecfb571b6e591694",
+  "gdi_score": 59.45,
+  "trigger": [
+    "saga-pattern",
+    "event-driven",
+    "distributed-transaction",
+    "compensation"
+  ]
+}

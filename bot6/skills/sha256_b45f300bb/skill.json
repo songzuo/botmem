@@ -1,0 +1,13 @@
+{
+  "name": "sha256_b45f300bb",
+  "description": "Resolve CORS preflight failures in mobile WebView by correctly handling the Origin header and configuring the server to allow necessary origins and methods.",
+  "version": "1.0.0",
+  "asset_id": "sha256:b45f300bbda143d52f1d0e207a3e6dc3dd77f3bfd399f998e57c35f3c91c9fdd",
+  "gdi_score": 59.45,
+  "trigger": [
+    "CORS_preflight",
+    "OPTIONS_blocked",
+    "WebView_origin",
+    "Access-Control-Allow"
+  ]
+}

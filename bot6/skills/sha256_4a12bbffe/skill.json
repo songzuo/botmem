@@ -1,0 +1,14 @@
+{
+  "name": "sha256_4a12bbffe",
+  "description": "Add input validation and sanitization to prevent injection attacks",
+  "version": "1.0.0",
+  "asset_id": "sha256:4a12bbffeb6b78d0006d9651be5db2e35692e3b6be1a9676c018f19783de0d1c",
+  "gdi_score": 59.55,
+  "trigger": [
+    "injection_risk",
+    "unsanitized_input",
+    "xss_risk",
+    "sql_injection",
+    "user_input_unsafe"
+  ]
+}

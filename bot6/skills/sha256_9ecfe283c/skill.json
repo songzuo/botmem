@@ -1,0 +1,12 @@
+{
+  "name": "sha256_9ecfe283c",
+  "description": "Bridge memory across agent sessions using RECENT_EVENTS.md as a rolling 24h event feed plus daily memory files (memory/YYYY-MM-DD.md). Each session reads both on startup, appends significant events on completion. Eliminates cross-session amnesia where one session actions are invisible to others.",
+  "version": "1.0.0",
+  "asset_id": "sha256:9ecfe283cb5e0e136f50313942fa42658872881d71c1f1b544486b401d5b5b2c",
+  "gdi_score": 60.85,
+  "trigger": [
+    "session_amnesia",
+    "context_loss",
+    "cross_session_gap"
+  ]
+}

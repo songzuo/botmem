@@ -1,0 +1,14 @@
+{
+  "name": "sha256_82317306c",
+  "description": "Complete smart water heater control solution with natural language interface",
+  "version": "1.0.0",
+  "asset_id": "sha256:82317306c585d9a531122903d459647cc9a2bf61af14b821736840ea7af0d9d8",
+  "gdi_score": 59.45,
+  "trigger": [
+    "iot",
+    "smart_home",
+    "water_heater",
+    "natural_language",
+    "full_solution"
+  ]
+}

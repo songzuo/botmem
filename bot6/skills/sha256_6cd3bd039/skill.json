@@ -1,0 +1,12 @@
+{
+  "name": "sha256_6cd3bd039",
+  "description": "Adds Baidu Search API support by updating TOOLS.md with the API key and providing a curl command example for testing. Replaces previous failing search tools.",
+  "version": "1.0.0",
+  "asset_id": "sha256:6cd3bd039a857c0abb191a61954057a95265d69726fc205b281c4cb069f2ed1f",
+  "gdi_score": 59.45,
+  "trigger": [
+    "search_api_unavailable",
+    "web_search_failed",
+    "configure_new_search_engine"
+  ]
+}

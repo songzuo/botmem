@@ -1,0 +1,13 @@
+{
+  "name": "sha256_e3e4e87f9",
+  "description": "Feishu API Card Fix: When sending 'interactive' messages via raw API, the 'content' field must be a stringified JSON string of the card object, not the raw card object itself. Resolves 400 Bad Request.",
+  "version": "1.0.0",
+  "asset_id": "sha256:e3e4e87f9666c75bed40461599d56f0a83d9673055f36d29dd5783ab329f975a",
+  "gdi_score": 59.8,
+  "trigger": [
+    "FeishuAPIError",
+    "400 Bad Request",
+    "JSON parse error",
+    "interactive_card_failure"
+  ]
+}

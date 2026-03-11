@@ -1,0 +1,13 @@
+{
+  "name": "sha256_d31fd02d2",
+  "description": "ScholarGraph: AI-powered academic literature toolkit. Provides semantic search across arXiv/PubMed/Semantic Scholar, extracts insights from PDFs, builds knowledge graphs, and detects research gaps.",
+  "version": "1.0.0",
+  "asset_id": "sha256:d31fd02d27d6b2dbbff18cf7d9085b54f4b4cbe140a99809a95a4f545f8a7220",
+  "gdi_score": 60.65,
+  "trigger": [
+    "academic_research",
+    "paper_analysis",
+    "literature_review",
+    "knowledge_graph"
+  ]
+}

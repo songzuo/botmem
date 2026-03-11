@@ -42,15 +42,50 @@ npm run build:analyze    # 构建分析
 
 ### 内部 API 端点
 
+#### 任务管理 API
 | 端点 | 方法 | 说明 |
 |------|------|------|
 | `/api/tasks` | GET, POST | 任务列表/创建 |
 | `/api/tasks/:id` | PUT, DELETE | 任务更新/删除 |
 | `/api/tasks/:id/assign` | POST | AI 智能分配 |
-| `/api/projects` | GET, POST | 项目列表/创建 |
-| `/api/projects/:id` | GET | 项目详情 |
+
+#### 项目管理 API
+| 端点 | 方法 | 说明 |
+|------|------|------|
+| `/api/tasks` | GET, POST | 任务列表/创建 |
+
+> 注: `/api/projects` 端点尚未实现，项目数据通过 `/api/tasks` 管理
+
+#### 日志系统 API
+| 端点 | 方法 | 说明 |
+|------|------|------|
 | `/api/logs` | GET, POST | 日志列表/创建 |
-| `/api/logs/export` | GET | 导出日志 |
+
+> 注: `/api/logs/export` 端点尚未实现
+
+#### 健康检查 API
+| 端点 | 方法 | 说明 |
+|------|------|------|
+| `/api/health` | GET | 基础健康检查 |
+| `/api/health/ready` | GET | 就绪状态检查 |
+| `/api/health/live` | GET | 存活状态检查 |
+| `/api/health/detailed` | GET | 详细健康报告 |
+
+#### 知识图谱 API
+| 端点 | 方法 | 说明 |
+|------|------|------|
+| `/api/knowledge/nodes` | GET, POST | 知识节点列表/创建 |
+| `/api/knowledge/nodes/:id` | GET, PUT, DELETE | 节点操作 |
+| `/api/knowledge/edges` | GET, POST | 知识边关系 |
+| `/api/knowledge/query` | POST | 知识查询 |
+| `/api/knowledge/inference` | POST | 知识推理 |
+| `/api/knowledge/lattice` | GET | 知识晶格 |
+
+#### 系统 API
+| 端点 | 方法 | 说明 |
+|------|------|------|
+| `/api/status` | GET | 系统状态 |
+| `/api/auth` | GET, POST | 认证接口 |
 
 ### 外部服务配置
 
@@ -63,12 +98,12 @@ NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id
 
 #### Resend (邮件通知)
 ```env
-RESEND_API_KEY=re_xxx
+RESEND_API_KEY=xxx
 ```
 
 #### 告警通知
 ```env
-SLACK_WEBHOOK_URL=https://hooks.slack.com/services/xxx
+SLACK_WEBHOOK_URL=xxx
 ALERT_EMAIL_RECIPIENTS=admin@example.com
 ```
 
@@ -112,6 +147,19 @@ ALERT_EMAIL_RECIPIENTS=admin@example.com
 | About | `/about` | ✅ 完成 |
 | Contact | `/contact` | ✅ 完成 |
 | Settings | `/settings` | ✅ 完成 |
+| Knowledge Lattice | `/knowledge-lattice` | ✅ 完成 |
+
+### API 端点实现状态
+
+| API 模块 | 实现状态 | 备注 |
+|----------|----------|------|
+| Tasks API | ✅ 完整 | `/api/tasks`, `/api/tasks/:id/assign` |
+| Health API | ✅ 完整 | `/api/health/*` |
+| Knowledge API | ✅ 完整 | `/api/knowledge/*` |
+| Auth API | ✅ 完整 | `/api/auth` (带完整认证和授权) |
+| Status API | ✅ 完整 | `/api/status` |
+| Logs API | ⚠️ 部分 | `/api/logs` 已实现，缺少 `/api/logs/export` 端点 |
+| Projects API | ❌ 未实现 | `/api/projects` 目录存在但未实现，项目数据通过 Tasks API 管理 |
 
 ### 重构状态
 
