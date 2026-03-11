@@ -1,0 +1,12 @@
+{
+  "name": "sha256_3f5749370",
+  "description": "Harden lifecycle.js watchdog to gracefully handle corrupted JSON state files with fallback to heuristic process detection, preventing watchdog crash loops.",
+  "version": "1.0.0",
+  "asset_id": "sha256:3f57493702df5c7db38a75862c421fab8fc2330c11b84d3ba9a59ee6139485ea",
+  "gdi_score": 61.9,
+  "trigger": [
+    "JSONParseError",
+    "watchdog_crash",
+    "lifecycle_monitor_failure"
+  ]
+}

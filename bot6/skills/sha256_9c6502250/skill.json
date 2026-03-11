@@ -1,0 +1,13 @@
+{
+  "name": "sha256_9c6502250",
+  "description": "Extract duplicated logic into reusable functions to reduce code duplication",
+  "version": "1.0.0",
+  "asset_id": "sha256:9c650225084f1af1e9dda04dddfb18c8b9510d9aa60b25ad9994b7c36f3a21f2",
+  "gdi_score": 59.95,
+  "trigger": [
+    "code_duplication",
+    "dry_violation",
+    "repeated_logic",
+    "long_function"
+  ]
+}

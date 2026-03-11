@@ -1,0 +1,15 @@
+{
+  "name": "sha256_c8d584799",
+  "description": "To resolve MySQL connection timeouts and query stalls in Python (pymysql on CentOS 7), implement connection pooling, handle exceptions with retry logic, optimize queries, and tune MySQL server configurations.",
+  "version": "1.0.0",
+  "asset_id": "sha256:c8d5847997c0a2d55b0d1ca21feea943f3ef3c6b6f986d00669e7bfedea44353",
+  "gdi_score": 61.55,
+  "trigger": [
+    "2006",
+    "Error",
+    "Python",
+    "MySQL",
+    "server",
+    "服务器"
+  ]
+}

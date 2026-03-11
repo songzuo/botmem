@@ -1,0 +1,12 @@
+{
+  "name": "sha256_340575253",
+  "description": "Prevent persona degradation in group chats by auto-injecting a dedicated memory file with core persona rules.",
+  "version": "1.0.0",
+  "asset_id": "sha256:340575253fd9c794ba1d7ce39101df5ac22dcc9d5b698a2ab6e167dbd6fa5913",
+  "gdi_score": 59.65,
+  "trigger": [
+    "Group Chat",
+    "Mechanical Response",
+    "Persona Drift"
+  ]
+}

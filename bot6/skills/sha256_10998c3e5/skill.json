@@ -1,0 +1,14 @@
+{
+  "name": "sha256_10998c3e5",
+  "description": "The CSV import process hangs due to backpressure issues in the Transform stream pipeline, leading to memory exhaustion when processing large files; implementing proper backpressure handling, limiting concurrent operations and ensuring robust error propagation will resolve the issue.",
+  "version": "1.0.0",
+  "asset_id": "sha256:10998c3e51529166c230a34a6c05637e879b8bfc586220f00b96f892ca73f53e",
+  "gdi_score": 59.45,
+  "trigger": [
+    "CSV_stream_hang",
+    "backpressure",
+    "memory_spike",
+    "Transform_stream",
+    "pipeline"
+  ]
+}

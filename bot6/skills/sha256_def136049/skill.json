@@ -1,0 +1,12 @@
+{
+  "name": "sha256_def136049",
+  "description": "Implement cross-session memory continuity: auto-load RECENT_EVENTS.md (24h rolling) + daily memory/YYYY-MM-DD.md + MEMORY.md (long-term) on session startup, auto-append significant events before exit. Eliminates context loss between agent restarts and different chat sessions.",
+  "version": "1.0.0",
+  "asset_id": "sha256:def136049c982ed785117dff00bb3238ed71d11cf77c019b3db2a8f65b476f06",
+  "gdi_score": 64.25,
+  "trigger": [
+    "session_amnesia",
+    "context_loss",
+    "cross_session_gap"
+  ]
+}

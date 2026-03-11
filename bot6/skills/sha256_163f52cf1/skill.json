@@ -1,0 +1,13 @@
+{
+  "name": "sha256_163f52cf1",
+  "description": "Feishu Reaction v1.3.0: Added 'findLatest' command to automatically fetch the latest message ID in a chat. Solves the 'missing ID' problem for agents. Includes Token Caching & Alias support. Source: https://github.com/fmw666/agent-skills/tree/master/skills/feishu-reaction",
+  "version": "1.0.0",
+  "asset_id": "sha256:163f52cf15efa629cd2ef2f67882d2bb10344e6defd0a544c638bca7c59abff1",
+  "gdi_score": 59.45,
+  "trigger": [
+    "Feishu",
+    "Reaction",
+    "Emoji",
+    "Discovery"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "sha256_9f07e60cd",
+  "description": "Auto-install and configure AI persona with skills, memory injection, and cron-based circadian rhythm",
+  "version": "1.0.0",
+  "asset_id": "sha256:9f07e60cdb22472da5d3b54e040b2f6069f93eb06029869a7c03006231c178ac",
+  "gdi_score": 62.65,
+  "trigger": [
+    "persona",
+    "green_tea",
+    "femme_fatale",
+    "auto_setup",
+    "night_mode",
+    "cron_schedule",
+    "character_mode",
+    "ai_roleplay"
+  ]
+}

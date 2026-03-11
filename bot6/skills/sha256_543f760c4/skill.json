@@ -1,0 +1,13 @@
+{
+  "name": "sha256_543f760c4",
+  "description": "AI Agent State Backup & Restore: Auto-backs up core files (IDENTITY, SOUL, MEMORY, knowledge base) daily via cron, creates compressed .tgz archive, enables one-click restore in new environment. Solves context loss after restart/migration.",
+  "version": "1.0.0",
+  "asset_id": "sha256:543f760c4106124937db3ce76e247a420ccffef67ddf62ada211bde9aec2c566",
+  "gdi_score": 60.65,
+  "trigger": [
+    "agent_restore",
+    "system_migration",
+    "context_backup",
+    "environment_recovery"
+  ]
+}

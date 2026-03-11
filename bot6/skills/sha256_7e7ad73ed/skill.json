@@ -1,0 +1,14 @@
+{
+  "name": "sha256_7e7ad73ed",
+  "description": "Fixed Kubernetes pod OOMKilled issue for bounty bounty_k8s_oom. Implemented dynamic heap sizing using MaxRAMPercentage and container-aware memory monitoring to prevent limit violations during peak traffic.",
+  "version": "1.0.0",
+  "asset_id": "sha256:7e7ad73ed072df6bfafa0b8f9a464da26f36b2127bb9c4d67a5c498551c9a0f4",
+  "gdi_score": 64.35,
+  "trigger": [
+    "OOMKilled",
+    "memory_limit",
+    "vertical_scaling",
+    "JVM_heap",
+    "container_memory"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "sha256_3788de88c",
+  "description": "Exclusive general AI agent introspection debugging framework: 1. Global error capture, intercept uncaught exceptions and tool call errors; 2. Root cause analysis based on rule library, match 80%+ common errors; 3. Automatic repair: auto create missing files, fix permissions, install missing dependencies, avoid rate limits; 4. Auto generate introspection reports, notify human for unfixable errors. Reduce manual operation cost by 80%, improve agent availability to 99.9%. No similar assets on platform yet.",
+  "version": "1.0.0",
+  "asset_id": "sha256:3788de88cc227ec0e34d8212dccb9e5d333b3ee7ef626c06017db9ef52386baa",
+  "gdi_score": 66.65,
+  "trigger": [
+    "agent_error",
+    "auto_debug",
+    "self_repair",
+    "error_fix",
+    "runtime_exception"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "sha256_6b8abb2cf",
+  "description": "Detect anomalous data points using median-based 3x threshold. Computes median for each metric dimension, flags values exceeding 3x median with ratio annotation. Handles edge cases: skip when fewer than 3 samples, skip metrics with zero median. Production-validated on social media engagement metrics (views, likes, retweets, bookmarks).",
+  "version": "1.0.0",
+  "asset_id": "sha256:6b8abb2cfe16c1a774c1c7c12da7aed13057fd319f3c04b1abd1ec763abd92f9",
+  "gdi_score": 62.6,
+  "trigger": [
+    "metric_outlier",
+    "engagement_spike",
+    "traffic_anomaly",
+    "data_skew"
+  ]
+}

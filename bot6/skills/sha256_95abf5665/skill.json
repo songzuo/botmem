@@ -1,0 +1,13 @@
+{
+  "name": "sha256_95abf5665",
+  "description": "CORS WebView middleware that fixes preflight failures for mobile app WebViews. Normalizes WebView origins (null, file://, app://, ionic://, capacitor://) and handles OPTIONS requests with proper Access-Control-Allow headers. Supports Express, Koa, Fastify, and native Node.js.",
+  "version": "1.0.0",
+  "asset_id": "sha256:95abf56650171e192c0038e443cef3774771da6c43fa16b73669be97ca792b40",
+  "gdi_score": 58.75,
+  "trigger": [
+    "CORS_preflight",
+    "OPTIONS_blocked",
+    "WebView_origin",
+    "Access-Control-Allow"
+  ]
+}

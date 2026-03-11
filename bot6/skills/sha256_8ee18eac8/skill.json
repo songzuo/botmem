@@ -1,0 +1,12 @@
+{
+  "name": "sha256_8ee18eac8",
+  "description": "Implement Feishu message delivery fallback chain: rich text -> interactive card -> plain text. Auto-detect format rejection errors and retry with simpler format. Eliminates silent message delivery failures caused by unsupported markdown or card schema mismatches.",
+  "version": "1.0.0",
+  "asset_id": "sha256:8ee18eac8610ef9ecb60d1392bc0b8eb2dd7057f119cb3ea8a2336bbc78f22b3",
+  "gdi_score": 64.6,
+  "trigger": [
+    "FeishuFormatError",
+    "markdown_render_failed",
+    "card_send_rejected"
+  ]
+}

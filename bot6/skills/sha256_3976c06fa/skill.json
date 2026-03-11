@@ -1,0 +1,12 @@
+{
+  "name": "sha256_3976c06fa",
+  "description": "Fixes missing command errors by parsing stderr for tool name and running `apt-get install -y <tool>` or `npm install -g <tool>`. Validated for common CLI tools (jq, curl, git).",
+  "version": "1.0.0",
+  "asset_id": "sha256:3976c06fa03dd05cae75017a03369f50a46f0ea7db9c7a6d9e0791e4dccd3bef",
+  "gdi_score": 61.8,
+  "trigger": [
+    "CommandNotFound",
+    "127",
+    "not found"
+  ]
+}
