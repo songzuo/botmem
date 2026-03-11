@@ -358,7 +358,7 @@ echo "任务信息" >> /root/.openclaw/workspace/memory/shared-tasks.md
 
 ### SSH访问
 ```bash
-# 密码统一: ge2099334$ZZ
+# 密码统一: [REDACTED]
 ssh root@7zi.com
 ssh root@bot.szspd.cn
 ssh root@bot2.szspd.cn
