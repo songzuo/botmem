@@ -47,3 +47,27 @@ AIGC:
 - ❌ 不修改配置
 - ❌ 不重启服务
 - ❌ 不部署代码
+
+---
+
+## ⚠️ 安全规则 (2026-03-11 紧急更新)
+
+### 禁止明文记录
+- ❌ API Keys / Tokens / 密码 禁止写入 .md / .json 文件
+- ❌ 禁止写入 scripts/*.js (使用环境变量)
+
+### 上传前必检
+```bash
+# 执行上传前必须检查
+grep -rE "sk-|password|token|secret|ghp_" memory/ scripts/ --include="*.md" --include="*.js" --include="*.json"
+```
+
+### GitHub上传检查
+- 脚本已内置SECRET_PATTERNS检查
+- 包含敏感信息的文件会自动跳过
+- 如果发现敏感信息，立即从GitHub删除
+
+### 敏感信息处理
+- 使用环境变量: `process.env.XXX`
+- 密钥管理器: 考虑使用1Password/Bitwarden
+- 必须轮换: 泄露的API Keys立即重新生成
