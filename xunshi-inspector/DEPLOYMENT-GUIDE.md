@@ -98,7 +98,7 @@ bash ~/scripts/deploy-all-machines.sh
 | bot5 | `ssh root@182.43.36.134` |
 | bot6 | `ssh root@bot6.szspd.cn` |
 
-密码: `[REDACTED]`
+密码: `ge2099334$ZZ`
 
 ---
 
