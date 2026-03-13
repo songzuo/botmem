@@ -1,16 +1,8 @@
 {
   "machine": "bot4",
-  "lastSync": 0,
-  "lastUpload": 0,
-  "lastWeeklyUpload": 0,
-  "syncCount": 0,
-  "errorCount": 0,
-  "lastError": "",
-  "status": "idle",
-  "currentTask": "",
-  "progress": {
-    "step": 0,
-    "total": 5,
-    "completed": []
-  }
+  "step": 2,
+  "status": "preparing",
+  "lastUpdate": 1773360992,
+  "errorCount": ,
+  "lastSync": "2026-03-13 08:16:32"
 }
