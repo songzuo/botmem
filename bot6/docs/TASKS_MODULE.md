@@ -339,7 +339,7 @@ addTask({
 更新任务信息。
 
 ```typescript
-updateTask('task_123', {
+updateTask('ta[已移除]', {
   priority: 'urgent',
   description: '更新后的描述'
 });
@@ -350,7 +350,7 @@ updateTask('task_123', {
 删除任务。
 
 ```typescript
-deleteTask('task_123');
+deleteTask('ta[已移除]');
 ```
 
 #### assignTask
@@ -358,7 +358,7 @@ deleteTask('task_123');
 分配任务给 AI 成员。
 
 ```typescript
-assignTask('task_123', 'ai_executor');
+assignTask('ta[已移除]', 'ai_executor');
 // 会自动:
 // 1. 更新任务状态为 'assigned'
 // 2. 添加历史记录
@@ -370,7 +370,7 @@ assignTask('task_123', 'ai_executor');
 标记任务完成。
 
 ```typescript
-completeTask('task_123');
+completeTask('ta[已移除]');
 // 会自动:
 // 1. 更新任务状态为 'completed'
 // 2. 添加历史记录
@@ -382,7 +382,7 @@ completeTask('task_123');
 添加任务评论。
 
 ```typescript
-addComment('task_123', {
+addComment('ta[已移除]', {
   author: 'user',
   content: '请优先处理这个任务'
 });
@@ -403,7 +403,7 @@ GET /api/tasks
 {
   "tasks": [
     {
-      "id": "task_123",
+      "id": "ta[已移除]",
       "title": "任务标题",
       ...
     }
