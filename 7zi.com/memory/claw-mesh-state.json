@@ -1,8 +1,8 @@
 {
   "machine": "7zi",
-  "step": 1,
-  "status": "pulling",
-  "lastUpdate": 1773388821,
+  "step": 4,
+  "status": "healthy",
+  "lastUpdate": 1773388824,
   "errorCount": ,
-  "lastSync": "2026-03-13 08:00:21"
+  "lastSync": "2026-03-13 08:00:24"
 }
