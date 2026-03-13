@@ -1,0 +1,33 @@
+=== 系统资源分析 ===
+时间: Mon Mar  9 00:22:38 UTC 2026
+
+1. CPU 使用:
+使用率: 12.8%
+
+2. 内存使用:
+使用: 4235MB / 7936MB (53%)
+
+3. 磁盘使用:
+/dev/vda1: 55G / 88G (64%)
+/dev/vda15: 6.1M / 105M (6%)
+
+4. 网络流量:
+接收: 4451823786 bytes
+发送: 5021090621 bytes
+
+5. 进程资源:
+USER          %MEM%     0M COMMAND
+root          11.1% 884.812M next-server
+root           6.0% 476.859M next-server
+root           5.0% 404.746M openclaw-gateway
+root           2.1% 167.57M /usr/bin/dockerd
+root           1.9% 154.504M /lib/systemd/systemd-journald
+root           1.6% 133.418M node
+root           1.6% 129.27M node
+root           1.5% 124.586M node
+root           1.5% 123.332M /usr/bin/node
+
+6. 系统负载:
+负载:  0.88, 0.98, 0.99
+
+✅ 分析完成
