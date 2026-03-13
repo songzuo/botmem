@@ -1,0 +1,26 @@
+{
+  "lastChecks": {
+    "cluster-health": 1741904280
+  },
+  "lastClusterHealth": {
+    "time": "2026-03-13T20:58:00Z",
+    "ssh": {
+      "7zi.com": "unreachable - SSHPASS not set",
+      "bot.szspd.cn": "unreachable - SSHPASS not set",
+      "bot2.szspd.cn": "unreachable - SSHPASS not set",
+      "bot3.szspd.cn": "unreachable - SSHPASS not set",
+      "bot4.szspd.cn": "unreachable - SSHPASS not set",
+      "bot5.szspd.cn": "unreachable - SSHPASS not set",
+      "bot6.szspd.cn": "unreachable - SSHPASS not set"
+    },
+    "local": {
+      "disk": "72%",
+      "memory_available": "2.0G"
+    },
+    "processes": {
+      "openclaw-node": "running",
+      "gateway": "running"
+    },
+    "conclusion": "Local healthy, SSH unreachable - SSHPASS not set (known issue)"
+  }
+}
