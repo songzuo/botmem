@@ -1,7 +1,38 @@
 # MEMORY.md - 长期记忆
 
 **创建时间**: 2026-03-08  
-**最后更新**: 2026-03-10 16:31 (Europe/Berlin)
+**最后更新**: 2026-03-15 01:45 (Europe/Berlin)
+
+---
+
+## 🔴 重要：会话启动流程
+
+每个会话开始时必须执行：
+1. 读取 `SOUL.md` — 了解自己是谁
+2. 读取 `USER.md` — 了解用户信息
+3. 读取 `memory/2026-MM-DD.md` 和 `memory/2026-MM-DD.md` (今天和昨天)
+4. **主会话中**：读取 `MEMORY.md`
+
+这是解决"没有持续记忆"问题的关键！
+
+---
+
+## 2026-03-14 重要记录
+
+### GITHUB_TOKEN 配置
+- 在 `~/.openclaw/openclaw.json` 中添加了 `env.vars.GITHUB_TOKEN`
+- 重启 Gateway 使配置生效
+- Git 推送正常工作
+
+### 技能分析结论
+- skill-vetter: 不需要（安全审查）
+- tavily-search: 不需要（已有 web_search）
+- playwright-browser: 不需要（已有 browser 工具）
+- code-interpreter: 不需要（AI 模型自带）
+
+### 测试修复
+- 修复了 tasks API route 中 CSRF 中间件重复声明问题
+- 修复了测试 mock 配置
 
 ---
 
@@ -29,6 +60,35 @@
 ---
 
 ## 重要里程碑
+
+### 2026-03-13 (今天) - 通知系统 API 完整实现
+
+**今日完成**:
+1. **Notifications API 完整实现**
+   - `GET /api/notifications` - 获取通知列表（支持 userId/type/read 过滤）
+   - `POST /api/notifications` - 创建通知（需认证+CSRF）
+   - `PUT /api/notifications` - 标记已读/全部已读
+   - `DELETE /api/notifications` - 删除通知/清空全部
+
+2. **测试完善**
+   - 创建 14 个测试用例
+   - 测试文件总数：105+ 个
+
+3. **前端通知中心**
+   - 创建 `/notifications` 页面
+   - 支持 CRUD 操作、筛选、标记已读
+
+4. **代码质量改进**
+   - TypeScript 错误：154→125
+   - ESLint：0 错误
+   - Git 历史清理（移除 secret）
+
+**文档更新**:
+- 更新 API_DOCS.md - 添加 Notifications API 文档
+- 更新 README.md - 添加 /api/notifications 端点
+- 更新 CHANGELOG.md - 记录新功能
+
+---
 
 ### 2026-03-10 (今天) - API 客户端与监控优化
 
@@ -179,17 +239,50 @@
 
 ### 任务管理
 - `GET/POST /api/tasks` - 任务列表/创建
-- `PUT/DELETE /api/tasks/:id` - 任务更新/删除
+- `PUT /api/tasks` - 任务更新
+- `GET /api/tasks/:id` - 获取任务详情
 - `POST /api/tasks/:id/assign` - AI 智能分配
 
-### 项目展示
-- `GET /api/projects` - 项目列表
-- `GET /api/projects/:id` - 项目详情
+### 项目管理
+- `GET/POST /api/projects` - 项目列表/创建
+- `PUT/DELETE /api/projects/:id` - 项目更新/删除
+- `GET /api/projects/:id/tasks` - 项目相关任务
+
+### 知识图谱
+- `GET/POST /api/knowledge/nodes` - 知识节点列表/创建
+- `GET/PUT/DELETE /api/knowledge/nodes/:id` - 节点操作
+- `GET/POST /api/knowledge/edges` - 知识边列表/创建
+- `POST /api/knowledge/query` - 知识查询
+- `POST /api/knowledge/inference` - 知识推理
+- `GET /api/knowledge/lattice` - 知识晶格
+
+### 通知系统
+- `GET /api/notifications` - 通知列表（支持 userId/type/read 过滤）
+- `POST /api/notifications` - 创建通知
+- `PUT /api/notifications` - 标记已读/全部已读
+- `DELETE /api/notifications` - 删除通知/清空全部
+
+### 健康检查
+- `GET /api/health` - 基础健康检查
+- `GET /api/health/ready` - 就绪状态
+- `GET /api/health/live` - 存活状态
+- `GET /api/health/detailed` - 详细健康报告
 
 ### 日志系统
 - `GET /api/logs` - 日志列表
 - `POST /api/logs` - 创建日志
-- `GET /api/logs/export` - 导出日志
+- `DELETE /api/logs` - 清理旧日志
+- `GET /api/logs/export` - 导出日志 (JSON/CSV)
+
+### 认证系统
+- `POST /api/auth/login` - 用户登录
+- `POST /api/auth/logout` - 用户登出
+- `POST /api/auth/refresh` - 刷新令牌
+- `GET /api/auth/me` - 获取当前用户
+- `GET /api/auth?action=csrf` - 获取 CSRF Token
+
+### 系统状态
+- `GET /api/status` - 系统状态
 
 ---
 
@@ -230,10 +323,10 @@ NEXT_PUBLIC_EMAILJS_SERVICE_ID=
 NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=
 
 # Resend
-RESEND_API_KEY=
+RESEND_API_KEY=xxx
 
 # 告警
-SLACK_WEBHOOK_URL=
+SLACK_WEBHOOK_URL=xxx
 ALERT_EMAIL_RECIPIENTS=
 ```
 
@@ -244,13 +337,15 @@ ALERT_EMAIL_RECIPIENTS=
 | 优先级 | 项目 | 状态 |
 |--------|------|------|
 | P0 | Sentry 集成 | ✅ 已移除，使用自定义系统 |
-| P1 | UserSettingsPage 重构 | ✅ 已完成 |
-| P1 | Dashboard 重构 | ✅ 已完成 |
-| P1 | AboutContent 重构 | ✅ 已完成 |
-| P1 | eslint v10 升级 | ✅ 已完成 |
+| P1 | UserSettingsPage 重构 | ✅ 已完成 (713→160 行) |
+| P1 | Dashboard 重构 | ✅ 已完成 (466 行) |
+| P1 | AboutContent 重构 | ✅ 已完成 (584 行) |
+| P1 | eslint v9/v10 升级 | ✅ 已完成 (v9.39.4) |
 | P1 | 测试覆盖率提升 | 🔄 进行中 (目标 80%) |
-| P2 | console 清理 | 🔄 进行中 |
+| P1 | Knowledge API 测试 | ✅ 已完成 |
+| P1 | Console 清理 | ✅ 已完成 |
 | P2 | any 类型减少 | 🔄 进行中 |
+| P2 | 类型安全提升 | ✅ 已完成 (29 个类型错误修复) |
 
 ---
 
@@ -258,17 +353,54 @@ ALERT_EMAIL_RECIPIENTS=
 
 ### 高优先级
 - [ ] 测试覆盖率提升至 80%
-- [ ] 修复 TaskCard 测试失败问题
 - [ ] E2E 测试完善
+- [ ] Gitea Actions Secrets 配置
 
 ### 中优先级
 - [ ] 多模态 AI 支持
 - [ ] 语音会议系统
 - [ ] 移动端适配
+- [ ] Claw-Mesh 协作系统优化
 
 ### 低优先级
 - [ ] 多语言扩展
 - [ ] 第三方应用集成
+
+---
+
+## 今日总结 (2026-03-13) - 通知系统 API 完整实现
+
+**完成任务**: 4+ 个  
+**工作时长**: ~2 小时  
+**代码改进**: TypeScript 错误 154→125  
+
+### 📊 完成统计
+
+| 类别 | 数量 | 详情 |
+|------|------|------|
+| API 端点 | 4 个 | Notifications API 完整 CRUD |
+| 测试用例 | 14 个 | Notifications API 测试 |
+| 前端页面 | 1 个 | /notifications 通知中心 |
+| 文档更新 | 4 个 | API_DOCS.md, README.md, CHANGELOG.md, MEMORY.md |
+
+### 🏆 关键成果
+
+1. **Notifications API 完整实现** - GET/POST/PUT/DELETE 全部完成
+2. **测试完善** - 14 个测试用例全部通过
+3. **前端通知中心** - 支持 CRUD、筛选、标记已读
+4. **代码质量** - ESLint 0 错误，TypeScript 125 个错误（持续改进中）
+
+### 📈 质量指标
+
+- ✅ ESLint: 0 错误
+- ✅ 测试: 105+ 个测试文件
+- ✅ API: 所有端点正常运行
+
+### 🎯 明日计划
+
+1. 继续 TypeScript 类型修复
+2. 完善前端通知中心 UI
+3. 准备新功能开发
 
 ---
 
