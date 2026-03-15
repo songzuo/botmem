@@ -1,26 +1,19 @@
 {
   "lastChecks": {
-    "cluster-health": 1741904280
+    "ssh_nodes": 1741972500,
+    "health": 1741972500
   },
-  "lastClusterHealth": {
-    "time": "2026-03-13T20:58:00Z",
-    "ssh": {
-      "7zi.com": "unreachable - SSHPASS not set",
-      "bot.szspd.cn": "unreachable - SSHPASS not set",
-      "bot2.szspd.cn": "unreachable - SSHPASS not set",
-      "bot3.szspd.cn": "unreachable - SSHPASS not set",
-      "bot4.szspd.cn": "unreachable - SSHPASS not set",
-      "bot5.szspd.cn": "unreachable - SSHPASS not set",
-      "bot6.szspd.cn": "unreachable - SSHPASS not set"
+  "lastHealthCheck": {
+    "timestamp": 1741972500,
+    "nodes": {
+      "bot.szspd.cn": {"picoclaw": 2, "mem": "1.8G/1.8G used", "disk": "23%"},
+      "bot2.szspd.cn": {"picoclaw": 1, "mem": "593M/1.8G", "disk": "55%"},
+      "bot3.szspd.cn": {"picoclaw": 1, "mem": "1.7G/3.6G", "disk": "72%"},
+      "bot4.szspd.cn": {"picoclaw": 1, "mem": "1.2G/1.9G", "disk": "67%"},
+      "bot5.szspd.cn": {"picoclaw": 1, "mem": "842M/1.9G", "disk": "51%"},
+      "7zi.com": {"picoclaw": 1, "mem": "3.8G/7.8G", "disk": "70%"}
     },
-    "local": {
-      "disk": "72%",
-      "memory_available": "2.0G"
-    },
-    "processes": {
-      "openclaw-node": "running",
-      "gateway": "running"
-    },
-    "conclusion": "Local healthy, SSH unreachable - SSHPASS not set (known issue)"
+    "status": "healthy",
+    "note": "bot.szspd.cn has 2 picoclaw processes"
   }
 }
