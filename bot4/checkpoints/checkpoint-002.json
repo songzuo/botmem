@@ -1,0 +1,24 @@
+{
+  "checkpointId": "checkpoint-002",
+  "taskId": "task-20260315-085434",
+  "step": 2,
+  "timestamp": "2026-03-15T08:54:35+08:00",
+  "state": {
+    "progress": {
+      "total": 3,
+      "completed": 1,
+      "current": 2,
+      "percentage": 33
+    },
+    "completed_steps": [
+      {
+        "id": 1,
+        "name": "步骤1",
+        "status": "completed",
+        "timestamp": "2026-03-15T08:54:35+08:00"
+      }
+    ],
+    "context": {}
+  },
+  "resumeCommand": "task-manager.sh resume --from-step 2"
+}

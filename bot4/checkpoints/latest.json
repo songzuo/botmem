@@ -1,0 +1,54 @@
+{
+  "checkpointId": "checkpoint-006",
+  "taskId": "task-20260315-093807",
+  "step": 6,
+  "timestamp": "2026-03-15T09:38:08+08:00",
+  "state": {
+    "progress": {
+      "total": 9,
+      "completed": 6,
+      "current": 6,
+      "percentage": 66
+    },
+    "completed_steps": [
+      {
+        "id": 1,
+        "name": "克隆源代码",
+        "status": "completed",
+        "timestamp": "2026-03-15T09:38:08+08:00"
+      },
+      {
+        "id": 2,
+        "name": "安装依赖",
+        "status": "completed",
+        "timestamp": "2026-03-15T09:38:08+08:00"
+      },
+      {
+        "id": 3,
+        "name": "添加中国模型配置",
+        "status": "completed",
+        "timestamp": "2026-03-15T09:38:08+08:00"
+      },
+      {
+        "id": 4,
+        "name": "创建中国特色组件",
+        "status": "completed",
+        "timestamp": "2026-03-15T09:38:08+08:00"
+      },
+      {
+        "id": 5,
+        "name": "提交代码到 Git",
+        "status": "completed",
+        "timestamp": "2026-03-15T09:38:08+08:00"
+      },
+      {
+        "id": 6,
+        "name": "推送到 GitHub",
+        "status": "completed",
+        "timestamp": "2026-03-15T09:38:08+08:00"
+      }
+    ],
+    "context": {}
+  },
+  "resumeCommand": "task-manager.sh resume --from-step 6"
+}

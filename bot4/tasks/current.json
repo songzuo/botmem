@@ -1,0 +1,86 @@
+{
+  "taskId": "task-20260315-093807",
+  "name": "Cherry Studio 中国版完整部署",
+  "status": "completed",
+  "priority": "high",
+  "created": "2026-03-15T09:38:07+08:00",
+  "updated": "2026-03-15T09:38:38+08:00",
+  "progress": {
+    "total": 9,
+    "completed": 9,
+    "current": 9,
+    "percentage": 100
+  },
+  "steps": [
+    {
+      "id": 1,
+      "name": "克隆源代码",
+      "status": "completed",
+      "timestamp": "2026-03-15T09:38:08+08:00"
+    },
+    {
+      "id": 2,
+      "name": "安装依赖",
+      "status": "completed",
+      "timestamp": "2026-03-15T09:38:08+08:00"
+    },
+    {
+      "id": 3,
+      "name": "添加中国模型配置",
+      "status": "completed",
+      "timestamp": "2026-03-15T09:38:08+08:00"
+    },
+    {
+      "id": 4,
+      "name": "创建中国特色组件",
+      "status": "completed",
+      "timestamp": "2026-03-15T09:38:08+08:00"
+    },
+    {
+      "id": 5,
+      "name": "提交代码到 Git",
+      "status": "completed",
+      "timestamp": "2026-03-15T09:38:08+08:00"
+    },
+    {
+      "id": 6,
+      "name": "推送到 GitHub",
+      "status": "completed",
+      "timestamp": "2026-03-15T09:38:08+08:00"
+    },
+    {
+      "id": 7,
+      "name": "构建项目",
+      "status": "completed",
+      "timestamp": "2026-03-15T09:38:38+08:00"
+    },
+    {
+      "id": 8,
+      "name": "部署到 7zi.com",
+      "status": "completed",
+      "timestamp": "2026-03-15T09:38:38+08:00"
+    },
+    {
+      "id": 9,
+      "name": "测试验证",
+      "status": "completed",
+      "timestamp": "2026-03-15T09:38:38+08:00"
+    }
+  ],
+  "errors": [
+    {
+      "step": 7,
+      "timestamp": "2026-03-15T09:38:08+08:00",
+      "type": "node_version_mismatch",
+      "message": "需要 Node.js >=24.11.1，当前 v22.22.0",
+      "resolved": false
+    }
+  ],
+  "context": {},
+  "resumeStrategy": {},
+  "currentStep": {
+    "id": 7,
+    "status": "in_progress",
+    "startedAt": "2026-03-15T09:38:08+08:00"
+  }
+}
