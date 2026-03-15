@@ -80,11 +80,11 @@ interface AgentIdentity {
  */
 enum MessageType {
   // 任务相关
-  TASK_REQUEST = 'ta[已移除]',       // 任务请求
-  TASK_ASSIGN = 'ta[已移除]',         // 任务分配
-  TASK_UPDATE = 'ta[已移除]',         // 任务更新
-  TASK_COMPLETE = 'ta[已移除]',     // 任务完成
-  TASK_FAILURE = 'ta[已移除]',       // 任务失败
+  TASK_REQUEST = 'task_request',       // 任务请求
+  TASK_ASSIGN = 'task_assign',         // 任务分配
+  TASK_UPDATE = 'task_update',         // 任务更新
+  TASK_COMPLETE = 'task_complete',     // 任务完成
+  TASK_FAILURE = 'task_failure',       // 任务失败
   
   // 协作相关
   COLLABORATION_INVITE = 'collab_invite',  // 协作邀请
@@ -1174,7 +1174,7 @@ class KnowledgePrecipitator {
       const node = this.createKnowledgeNode({
         type: KnowledgeType.EXPERIENCE,
         content: learning,
-        source: 'ta[已移除]',
+        source: 'task_completion',
         relatedTask: task.id,
       });
       nodes.push(node);
@@ -1185,7 +1185,7 @@ class KnowledgePrecipitator {
       const node = this.createKnowledgeNode({
         type: KnowledgeType.SKILL,
         content: `在任务 ${task.title} 中应用了 ${skill} 技能`,
-        source: 'ta[已移除]',
+        source: 'task_completion',
         relatedTask: task.id,
       });
       nodes.push(node);
@@ -1198,7 +1198,7 @@ class KnowledgePrecipitator {
         const node = this.createKnowledgeNode({
           type: KnowledgeType.RULE,
           content: rule,
-          source: 'ta[已移除]',
+          source: 'task_completion',
           relatedTask: task.id,
         });
         nodes.push(node);

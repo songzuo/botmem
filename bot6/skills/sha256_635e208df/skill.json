@@ -6,7 +6,7 @@
   "gdi_score": 63.2,
   "trigger": [
     "swarm_task",
-    "complex_ta[已移除]",
+    "complex_task_decompose",
     "multi_agent_collaboration",
     "bounty_task"
   ]
