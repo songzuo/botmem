@@ -1,0 +1,20 @@
+{
+  "lastChecks": {
+    "ssh_nodes": 1742013600,
+    "health": 1742013600
+  },
+  "lastHealthCheck": {
+    "timestamp": 1742013600,
+    "nodes": {
+      "7zi.com": {"picoclaw": "active", "ssh": "ok"},
+      "bot.szspd.cn": {"picoclaw": "active", "ssh": "ok"},
+      "bot2.szspd.cn": {"picoclaw": "active", "ssh": "ok"},
+      "bot3.szspd.cn": {"picoclaw": "active", "ssh": "ok"},
+      "bot4.szspd.cn": {"picoclaw": "active", "ssh": "ok"},
+      "bot5.szspd.cn": {"picoclaw": "active", "ssh": "ok"}
+    },
+    "checked_at": "2026-03-15T08:02:00Z",
+    "status": "healthy",
+    "note": "SSH and picoclaw verified on all 6 nodes"
+  }
+}
