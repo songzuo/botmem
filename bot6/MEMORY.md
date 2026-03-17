@@ -1,7 +1,7 @@
 # MEMORY.md - 长期记忆
 
 **创建时间**: 2026-03-08  
-**最后更新**: 2026-03-10 16:31 (Europe/Berlin)
+**最后更新**: 2026-03-17 03:10 (Europe/Berlin)
 
 ---
 
@@ -125,6 +125,69 @@
 - OpenClaw 技能系统集成
 - 国际化 (i18n) 支持
 - 响应式设计优化
+
+---
+
+### 2026-03-16 - 系统健康检查与问题发现
+
+**7zi 项目状态**:
+- 位置: `/root/7zi-project/7zi-frontend`
+- TypeScript 错误: ~319 个
+- 测试状态: 99 failed / 22 passed
+- 服务器: 运行中 ✅
+
+**测试失败原因**:
+- `response.json is not a function` - mock 配置问题
+- `Cannot read properties of undefined (reading 'ok')` - mock 返回值问题
+
+**系统健康报告 (bot6)**:
+- 系统运行时间: 6 天 23 小时
+- CPU 负载: 1.78/1.27/1.18 (偏高)
+- 内存使用: 2.0GB / 7.8GB (26%) ✅
+- 磁盘使用: 33GB / 145GB (23%) ✅
+
+**发现的关键问题**:
+1. **OpenClaw 服务冲突** (严重) - systemd 与独立 gateway 端口冲突，重启计数 >5062 次
+2. **Claw-Mesh 同步失败** (中等) - git rebase 操作卡住
+
+**活跃 Cron 任务**:
+| 任务 | 频率 | 状态 |
+|------|------|------|
+| bot6_ta[已移除].sh | */15 min | ✅ |
+| self_think.py --auto | */15 min | ✅ |
+| claw-mesh-watchdog.sh | */5 min | ✅ |
+| session-guardian.js | 每小时 | ✅ |
+| claw-mesh-sync.sh | */4 min | ❌ 失败 |
+
+---
+
+### 2026-03-11 - 持续工作调度与最佳实践
+
+**活跃子代理 (5个)**:
+1. Settings 页面重构
+2. 测试覆盖率提升
+3. Console 语句清理
+4. 类型安全优化
+5. Knowledge 页面拆分
+
+**从其他机器学习的最佳实践 (bot4)**:
+- **永久记忆** - 记录重要账号、API 密钥、个人信息
+- **方法论检查表** - METHODOLOGY-CHECKLIST.md 记录教训
+- **sessions.json** - 用于断点续传
+
+**核心教训**:
+- 先调查，后操作
+- 继承原有环境，增量修改
+- 验证结果
+- 保留回滚方案
+
+**已配置的定时任务**:
+| 任务 | 频率 | 状态 |
+|------|------|------|
+| 推送记忆文件 | 每 4 小时 | ✅ |
+| 推送工作区文件 | 每天 8:00 | ✅ |
+| 同步到 botmem | 每 4 小时 | ✅ |
+| 同步常规文件到 botmem | 每天 8:00 | ✅ |
 
 ---
 
@@ -257,18 +320,38 @@ ALERT_EMAIL_RECIPIENTS=
 ## 待办事项
 
 ### 高优先级
-- [ ] 测试覆盖率提升至 80%
-- [ ] 修复 TaskCard 测试失败问题
-- [ ] E2E 测试完善
+- [ ] 解决 OpenClaw 服务冲突 (systemd vs gateway)
+- [ ] 修复 Claw-Mesh 同步 (git rebase 卡住)
+- [ ] 修复 7zi 项目 TypeScript 错误 (~319 个)
+- [ ] 修复测试失败问题 (99 failed)
 
 ### 中优先级
+- [ ] 清理 console 语句
+- [ ] 减少 any 类型
 - [ ] 多模态 AI 支持
-- [ ] 语音会议系统
 - [ ] 移动端适配
 
 ### 低优先级
 - [ ] 多语言扩展
 - [ ] 第三方应用集成
+
+---
+
+## 系统配置
+
+### bot6 机器
+- **位置**: 本机
+- **OpenClaw**: 独立 gateway 运行 (非 systemd)
+- **Claw-Mesh**: 同步到 botmem 仓库
+- **Prometheus**: 监控运行中
+- **Docker**: 运行中
+
+### 相关仓库
+| 仓库 | 用途 | 状态 |
+|------|------|------|
+| botmem | 12 机器同步 | ⚠️ 同步失败 |
+| 7zi-frontend | 7zi 项目 | TypeScript 错误 |
+| docs | 主网站 | 服务器离线 |
 
 ---
 
