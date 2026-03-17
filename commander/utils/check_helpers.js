@@ -1,9 +1,9 @@
 /**
  * check_helpers.js - SSH 远程检查共享工具模块
- * 
+ *
  * 提供统一的 SSH 连接、命令执行、端口检查、进程检查等功能
- * 
- * @version 2.0.0
+ *
+ * @version 2.1.0
  * @author Commander Team
  */
 
@@ -48,13 +48,13 @@ function validateConfig(config) {
 function createConnection(config = {}) {
   const conn = new Client();
   const finalConfig = { ...defaultServerConfig, ...config };
-  
+
   try {
     validateConfig(finalConfig);
   } catch (err) {
     throw new Error(`Invalid SSH config: ${err.message}`);
   }
-  
+
   return { conn, config: finalConfig };
 }
 
@@ -69,34 +69,35 @@ function createConnection(config = {}) {
  */
 function execCommand(conn, command, options = {}) {
   const { timeout = DEFAULT_CMD_TIMEOUT, mergeStderr = true } = options;
-  
+
   return new Promise((resolve, reject) => {
     let timer = null;
     let stdout = '';
     let stderr = '';
-    
+
     conn.exec(command, (err, stream) => {
       if (err) {
         reject(new Error(`Command exec failed: ${err.message}`));
         return;
       }
-      
-      // 设置超时
+
+      // 设置超时定时器
       if (timeout > 0) {
         timer = setTimeout(() => {
           stream.destroy();
           reject(new Error(`Command timeout after ${timeout}ms: ${command}`));
         }, timeout);
       }
-      
+
+      // 收集标准输出
       stream.on('data', (data) => {
         stdout += data.toString();
       }).on('close', (code) => {
         if (timer) clearTimeout(timer);
-        resolve({ 
-          stdout, 
+        resolve({
+          stdout,
           stderr: mergeStderr ? stdout : stderr,
-          exitCode: code 
+          exitCode: code
         });
       }).stderr.on('data', (data) => {
         stderr += data.toString();
@@ -122,6 +123,23 @@ function getOutputString(result) {
 }
 
 /**
+ * 安全解析 JSON 输出
+ * @param {Object|string} result - execCommand 的返回值或字符串
+ * @param {*} fallback - 解析失败时返回的默认值
+ * @returns {*} 解析后的对象或默认值
+ */
+function safeParseJSON(result, fallback = []) {
+  try {
+    const output = getOutputString(result);
+    if (!output.trim()) return fallback;
+    return JSON.parse(output);
+  } catch (e) {
+    console.error('JSON parse error:', e.message);
+    return fallback;
+  }
+}
+
+/**
  * 执行多个 SSH 命令（顺序执行）
  * @param {Client} conn - SSH 连接实例
  * @param {string[]} commands - 命令数组
@@ -134,24 +152,24 @@ function getOutputString(result) {
 async function execCommands(conn, commands, options = {}) {
   const { onProgress, onCommandStart, stopOnError = false } = options;
   const results = [];
-  
+
   for (let i = 0; i < commands.length; i++) {
     if (onCommandStart) {
       onCommandStart(i, commands[i]);
     }
-    
+
     const result = await execCommand(conn, commands[i]);
     results.push(result);
-    
+
     if (onProgress) {
       onProgress(i, result);
     }
-    
+
     if (stopOnError && result.exitCode !== 0) {
       throw new Error(`Command failed at index ${i}: ${commands[i]}`);
     }
   }
-  
+
   return results;
 }
 
@@ -177,13 +195,13 @@ function escapeGrepPattern(patterns) {
 function checkPorts(conn, ports, options = {}) {
   const { useSs = true, protocol = 'tcp' } = options;
   const portPattern = escapeGrepPattern(Array.isArray(ports) ? ports : [ports]);
-  
+
   const protocolFilter = protocol === 'all' ? '' : (protocol === 'udp' ? '-u' : '-t');
-  
-  const command = useSs 
+
+  const command = useSs
     ? `ss -${protocolFilter}lnp 2>/dev/null | grep -E "${portPattern}"`
     : `netstat -${protocolFilter}lnp 2>/dev/null | grep -E "${portPattern}"`;
-  
+
   return execCommand(conn, command);
 }
 
@@ -205,22 +223,11 @@ function checkProcess(conn, pattern, options = {}) {
 /**
  * 检查 PM2 进程列表
  * @param {Client} conn - SSH 连接实例
- * @param {Object} options - 可选配置
- * @param {boolean} options.full - 是否获取完整信息（默认 false）
  * @returns {Promise<Array>} PM2 进程数组
  */
-async function checkPM2(conn, options = {}) {
-  const { full = false } = options;
-  const command = full ? 'pm2 jlist' : 'pm2 jlist';
-  
-  try {
-    const result = await execCommand(conn, command);
-    const output = getOutputString(result);
-    return JSON.parse(output);
-  } catch (e) {
-    console.error('PM2 JSON parse error:', e.message);
-    return [];
-  }
+async function checkPM2(conn) {
+  const result = await execCommand(conn, 'pm2 jlist');
+  return safeParseJSON(result, []);
 }
 
 /**
@@ -233,11 +240,42 @@ async function checkService(conn, serviceName) {
   const escapedName = escapeGrepPattern(serviceName);
   const result = await execCommand(conn, `systemctl is-active ${escapedName} 2>&1`);
   const status = getOutputString(result).trim();
-  
+
   return {
     running: status === 'active',
     status
   };
+}
+
+/**
+ * 通用简单检查函数（用于单命令检查）
+ * @param {Client} conn - SSH 连接实例
+ * @param {string} command - 要执行的命令
+ * @param {Object} options - 可选配置（传递给 execCommand）
+ * @returns {Promise<{stdout: string, stderr: string, exitCode: number|null}>} 命令执行结果
+ */
+async function simpleCheck(conn, command, options = {}) {
+  return execCommand(conn, command, options);
+}
+
+/**
+ * 检查磁盘使用情况
+ * @param {Client} conn - SSH 连接实例
+ * @param {string} path - 要检查的路径（默认 '/'）
+ * @returns {Promise<{stdout: string, stderr: string, exitCode: number|null}>} 磁盘使用信息
+ */
+async function checkDiskUsage(conn, path = '/') {
+  const escapedPath = escapeGrepPattern(path);
+  return simpleCheck(conn, `df -h ${escapedPath} 2>/dev/null | tail -n 1`);
+}
+
+/**
+ * 获取系统负载
+ * @param {Client} conn - SSH 连接实例
+ * @returns {Promise<{stdout: string, stderr: string, exitCode: number|null}>} 系统负载信息
+ */
+async function checkLoad(conn) {
+  return simpleCheck(conn, 'uptime');
 }
 
 /**
@@ -254,16 +292,20 @@ async function checkService(conn, serviceName) {
  */
 function quickCheck(commands, options = {}) {
   return new Promise((resolve, reject) => {
-    const { 
-      config = {}, 
-      onSuccess, 
+    const {
+      config = {},
+      onSuccess,
       onError,
       closeOnSuccess = false,
       closeOnError = true
     } = options;
-    
+
     const { conn, config: finalConfig } = createConnection(config);
-    
+
+    /**
+     * 统一错误处理函数
+     * @param {Error} err - 错误对象
+     */
     const handleError = (err) => {
       if (onError) {
         onError(err);
@@ -273,16 +315,19 @@ function quickCheck(commands, options = {}) {
       if (closeOnError) conn.end();
       reject(err);
     };
-    
+
     conn.on('ready', async () => {
       try {
-        if (Array.isArray(commands)) {
-          const outputs = await execCommands(conn, commands);
-          if (onSuccess) await onSuccess(outputs, conn);
-        } else {
-          const output = await execCommand(conn, commands);
-          if (onSuccess) await onSuccess(output, conn);
-        }
+        // 根据命令类型执行
+        const isArray = Array.isArray(commands);
+        const result = isArray
+          ? await execCommands(conn, commands)
+          : await execCommand(conn, commands);
+
+        // 调用成功回调
+        if (onSuccess) await onSuccess(result, conn);
+
+        // 关闭连接
         if (closeOnSuccess) conn.end();
         resolve();
       } catch (err) {
@@ -297,30 +342,44 @@ function quickCheck(commands, options = {}) {
 /**
  * 链式命令执行器（增强版）
  * 用于需要按顺序执行多个命令并分别处理的场景
- * 
+ *
  * 用法:
  *   await chain(conn)
  *     .exec('echo hello', output => console.log('Output:', output.stdout))
  *     .exec('echo world', output => console.log('Output:', output.stdout))
  *     .end(() => conn.end())
- * 
+ *
  * @param {Client} conn - SSH 连接实例
  * @returns {Object} 链式执行器 API
  */
 function chain(conn) {
   const tasks = [];
-  
+
   const api = {
+    /**
+     * 添加一个命令到执行队列
+     * @param {string} command - 要执行的命令
+     * @param {Function} handler - 结果处理函数 (output, result)
+     * @returns {Object} 链式 API
+     */
     exec: (command, handler) => {
       tasks.push({ command, handler });
       return api;
     },
+
     // 兼容旧版本的 then 方法
     then: (command, handler) => {
       return api.exec(command, handler);
     },
+
+    /**
+     * 执行所有命令队列
+     * @param {Function} finalHandler - 所有命令执行完成后的回调
+     * @returns {Promise<{completed: boolean, taskCount: number}>} 执行结果
+     */
     end: (finalHandler) => {
       return (async () => {
+        // 顺序执行所有任务
         for (const task of tasks) {
           const result = await execCommand(conn, task.command);
           if (task.handler) {
@@ -328,12 +387,15 @@ function chain(conn) {
             await task.handler(output, result);
           }
         }
+
+        // 执行结束回调
         if (finalHandler) await finalHandler();
+
         return { completed: true, taskCount: tasks.length };
       })();
     }
   };
-  
+
   return api;
 }
 
@@ -348,63 +410,48 @@ function chain(conn) {
 function formatPM2List(list, options = {}) {
   const { showUptime = false, showMemory = false } = options;
   const lines = ['=== PM2 进程列表 ==='];
-  
+
   if (!Array.isArray(list) || list.length === 0) {
     lines.push('(无进程)');
     return lines.join('\n');
   }
-  
+
   list.forEach(p => {
     if (p.name && p.pm2_env && p.pm2_env.status) {
       const status = p.pm2_env.status;
       const command = p.pm2_env.exec_command || 'N/A';
-      const uptime = showUptime ? ` | Uptime: ${Math.floor((Date.now() - p.pm2_env.pm_uptime) / 1000)}s` : '';
-      const memory = showMemory && p.monit ? ` | Memory: ${Math.round(p.monit.memory / 1024 / 1024)}MB` : '';
-      
+      const uptime = showUptime && p.pm2_env.pm_uptime
+        ? ` | Uptime: ${Math.floor((Date.now() - p.pm2_env.pm_uptime) / 1000)}s`
+        : '';
+      const memory = showMemory && p.monit
+        ? ` | Memory: ${Math.round(p.monit.memory / 1024 / 1024)}MB`
+        : '';
+
       lines.push(`${p.name}: ${status} (${command})${uptime}${memory}`);
     }
   });
-  
+
   return lines.join('\n');
-}
-
-/**
- * 检查磁盘使用情况
- * @param {Client} conn - SSH 连接实例
- * @param {string} path - 要检查的路径（默认 '/'）
- * @returns {Promise<string>} 磁盘使用信息
- */
-async function checkDiskUsage(conn, path = '/') {
-  const escapedPath = escapeGrepPattern(path);
-  const command = `df -h ${escapedPath} 2>/dev/null | tail -n 1`;
-  return execCommand(conn, command);
-}
-
-/**
- * 获取系统负载
- * @param {Client} conn - SSH 连接实例
- * @returns {Promise<string>} 系统负载信息
- */
-async function checkLoad(conn) {
-  return execCommand(conn, 'uptime');
 }
 
 module.exports = {
   // 配置
   defaultServerConfig,
   DEFAULT_CMD_TIMEOUT,
-  
+
   // 连接
   createConnection,
   validateConfig,
-  
+
   // 命令执行
   execCommand,
   execCommands,
   quickCheck,
   chain,
+  simpleCheck,
   getOutputString,
-  
+  safeParseJSON,
+
   // 检查函数
   checkPorts,
   checkProcess,
@@ -412,7 +459,7 @@ module.exports = {
   checkService,
   checkDiskUsage,
   checkLoad,
-  
+
   // 工具函数
   escapeGrepPattern,
   formatPM2List
