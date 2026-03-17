@@ -409,4 +409,18 @@ ALERT_EMAIL_RECIPIENTS=
 
 ---
 
+## Claw-Mesh 状态
+
+**最新同步**: 2026-03-17 03:08:18  
+**状态**: degraded (同步问题待修复)  
+**机器**: bot6  
+**仓库**: https://github.com/songzuo/botmem
+
+**同步规则**:
+1. 只操作 bot6 目录 - 不删除、不覆盖其他机器
+2. 去除敏感信息 - token, password, secret 等
+3. dry-run 测试 - 推送前先测试
+
+---
+
 *此文件记录项目的重要信息和决策，随项目进展持续更新。*
