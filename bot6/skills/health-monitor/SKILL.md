@@ -55,7 +55,7 @@ author: OpenClaw Team
 {
   "alerts": [
     {
-      "metric": "disk_usage",
+      "metric": "di[已移除]",
       "threshold": 85,
       "severity": "warning",
       "message": "磁盘使用率超过 85%"
