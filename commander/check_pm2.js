@@ -20,7 +20,11 @@ conn.on('ready', () => {
     }
 
     let output = '';
-    stream.on('close', (code) => {
+    stream.on('data', (data) => {
+      output += data.toString();
+    }).stderr.on('data', (data) => {
+      output += data.toString();
+    }).on('close', (code) => {
       try {
         const list = JSON.parse(output);
         console.log('=== PM2 进程列表 ===');
@@ -31,13 +35,9 @@ conn.on('ready', () => {
         });
       } catch(e) {
         console.log('解析错误:', e.message);
-        console.log(output.substring(0, 2000));
+        console.log('原始输出:', output.substring(0, 2000));
       }
       conn.end();
-    }).on('data', (data) => {
-      output += data.toString();
-    }).stderr.on('data', (data) => {
-      output += data.toString();
     });
   });
 }).on('error', (err) => {
