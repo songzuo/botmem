@@ -1,0 +1,50 @@
+{
+  "alerts": [
+    {
+      "metric": "disk_usage",
+      "threshold": 85,
+      "severity": "warning",
+      "message": "磁盘使用率超过 85%"
+    },
+    {
+      "metric": "disk_usage",
+      "threshold": 95,
+      "severity": "critical",
+      "message": "磁盘使用率超过 95%，请立即处理"
+    },
+    {
+      "metric": "memory_usage",
+      "threshold": 80,
+      "severity": "warning",
+      "message": "内存使用率超过 80%"
+    },
+    {
+      "metric": "memory_usage",
+      "threshold": 95,
+      "severity": "critical",
+      "message": "内存使用率超过 95%，可能发生 OOM"
+    },
+    {
+      "metric": "cpu_usage",
+      "threshold": 70,
+      "severity": "warning",
+      "message": "CPU 使用率超过 70%"
+    },
+    {
+      "metric": "cpu_usage",
+      "threshold": 90,
+      "severity": "critical",
+      "message": "CPU 使用率超过 90%"
+    }
+  ],
+  "notification": {
+    "enabled": true,
+    "channels": ["log"]
+  },
+  "services": [
+    "docker",
+    "nginx",
+    "openclaw"
+  ],
+  "check_interval": 300
+}

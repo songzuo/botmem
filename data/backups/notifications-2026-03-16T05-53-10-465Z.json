@@ -1,0 +1,26 @@
+{
+  "items": [
+    {
+      "id": "notif-001",
+      "type": "task_assigned",
+      "title": "新任务分配",
+      "message": "您被分配了新任务\"系统架构评审\"，请及时查看。",
+      "read": false,
+      "createdAt": "2026-03-13T08:00:00Z",
+      "userId": "user-001",
+      "priority": "high",
+      "link": "/tasks/task-003"
+    },
+    {
+      "id": "notif-002",
+      "type": "project_update",
+      "title": "项目进度更新",
+      "message": "项目\"AI 助手平台\"已更新至 v2.0 版本。",
+      "read": true,
+      "createdAt": "2026-03-12T15:30:00Z",
+      "userId": "user-001",
+      "priority": "medium",
+      "link": "/projects/proj-001"
+    }
+  ]
+}

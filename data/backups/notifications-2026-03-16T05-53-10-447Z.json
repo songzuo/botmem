@@ -1,0 +1,15 @@
+{
+  "items": [
+    {
+      "id": "notif-001",
+      "type": "task_assigned",
+      "title": "新任务分配",
+      "message": "您被分配了新任务\"系统架构评审\"，请及时查看。",
+      "read": false,
+      "createdAt": "2026-03-13T08:00:00Z",
+      "userId": "user-001",
+      "priority": "high",
+      "link": "/tasks/task-003"
+    }
+  ]
+}

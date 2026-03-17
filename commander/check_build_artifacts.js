@@ -8,8 +8,8 @@ conn.on('ready', () => {
   const commands = [
     'echo "=== 检查cv的app目录 ===" && ls -la /web/cv/app-806p2wx4khz5/ | head -20',
     'echo "=== 检查sign的app目录 ===" && ls -la /web/sign/app-7z3vcj66vpc1/ | head -20',
-    'echo "=== 检查china的app目录 ===" && ls -la /web/china/app-81cpnk3eh8n5/ | head -20 "=== 检查song',
-    'echo的app目录 ===" && ls -la /web/song/app-7ucu4p2g9ypt/ | head -20',
+    'echo "=== 检查china的app目录 ===" && ls -la /web/china/app-81cpnk3eh8n5/ | head -20',
+    'echo "=== 检查song的app目录 ===" && ls -la /web/song/app-7ucu4p2g9ypt/ | head -20',
     'echo "=== 检查ppt的app目录 ===" && ls -la /web/ppt/app-889o5k4aefi9/ | head -20',
     'echo "=== 检查today的app目录 ===" && ls -la /web/today/app-8cputnrlfcw1/ | head -20',
     'echo "=== 检查wechat的app目录 ===" && ls -la /web/wechat/app-81q7p9yhr5z5/ | head -20',
