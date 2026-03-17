@@ -1,13 +1,13 @@
 {
   "alerts": [
     {
-      "metric": "disk_usage",
+      "metric": "di[已移除]",
       "threshold": 85,
       "severity": "warning",
       "message": "磁盘使用率超过 85%"
     },
     {
-      "metric": "disk_usage",
+      "metric": "di[已移除]",
       "threshold": 95,
       "severity": "critical",
       "message": "磁盘使用率超过 95%，请立即处理"
