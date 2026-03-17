@@ -2,6 +2,14 @@
 
 This folder is home. Treat it that way.
 
+**最后更新**: 2026-03-17 12:10 CET
+
+## Workspace Overview
+
+This is the **OpenClaw 11-Machine Collective Intelligence System** - a distributed multi-agent platform consisting of 11 interconnected OpenClaw machines, each running specialized AI agents that collaborate through the Claw-Mesh communication system.
+
+**Main Project**: 7zi AI Team Management Platform (Next.js 16 + React 19 + TypeScript)
+
 ## First Run
 
 If `BOOTSTRAP.md` exists, that's your birth certificate. Follow it, figure out who you are, then delete it. You won't need it again.

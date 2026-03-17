@@ -4,10 +4,22 @@
   "description": "巡视图健康检查工具",
   "main": "index.js",
   "scripts": {
-    "health-check": "node scripts/health-check.js"
+    "test": "jest",
+    "health-check": "node scripts/health-check.js",
+    "health-check:enhanced": "node scripts/health-check-enhanced.js",
+    "health-check:json": "node scripts/health-check.js --json",
+    "validate-config": "node scripts/config-validator.js",
+    "check:picoclaw": "node scripts/check-picoclaw.js",
+    "check:all": "node scripts/health-check-enhanced.js",
+    "report:daily": "node scripts/report-generator.js && cat reports/*.txt",
+    "deploy:router": "node scripts/deploy-router.js",
+    "deploy:cluster": "bash scripts/deploy-all-machines.sh"
   },
   "dependencies": {
     "ssh2": "^1.15.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   },
   "author": "",
   "license": "ISC"

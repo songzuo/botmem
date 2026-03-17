@@ -1,0 +1,8 @@
+{
+  "host": "your-server-hostname.com",
+  "port": 22,
+  "username": "your-username",
+  "password": "your-password-here",
+  "readyTimeout": 30000,
+  "compress": true
+}
