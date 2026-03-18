@@ -1,0 +1,14 @@
+{
+  "tasks": [
+    {
+      "id": "skill-vetter-install",
+      "name": "安装skill-vetter技能",
+      "status": "completed",
+      "started": "2026-03-15T00:53:52+00:00",
+      "completed": "2026-03-15T00:54:17+00:00",
+      "result": ""
+    }
+  ],
+  "faults": [],
+  "lastUpdated": "2026-03-15T00:54:17+00:00"
+}
