@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Coverage directories
+coverage/
+**/coverage/
+
+# Test reports
+*.lcov
+.nyc_output/
+test-results/
+
+# Lock files (optional - uncomment if you prefer not to commit them)
+# package-lock.json
+# **/package-lock.json
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Generated reports and analysis
+code-cleanup-*.js
+code-cleanup-report.json
+health_report.json
+TEST_SUMMARY.md
+BUGFIX_REPORT.md
+OPTIMIZATION_REPORT.md
+TASK_REPORT.md
+
+# Test results and reports
+bot6/projects/docs/coverage/
+bot6/user-api/coverage/
+xunshi-inspector/coverage/
+xunshi-inspector/reports/
+
+# Temporary test configs (if they're generated)
+**/jest.config.js
+**/jest.config.json
+
+# Build outputs
+dist/
+build/
+*.min.js
+
+# OS files
+.DS_Store
+Thumbs.db

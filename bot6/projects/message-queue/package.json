@@ -1,0 +1,30 @@
+{
+  "name": "bot6-message-queue",
+  "version": "1.0.0",
+  "description": "Message queue integration module for bot6 - supports in-memory and Redis backends",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js",
+    "test:dlq": "node test-dlq.js",
+    "test:health": "node test-health-check.js",
+    "example:in-memory": "node examples/in-memory.js",
+    "example:redis": "node examples/redis.js",
+    "example:worker": "node examples/worker.js",
+    "example:api": "node examples/api-server.js"
+  },
+  "keywords": [
+    "message-queue",
+    "task-queue",
+    "redis",
+    "bot6"
+  ],
+  "author": "bot6 team",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.22.1",
+    "redis": "^4.6.12"
+  },
+  "optionalDependencies": {
+    "ioredis": "^5.3.2"
+  }
+}
