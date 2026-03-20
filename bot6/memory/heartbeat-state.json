@@ -4,9 +4,9 @@
     "calendar": null,
     "weather": null,
     "build": 1742467680,
-    "projectStatus": 1742488020,
-    "tsc": 1742488020
+    "projectStatus": 1742488200,
+    "tsc": 1742488200
   },
-  "tscErrors": 0,
-  "notes": "TypeScript: 0 errors (non-test files). Deleted files (meet room, components) - cleanup in progress. No action needed. Time: 15:37 CET"
+  "tscErrors": 550,
+  "notes": "TypeScript: 550 errors (non-test + test). Key issues: AIChat.tsx (Expected 1 arguments, but got 0), MemberCard.tsx (MemberStatus indexing issues), LazyComponents.tsx (AIChat export), NetworkErrorBoundary.test.tsx (Mock types). Build blocked: another next build running. Time: 15:52 CET"
 }
