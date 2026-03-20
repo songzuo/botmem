@@ -1,11 +1,9 @@
 {
-  "lastSync": "2026-03-14T04:00:00+08:00",
-  "lastPull": "2026-03-14T04:00:00+08:00",
-  "lastPush": "2026-03-14T04:00:00+08:00",
-  "machines": {
-    "bot": { "lastSeen": "2026-03-14T04:00:00+08:00", "status": "active" },
-    "bot3": { "lastSeen": "2026-03-15T08:00:00+08:00", "status": "active" },
-    "bot4": { "lastSeen": "2026-03-13T20:00:00+08:00", "status": "active" },
-    "bot6": { "lastSeen": "2026-03-13T20:00:00+08:00", "status": "active" }
+  "lastChecks": {
+    "email": null,
+    "calendar": null,
+    "weather": null,
+    "build": 1742467680,
+    "projectStatus": 1742467680
   }
 }
