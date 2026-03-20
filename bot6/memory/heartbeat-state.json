@@ -3,7 +3,15 @@
     "email": null,
     "calendar": null,
     "weather": null,
-    "build": 1742481600,
-    "projectStatus": 1742496000
-  }
+    "build": 1742478720,
+    "projectStatus": 1742478720,
+    "tooltipTests": 1742478520
+  },
+  "tscErrors": 550,
+  "lastTscCheck": 1742478720,
+  "testFailures": 620,
+  "testTotal": 4966,
+  "testPassRate": 87.5,
+  "testFixedToday": "Tooltip.test.tsx: 16 tests (22/22 now passing)",
+  "notes": "Tooltip tests fixed by adding await waitFor after fireEvent calls and using getByRole('tooltip') instead of parentElement"
 }
