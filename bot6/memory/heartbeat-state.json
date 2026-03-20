@@ -4,8 +4,9 @@
     "calendar": null,
     "weather": null,
     "build": 1742467680,
-    "projectStatus": 1742478720
+    "projectStatus": 1742478720,
+    "tsc": 1742479500
   },
-  "tscErrors": 514,
-  "lastTscCheck": 1742478720
+  "tscErrors": 492,
+  "notes": "api-mocks.ts fixed (return type changed to any). Non-test errors remain in src/lib/middleware, src/lib/voice-meeting/signaling.ts (lines 549, 615), src/lib/websocket (exports), src/test/api/test-helpers.ts. Time: 15:25 CET"
 }
