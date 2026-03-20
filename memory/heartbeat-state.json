@@ -3,7 +3,9 @@
     "email": null,
     "calendar": null,
     "weather": null,
-    "build": 1742467680,
-    "projectStatus": 1742564820
-  }
+    "build": null,
+    "projectStatus": 1742479380,
+    "tsc": 1742479380
+  },
+  "notes": "TypeScript: 415 errors (all in test files). src/ non-test files: 0 errors. Test suite: 10 vitest processes running. Tests: 4346/4966 passing (87.5%)."
 }
