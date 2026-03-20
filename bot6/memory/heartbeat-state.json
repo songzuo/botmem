@@ -5,5 +5,7 @@
     "weather": null,
     "build": 1742467680,
     "projectStatus": 1742478720
-  }
+  },
+  "tscErrors": 514,
+  "lastTscCheck": 1742478720
 }
