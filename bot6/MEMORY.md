@@ -18,8 +18,8 @@
 
 | 技术 | 版本 |
 |------|------|
-| Next.js | 16.1.6 |
-| React | 19.2.3 |
+| Next.js | 16.1.7 |
+| React | 19.2.4 |
 | TypeScript | ^5 |
 | Tailwind CSS | ^4 |
 | Vitest | ^4.0.18 |
