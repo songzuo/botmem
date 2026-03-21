@@ -4,8 +4,8 @@
     "calendar": null,
     "weather": null,
     "build": null,
-    "projectStatus": 1742479380,
-    "tsc": 1742479380
+    "projectStatus": 1742482200,
+    "tsc": 1742482200
   },
-  "notes": "TypeScript: 415 errors (all in test files). src/ non-test files: 0 errors. Test suite: 10 vitest processes running. Tests: 4346/4966 passing (87.5%)."
+  "notes": "TypeScript: All errors in test files only. src/ non-test files: 0 errors. Test suite: 4346/4966 passing (87.5%). Build healthy. ml.shared-runtime.d.ts esModuleInterop warning noted but non-blocking."
 }
