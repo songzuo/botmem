@@ -3,9 +3,9 @@
     "email": null,
     "calendar": null,
     "weather": null,
-    "build": null,
-    "projectStatus": 1742479380,
-    "tsc": 1742479380
+    "build": 1742594400,
+    "projectStatus": 1742594640,
+    "tsc": 1742594640
   },
-  "notes": "TypeScript: 415 errors (all in test files). src/ non-test files: 0 errors. Test suite: 10 vitest processes running. Tests: 4346/4966 passing (87.5%)."
+  "notes": "Production code ~20 TypeScript errors (same errors as last check). Test files have ~981 errors. Key issues: AuditLog type (users/route.ts:359), TaskStatusUpdate missing userId (websocket page), ApiResponse generic (UserProfile), height prop (AnalyticsDashboard), WebSocketStatusIndicator export (TaskStatusExample), useWebSocket callbacks, task-store import conflict, permissions/examples functions undefined. HEARTBEAT.md needs update to reflect current accurate state."
 }
