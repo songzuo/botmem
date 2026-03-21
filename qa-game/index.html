@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>派内知识问答</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      text-align: center;
+      padding: 30px 0;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .game-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .game-card {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .stat {
+      background: rgba(0,0,0,0.2);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+
+    .timer {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffd700;
+      text-shadow: 0 0 10px rgba(255,215,0,0.5);
+    }
+
+    .timer.warning {
+      color: #ff6b6b;
+      animation: pulse 0.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .progress {
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    .question-text {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option-btn {
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.3);
+      color: #fff;
+      padding: 15px 20px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: left;
+    }
+
+    .option-btn:hover {
+      background: rgba(255,255,255,0.25);
+      border-color: rgba(255,255,255,0.5);
+      transform: translateX(5px);
+    }
+
+    .option-btn.correct {
+      background: rgba(72, 199, 142, 0.5);
+      border-color: #48c78e;
+    }
+
+    .option-btn.wrong {
+      background: rgba(237, 100, 100, 0.5);
+      border-color: #ed6464;
+    }
+
+    .option-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .result-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+
+    .result-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .result-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 24px;
+      padding: 40px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      transform: scale(0.8);
+      transition: transform 0.3s;
+    }
+
+    .result-overlay.show .result-card {
+      transform: scale(1);
+    }
+
+    .result-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+
+    .result-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .result-score {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #ffd700;
+      margin: 20px 0;
+    }
+
+    .result-detail {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 25px;
+    }
+
+    .btn {
+      background: #fff;
+      color: #667eea;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      margin-top: 10px;
+    }
+
+    /* 排行榜 */
+    .leaderboard {
+      margin-top: 20px;
+    }
+
+    .leaderboard h2 {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .leaderboard-list {
+      list-style: none;
+    }
+
+    .leaderboard-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 15px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+
+    .rank {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin-right: 12px;
+      border-radius: 50%;
+    }
+
+    .rank-1 { background: linear-gradient(135deg, #ffd700, #ffb700); color: #333; }
+    .rank-2 { background: linear-gradient(135deg, #c0c0c0, #a8a8a8); color: #333; }
+    .rank-3 { background: linear-gradient(135deg, #cd7f32, #b86e28); color: #fff; }
+    .rank-default { background: rgba(255,255,255,0.2); }
+
+    .player-name {
+      flex: 1;
+      font-weight: 500;
+    }
+
+    .player-score {
+      font-weight: 700;
+      color: #ffd700;
+    }
+
+    /* 起始页 */
+    .start-screen {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .start-screen h2 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+
+    .start-screen p {
+      opacity: 0.8;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .input-group {
+      margin: 20px 0;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .input-group input {
+      width: 100%;
+      max-width: 280px;
+      padding: 12px 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .input-group input::placeholder {
+      color: rgba(255,255,255,0.5);
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: #fff;
+    }
+
+    /* 加载动画 */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 1.8rem; }
+      .question-text { font-size: 1.2rem; }
+      .option-btn { font-size: 1rem; padding: 12px 16px; }
+      .game-card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🎯 派内知识问答</h1>
+      <p class="subtitle">测测你对派了解多少！</p>
+    </header>
+
+    <main class="game-area" id="gameArea">
+      <!-- 游戏内容会动态插入 -->
+    </main>
+  </div>
+
+  <!-- 结果弹窗 -->
+  <div class="result-overlay" id="resultOverlay">
+    <div class="result-card">
+      <div class="result-icon" id="resultIcon">🏆</div>
+      <div class="result-title" id="resultTitle">游戏结束!</div>
+      <div class="result-score" id="resultScore">0 分</div>
+      <div class="result-detail" id="resultDetail">答对 0/10 题</div>
+      <button class="btn" onclick="restartGame()">再来一次</button>
+      <button class="btn btn-secondary" onclick="showLeaderboard()">查看排行榜</button>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = 'http://localhost:3003/api';
+    let questions = [];
+    let currentQuestion = 0;
+    let score = 0;
+    let correctCount = 0;
+    let timerInterval = null;
+    let timeLeft = 15;
+    let playerName = '';
+    let gameStarted = false;
+
+    // 显示起始页
+    function showStartScreen() {
+      const gameArea = document.getElementById('gameArea');
+      gameArea.innerHTML = `
+        <div class="game-card start-screen">
+          <h2>欢迎来到派内知识问答!</h2>
+          <p>共10道题目，每题15秒作答时间<br>答对得10分，答错或超时不得分</p>
+          <div class="input-group">
+            <label>输入你的名字开始游戏</label>
+            <input type="text" id="playerNameInput" placeholder="匿名玩家" maxlength="10">
+          </div>
+          <button class="btn" onclick="startGame()">开始挑战</button>
+        </div>
+      `;
+    }
+
+    // 获取题目
+    async function fetchQuestions() {
+      const res = await fetch(`${API_BASE}/questions`);
+      const data = await res.json();
+      if (data.success) {
+        questions = data.questions;
+      }
+    }
+
+    // 获取排行榜
+    async function fetchLeaderboard() {
+      const res = await fetch(`${API_BASE}/leaderboard`);
+      return res.json();
+    }
+
+    // 开始游戏
+    async function startGame() {
+      const input = document.getElementById('playerNameInput');
+      playerName = input.value.trim() || '匿名玩家';
+      gameStarted = true;
+      currentQuestion = 0;
+      score = 0;
+      correctCount = 0;
+
+      await fetchQuestions();
+      showQuestion();
+    }
+
+    // 显示题目
+    function showQuestion() {
+      if (currentQuestion >= questions.length) {
+        endGame();
+        return;
+      }
+
+      const q = questions[currentQuestion];
+      const gameArea = document.getElementById('gameArea');
+
+      gameArea.innerHTML = `
+        <div class="game-card">
+          <div class="stats-bar">
+            <span class="stat">🏆 ${score} 分</span>
+            <span class="timer" id="timer">⏱️ 15</span>
+            <span class="progress">第 ${currentQuestion + 1}/10 题</span>
+          </div>
+          <div class="question-text">${q.question}</div>
+          <div class="options">
+            ${q.options.map((opt, i) => `
+              <button class="option-btn" onclick="selectOption('${opt.replace(/'/g, "\\'")}')">${opt}</button>
+            `).join('')}
+          </div>
+        </div>
+        <div class="game-card leaderboard">
+          <h2>🏅 排行榜</h2>
+          <ul class="leaderboard-list" id="leaderboardList">
+            <li style="text-align:center;padding:20px;"><span class="loading"></span> 加载中...</li>
+          </ul>
+        </div>
+      `;
+
+      // 加载排行榜
+      loadLeaderboard();
+
+      // 启动计时器
+      startTimer();
+    }
+
+    // 计时器
+    function startTimer() {
+      timeLeft = 15;
+      updateTimerDisplay();
+
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          timeOut();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const timerEl = document.getElementById('timer');
+      if (timerEl) {
+        timerEl.textContent = `⏱️ ${timeLeft}`;
+        timerEl.classList.toggle('warning', timeLeft <= 5);
+      }
+    }
+
+    // 超时
+    function timeOut() {
+      const buttons = document.querySelectorAll('.option-btn');
+      buttons.forEach(btn => {
+        btn.disabled = true;
+        if (btn.textContent.trim() === questions[currentQuestion].options.find(o => o === questions[currentQuestion].options[0])) {
+          // 显示正确答案
+        }
+      });
+
+      // 显示正确答案是哪个
+      const correctAnswer = questions[currentQuestion].options[0]; // 第一个是正确答案
+      buttons.forEach(btn => {
+        if (btn.textContent.trim() === questions[currentQuestion].answer) {
+          btn.classList.add('correct');
+        }
+      });
+
+      setTimeout(() => {
+        currentQuestion++;
+        showQuestion();
+      }, 1500);
+    }
+
+    // 选择选项
+    async function selectOption(selected) {
+      if (!gameStarted) return;
+      gameStarted = false; // 防止重复点击
+
+      clearInterval(timerInterval);
+
+      const buttons = document.querySelectorAll('.option-btn');
+      buttons.forEach(btn => {
+        btn.disabled = true;
+        const optText = btn.textContent.trim();
+        if (optText === questions[currentQuestion].answer) {
+          btn.classList.add('correct');
+        } else if (optText === selected && selected !== questions[currentQuestion].answer) {
+          btn.classList.add('wrong');
+        }
+      });
+
+      // 提交答案
+      const res = await fetch(`${API_BASE}/answer`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          questionId: questions[currentQuestion].id,
+          answer: selected
+        })
+      });
+
+      const data = await res.json();
+      if (data.correct) {
+        score += 10;
+        correctCount++;
+      }
+
+      setTimeout(() => {
+        currentQuestion++;
+        gameStarted = true;
+        showQuestion();
+      }, 1200);
+    }
+
+    // 结束游戏
+    async function endGame() {
+      clearInterval(timerInterval);
+
+      // 提交分数
+      if (playerName) {
+        await fetch(`${API_BASE}/leaderboard`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: playerName, score })
+        });
+      }
+
+      // 显示结果
+      const overlay = document.getElementById('resultOverlay');
+      const icon = document.getElementById('resultIcon');
+      const title = document.getElementById('resultTitle');
+      const scoreEl = document.getElementById('resultScore');
+      const detailEl = document.getElementById('resultDetail');
+
+      if (correctCount >= 8) {
+        icon.textContent = '🏆';
+        title.textContent = '太厉害了!';
+      } else if (correctCount >= 5) {
+        icon.textContent = '🎉';
+        title.textContent = '不错不错!';
+      } else {
+        icon.textContent = '💪';
+        title.textContent = '继续加油!';
+      }
+
+      scoreEl.textContent = `${score} 分`;
+      detailEl.textContent = `答对 ${correctCount}/10 题`;
+
+      overlay.classList.add('show');
+    }
+
+    // 重开游戏
+    function restartGame() {
+      document.getElementById('resultOverlay').classList.remove('show');
+      gameStarted = false;
+      showStartScreen();
+    }
+
+    // 显示排行榜
+    async function loadLeaderboard() {
+      const data = await fetchLeaderboard();
+      const list = document.getElementById('leaderboardList');
+
+      if (!data.success || !data.leaderboard.length) {
+        list.innerHTML = '<li style="text-align:center;padding:20px;opacity:0.7;">暂无数据</li>';
+        return;
+      }
+
+      list.innerHTML = data.leaderboard.map((item, i) => {
+        const rankClass = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : 'rank-default';
+        return `
+          <li class="leaderboard-item">
+            <span class="rank ${rankClass}">${i + 1}</span>
+            <span class="player-name">${item.name}</span>
+            <span class="player-score">${item.score}分</span>
+          </li>
+        `;
+      }).join('');
+    }
+
+    function showLeaderboard() {
+      document.getElementById('resultOverlay').classList.remove('show');
+      loadLeaderboard();
+    }
+
+    // 初始化
+    showStartScreen();
+  </script>
+</body>
+</html>
