@@ -1,40 +1,80 @@
 # TOOLS.md - Local Notes
 
-Skills define _how_ tools work. This file is for _your_ specifics — the stuff that's unique to your setup.
+## SSH 服务器清单 (8 台目标)
 
-## What Goes Here
+### 当前已配置
 
-Things like:
+| 服务器 | IP | 用户 | 密码 | 用途 |
+|--------|-----|------|------|------|
+| **7zi.com** | 165.99.43.61 | root | `ge20993344$ZZ` | 主网站部署 |
+| **bot5.szspd.cn** | 182.43.36.134 | root | `ge20993344$ZZ` | 测试机器 |
+| **本机 (bot6)** | - | root | - | OpenClaw 运行 |
 
-- Camera names and locations
-- SSH hosts and aliases
-- Preferred voices for TTS
-- Speaker/room names
-- Device nicknames
-- Anything environment-specific
+### Windows 测试机器
 
-## Examples
+| 服务器 | IP | 用户 | 密码 | 连接方式 | 用途 |
+|--------|-----|------|------|----------|------|
+| **Windows 测试机** | 36.133.22.15 | Administrator | `ge20993344$ZZ` | RDP (端口 3389) | 网站测试、界面验证 |
 
-```markdown
-### Cameras
+**连接命令**:
+```bash
+# 使用 rdesktop 连接
+rdesktop -u Administrator -p 'ge20993344$ZZ' 36.133.22.15
 
-- living-room → Main area, 180° wide angle
-- front-door → Entrance, motion-triggered
-
-### SSH
-
-- home-server → 192.168.1.100, user: admin
-
-### TTS
-
-- Preferred voice: "Nova" (warm, slightly British)
-- Default speaker: Kitchen HomePod
+# 或使用 xfreerdp
+xfreerdp /u:Administrator /p:'ge20993344$ZZ' /v:36.133.22.15
 ```
 
-## Why Separate?
+### SSH 认证方法
 
-Skills are shared. Your setup is yours. Keeping them apart means you can update skills without losing your notes, and share skills without leaking your infrastructure.
+**密码含 `$` 必须用单引号！**
+
+```bash
+# ✅ 正确
+sshpass -p 'ge20993344$ZZ' ssh root@7zi.com
+
+# ❌ 错误（$会被 shell 解析）
+sshpass -p "ge20993344$ZZ" ssh root@7zi.com
+```
+
+### 部署目标
+
+- **主部署**: 7zi.com
+- **测试**: bot5.szspd.cn
+- **未来**: 共 8 台服务器集群
 
 ---
 
-Add whatever helps you do your job. This is your cheat sheet.
+## TTS
+
+- Preferred voice: "Nova" (warm, slightly British)
+
+## Cameras
+
+- (to be added)
+
+## SSH Keys
+
+### 密钥对 1 (ed25519)
+```bash
+# 公钥
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKUyv7pPHVE5WJ9G7aWgUuXTivNZmJHm7uV9PSgcUpxM root@bot6
+# 私钥：~/.ssh/id_ed25519
+```
+
+### 密钥对 2 (最新)
+```bash
+# 公钥
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMl7ZIMgYpejAkTAf6mRiSNWmwyJX9O91AYGNFUJsXYo
+# 需要配置到服务器 authorized_keys
+```
+
+## SSH Key Setup
+
+```bash
+# Generate key
+ssh-keygen -t ed25519 -N "" -f ~/.ssh/id_ed25519
+
+# Copy to server (需要正确密码)
+sshpass -p 'ge20993344$ZZ' ssh-copy-id root@7zi.com
+```

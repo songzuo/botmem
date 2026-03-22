@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-03-21T17:52:40.246Z",
+  "summary": {
+    "total": 1,
+    "success": 0,
+    "failed": 1,
+    "warnings": 0,
+    "successRate": 0
+  },
+  "results": [
+    {
+      "timestamp": "2026-03-21T17:52:40.246Z",
+      "name": "test2",
+      "status": "error"
+    }
+  ]
+}
