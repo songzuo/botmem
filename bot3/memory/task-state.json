@@ -1,0 +1,19 @@
+{
+  "lastHeartbeat": "2026-03-25T02:28:00+08:00",
+  "status": "idle",
+  "currentTask": null,
+  "currentPhase": null,
+  "gatewayStatus": "running",
+  "gatewayStartTime": "2026-03-19T06:00:00+08:00",
+  "activeSessions": 1,
+  "activeSubagents": 0,
+  "subagents": [],
+  "recoveryFiles": [],
+  "pendingTasks": [
+    "api.7zi.com 用户无法创建 API Token - 阻断性 Bug",
+    "api.7zi.com JWT Token 无法用于 AI 调用 - 需要 sk-xxx 格式",
+    "api.7zi.com 普通用户无法使用 AI 服务 - 权限问题"
+  ],
+  "lastCheck": "2026-03-25T02:28:00+08:00",
+  "checkResult": "Gateway 运行正常 (pid 2777901)。claw-mesh-sync 进程已停止 (bot3 重启失败)，需要手动介入或等待自动恢复。"
+}
