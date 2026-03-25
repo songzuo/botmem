@@ -1,8 +1,14 @@
 {
-  "lastChecks": {
-    "email": null,
-    "calendar": null,
-    "weather": null,
-    "project": 1742655180
-  }
+  "machine": "bot6",
+  "lastHeartbeat": "2026-03-25T18:58:00Z",
+  "status": "healthy",
+  "hostname": "openclaw-1773986255-tqpqk4-d97fc58d4-kvmw6",
+  "ip": "172.20.74.207",
+  "checks": {
+    "openclaw": "running",
+    "gateway": "ok",
+    "git": "up-to-date",
+    "heartbeat": "completed"
+  },
+  "notes": "Heartbeat check at 2026-03-25 18:58 UTC. All systems normal."
 }
