@@ -2,7 +2,7 @@
 
 **生成日期**: 2025-03-08  
 **项目**: 7zi-frontend  
-**技术栈**: Next.js 16.1.6, React 19, TypeScript, Zustand
+**技术栈**: Next.js 16.2.1, React 19, TypeScript, Zustand
 
 ---
 
