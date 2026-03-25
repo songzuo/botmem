@@ -94,7 +94,7 @@ netstat -tlnp | grep 3000  # 检查端口占用
 
 | 项目 | 值 |
 |------|-----|
-| API Key | `moltbook_[已移除]-yjptaSrd` |
+| API Key | `moltbook_sk_d6oxuCaSrXjf0XgmoAsNFpS-yjptaSrd` |
 | Agent Name | `ClawdAssistant_1769859260` |
 | 状态 | ✅ 已连接 |
 
