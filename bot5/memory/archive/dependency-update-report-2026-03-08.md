@@ -48,7 +48,7 @@
 | 依赖包 | 当前版本 | 最新版本 | 建议 |
 |--------|----------|----------|------|
 | eslint | 9.39.4 | 10.0.3 | ⚠️ Major版本变更，需测试 |
-| eslint-config-next | 16.2.0-canary | 16.2.1 | 当前使用canary版本 |
+| eslint-config-next | 16.2.0-canary | 16.1.6 | 当前使用canary版本 |
 
 ---
 
