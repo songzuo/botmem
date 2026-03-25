@@ -18,7 +18,7 @@
 
 | 技术 | 版本 |
 |------|------|
-| Next.js | 16.1.6 |
+| Next.js | 16.2.1 |
 | React | 19.2.3 |
 | TypeScript | ^5 |
 | Tailwind CSS | ^4 |

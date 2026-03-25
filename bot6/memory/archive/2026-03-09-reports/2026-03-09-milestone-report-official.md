@@ -117,7 +117,7 @@
 
 | 技术 | 版本 | 用途 |
 |------|------|------|
-| Next.js | 16.1.6 | React 全栈框架 |
+| Next.js | 16.2.1 | React 全栈框架 |
 | React | 19.2.3 | UI 库 |
 | TypeScript | 5.x | 类型安全 |
 | Tailwind CSS | 4.x | 原子化 CSS |
