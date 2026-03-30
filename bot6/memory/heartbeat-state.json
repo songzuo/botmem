@@ -3,8 +3,8 @@
     "email": null,
     "calendar": null,
     "weather": null,
-    "project": 1743339480
+    "project": 1743340140
   },
-  "lastHeartbeat": 1743339480,
-  "notes": "Heartbeat check 2026-03-30 15:08 Berlin. Found TypeScript errors in System logs from subagent exec sessions: setSecurityHeaders/withSecurityHeaders not exported, signature.ts possibly undefined, headers issues. 4 subagent tasks were listed but only 3 have reports. Need to investigate auth-api-500-fix."
+  "lastHeartbeat": 1743340140,
+  "notes": "Heartbeat 2026-03-30 15:19 Berlin. TECH_DEBT_ANALYSIS_v1.5.0.md generated at 15:19. 4 subagent tasks from HEARTBEAT.md - 3 reports exist, auth-api-500-fix has no report found. TypeScript error in auth/me/route.ts:25 (UserStatus missing DELETED). No urgent action required."
 }
