@@ -3,8 +3,8 @@
     "email": null,
     "calendar": null,
     "weather": null,
-    "project": 1743340140
+    "project": 1743341040
   },
-  "lastHeartbeat": 1743340140,
-  "notes": "Heartbeat 2026-03-30 15:19 Berlin. TECH_DEBT_ANALYSIS_v1.5.0.md generated at 15:19. 4 subagent tasks from HEARTBEAT.md - 3 reports exist, auth-api-500-fix has no report found. TypeScript error in auth/me/route.ts:25 (UserStatus missing DELETED). No urgent action required."
+  "lastHeartbeat": 1743341040,
+  "notes": "Heartbeat 2026-03-30 15:24 Berlin. TECH_DEBT_ANALYSIS completed - TS errors reduced to 1 (auth/me/route.ts missing DELETED status). Two subagent execs failed SIGTERM (sharp-br, calm-sag) - likely auth-api-500-fix task. 4 subagent tasks listed but status unclear. lib-layer-refactor-analysis done (14:42), health-api-diagnostic done (14:40), auth-middleware-fix done (14:39)."
 }
