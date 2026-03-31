@@ -1,801 +1,622 @@
-# WebSocket 实时通信最佳实践报告
+# WebSocket 实时通信最佳实践研究报告
 
-**项目**: 7zi-frontend v1.4.0  
-**生成时间**: 2026-03-31  
-**分析师**: 咨询师子代理
-
----
-
-## 📊 当前 WebSocket 实现分析
-
-### 1. 架构概览
-
-项目采用了双层实时通信架构：
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     客户端层                                  │
-├─────────────────────────────────────────────────────────────┤
-│  useWebSocket (基础)                                        │
-│  useEnhancedWebSocket (增强)                                │
-│  useCollaboration (协作)                                    │
-│  notification-service (通知)                                │
-└─────────────────────────────────────────────────────────────┘
-                              ↓ WebSocket / Socket.IO
-┌─────────────────────────────────────────────────────────────┐
-│                     服务端层                                  │
-├─────────────────────────────────────────────────────────────┤
-│  WebSocket Server (Socket.IO)                               │
-│  ├── RoomManager (房间管理)                                  │
-│  ├── PermissionManager (权限控制)                            │
-│  └── MessageStore (消息存储)                                 │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### 2. 核心模块分析
-
-#### 2.1 WebSocket Server (`server.ts` - 41.4KB)
-
-**优点**:
-- ✅ 使用 Socket.IO 作为 WebSocket 抽象层
-- ✅ 支持 JWT token 认证
-- ✅ 实现了房间 (Room) 概念
-- ✅ 支持文档协作 (CRDT-like operations)
-- ✅ 实现了心跳检测机制 (120秒超时)
-- ✅ 有完善的日志记录
-- ✅ 集成了权限管理、消息存储、房间管理
-
-**实现亮点**:
-```typescript
-// v1.4.0 集成了三个核心模块
-- RoomManager: 房间生命周期管理
-- PermissionManager: 基于角色的权限控制 (RBAC)
-- MessageStore: 消息持久化和离线消息队列
-```
-
-#### 2.2 客户端 Hooks
-
-**useCollaboration.ts (28.8KB)**:
-- 支持文档协作、光标同步、选择更新
-- 实现了重连机制和连接状态管理
-- 提供了完整的协作 API
-
-**useEnhancedWebSocket.ts (20.9KB)**:
-- 指数退避重连策略
-- 消息优先级队列
-- 离线消息队列
-- 连接质量统计
-
-**notification-service.ts (31.2KB)**:
-- 统一的通知管理服务
-- 离线通知队列
-- 错误处理和重试机制
-
-#### 2.3 辅助功能
-
-**SSE Stream (`src/lib/sse/`)**:
-- 提供服务器推送事件支持
-- 作为 WebSocket 的补充方案
-
-**Realtime 模块 (`src/lib/realtime/`)**:
-- 提供独立的实时通信抽象
-- 包含通知、任务实时更新等功能
-
-### 3. 当前配置分析
-
-```typescript
-// 当前 Socket.IO 配置
-{
-  path: '/api/ws',
-  cors: {
-    origin: process.env.NEXT_PUBLIC_SITE_URL || 'https://7zi.studio',
-    methods: ['GET', 'POST'],
-    credentials: true,
-  },
-  transports: ['websocket', 'polling'],
-  pingTimeout: 45000,      // 45秒
-  pingInterval: 25000,     // 25秒
-  maxHttpBufferSize: 1e8,  // 100MB
-}
-```
+**生成日期**: 2026-03-31  
+**子代理**: 咨询师  
+**项目**: xunshi-inspector / 7zi-frontend
 
 ---
 
-## ⚠️ 发现的潜在问题
+## 一、当前 WebSocket 实现分析
 
-### 1. 性能问题
+### 1.1 技术栈概览
 
-#### 问题 1.1: 内存存储无持久化
+| 组件 | 技术方案 | 版本 |
+|------|----------|------|
+| WebSocket 服务器 | Socket.IO | ^4.x |
+| 实时通信协议 | Socket.IO Protocol | - |
+| 房间管理 | RoomManager (自研) | v1.4.0 |
+| 权限系统 | PermissionManager (自研) | v1.4.0 |
+| 消息存储 | MessageStore (内存) | v1.4.0 |
+| 重试机制 | RetryManager (指数退避) | - |
+| 客户端 Hook | useCollaboration / useEnhancedWebSocket | - |
+
+### 1.2 架构图
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                         客户端                                   │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐            │
+│  │useCollaboration│ │useEnhancedWS │  │  useWebSocket│            │
+│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘            │
+│         └────────────────┼─────────────────┘                      │
+│                          │ socket.io-client                      │
+└──────────────────────────┼───────────────────────────────────────┘
+                           │ WebSocket / HTTP
+┌──────────────────────────┼───────────────────────────────────────┐
+│                     服务器端                                      │
+│  ┌─────────────┐  ┌─────┴─────┐  ┌─────────────┐                  │
+│  │ Socket.IO   │──│  Server   │──│  Handler    │                  │
+│  │   Server    │  │           │  │  (rooms.ts) │                  │
+│  └─────────────┘  └───────────┘  └─────────────┘                  │
+│       │                                    │                      │
+│       ▼                                    ▼                      │
+│  ┌─────────────┐                    ┌─────────────┐               │
+│  │ Permission  │                    │   Message   │               │
+│  │ Manager     │                    │   Store     │               │
+│  └─────────────┘                    └─────────────┘               │
+│                                                               │
+│  ⚠️ 内存存储 - 单实例部署                                      │
+└───────────────────────────────────────────────────────────────┘
+```
+
+### 1.3 核心功能模块
+
+#### Server.ts (41KB)
+- ✅ Socket.IO 服务器初始化
+- ✅ JWT 认证中间件
+- ✅ 房间事件处理 (create, join, leave, delete)
+- ✅ 消息事件处理 (send, edit, delete, react, pin)
+- ✅ 文档协同操作 (cursor, selection, operations)
+- ✅ 权限检查集成
+- ✅ 离线消息队列
+- ✅ 心跳检测 (120秒超时)
+- ✅ 定时清理任务
+
+#### Rooms.ts (21KB)
+- ✅ 房间创建/销毁
+- ✅ 参与者管理
+- ✅ 踢出/封禁用户
+- ✅ 角色管理
+- ✅ 可见性控制 (public/private/invite-only)
+- ✅ 自动清理计时器
+
+#### Permissions.ts (12KB)
+- ✅ RBAC 权限系统 (owner/admin/moderator/member/guest)
+- ✅ 细粒度权限 (room/message/admin 三类)
+- ✅ 权限过期机制
+- ✅ 封禁用户系统
+
+#### MessageStore.ts (16KB)
+- ✅ 内存消息存储
+- ✅ 离线消息队列
+- ✅ 消息历史查询
+- ✅ Reactions & Pinning
+- ✅ 自动过期清理
+
+---
+
+## 二、发现的潜在问题
+
+### 2.1 严重问题 (High Priority)
+
+#### 🔴 问题 1: 无法水平扩展
+```
+现状: 所有数据存储在内存中 (rooms Map, messageStore Map)
+影响: 无法部署多个 Socket.IO 实例
+风险: 单点故障，连接数受限于单机资源
+```
+
+#### 🔴 问题 2: 心跳超时过长
 ```typescript
-// 当前所有数据都在内存中
-private rooms: Map<string, Room> = new Map();
-private messages: Map<string, Map<string, StoredMessage>> = new Map();
+// server.ts:471
+const heartbeatTimeout = 120000; // 2分钟
 ```
-**风险**: 服务器重启会导致所有实时数据丢失
+影响: 断网用户占用服务器资源长达2分钟才能被识别
 
-#### 问题 1.2: 无水平扩展支持
-- 当前实现依赖单机内存存储
-- 无法支持多服务器集群部署
-- 缺少 Redis Adapter 集成
-
-#### 问题 1.3: 消息缓冲区过大
+#### 🔴 问题 3: 缺少消息速率限制
 ```typescript
-maxHttpBufferSize: 1e8  // 100MB 过大！
+// message:send 事件无速率限制
+socket.on('message:send', ...)
 ```
-**风险**: 容易受到 DoS 攻击
+风险: 恶意用户可发送大量消息导致 DoS
 
-### 2. 安全问题
+### 2.2 中等问题 (Medium Priority)
 
-#### 问题 2.1: Origin 验证不够严格
+#### 🟡 问题 4: CORS 配置不够灵活
 ```typescript
-// 当前只检查一个 origin
-const allowedOrigin = process.env.NEXT_PUBLIC_SITE_URL || 'https://7zi.studio';
+// server.ts:518
+origin: allowedOrigin, // 仅支持单一源
 ```
-**建议**: 应该使用白名单数组，而不是单个值
+建议: 应支持多个允许的域名
 
-#### 问题 2.2: 缺少消息大小限制
+#### 🟡 问题 5: 缺少消息加密
+```
+现状: WebSocket 传输未加密
+建议: 对敏感消息内容进行端到端加密
+```
+
+#### 🟡 问题 6: 未实现消息确认机制
 ```typescript
-// 消息发送没有大小检查
-socket.on('message:send', (data) => {
-  // 直接处理，没有验证 content 大小
-});
+// 消息发送后无确认回执
+socket.emit('message:new', storedMessage);
 ```
+影响: 无法确保消息可靠送达
 
-#### 问题 2.3: 缺少速率限制
-- 消息发送没有速率限制
-- 可能被恶意用户滥发消息
-
-#### 问题 2.4: Token 存储在内存
+#### 🟡 问题 7: 断线重连状态恢复不完整
 ```typescript
-const token = socket.handshake.auth.token;
-// Token 验证后没有定期刷新或失效检查
+// useCollaboration.ts - 重连后可能丢失:
+1. 光标位置
+2. 未保存的文档操作
+3. 房间内用户状态
 ```
 
-### 3. 可靠性问题
+### 2.3 轻微问题 (Low Priority)
 
-#### 问题 3.1: 心跳超时设置不一致
+#### 🟢 问题 8: 重复的颜色生成逻辑
 ```typescript
-// 服务端
-pingTimeout: 45000,    // 45秒
-socket.data.lastHeartbeat = Date.now();
-const heartbeatTimeout = 120000; // 120秒
-
-// 客户端
-heartbeatInterval: 30000  // 30秒
+// server.ts:66 - _generateColor()
+// rooms.ts:92 - generateColor()
 ```
-**问题**: 服务端配置不一致可能导致连接异常断开
 
-#### 问题 3.2: 重连策略不够健壮
+#### 🟢 问题 9: 未使用 Socket.IO 内置适配器
+```
+现状: 未配置 Redis Adapter
+无法实现: 跨实例消息广播
+```
+
+#### 🟢 问题 10: 错误处理不一致
 ```typescript
-// 客户端重连间隔固定
-reconnectInterval: 3000  // 固定 3 秒
-```
-**建议**: 应该使用指数退避 + 抖动 (jitter)
-
-#### 问题 3.3: 离线消息可能丢失
-- 离线消息队列有大小限制 (100条)
-- 超出限制的消息会被丢弃
-
-### 4. 架构问题
-
-#### 问题 4.1: 多套实时通信方案并存
-```
-src/lib/websocket/   - Socket.IO (主要)
-src/lib/realtime/    - 另一套 WebSocket 实现
-src/lib/sse/         - SSE 实现
-```
-**问题**: 架构复杂，维护成本高
-
-#### 问题 4.2: 全局单例模式
-```typescript
-let io: SocketIOServer | null = null;
-let roomManager: RoomManager | null = null;
-```
-**问题**: 难以进行单元测试和依赖注入
-
-### 5. 代码质量问题
-
-#### 问题 5.1: 错误处理不统一
-```typescript
-// 有的地方抛出错误
-throw new Error('Room not found');
-
-// 有的地方发送错误事件
-socket.emit('system:error', { message: '...' });
-```
-
-#### 问题 5.2: 魔法数字
-```typescript
-const heartbeatTimeout = 120000; // 应该定义为常量
-maxHistorySize: 10000,           // 魔法数字
-offlineMessageTTL: 7 * 24 * 60 * 60 * 1000,  // 应该有注释
+// 部分使用 logger.error，部分使用 socket.emit('system:error')
 ```
 
 ---
 
-## 💡 改进建议
+## 三、改进建议 (至少5条)
 
-### 建议 1: 实现消息持久化和数据库集成
+### 📌 建议 1: 引入 Redis Adapter 实现水平扩展
 
-**优先级**: 🔴 高
-
-**现状**: 所有消息存储在内存中，服务器重启会丢失
+**当前状态**: 单实例内存存储
 
 **改进方案**:
-
 ```typescript
-// 1. 添加数据库持久化层
-import { PrismaClient } from '@prisma/client';
+// 安装 socket.io-redis adapter
+// npm install @socket.io/redis-adapter redis
 
-interface MessageRepository {
-  save(message: StoredMessage): Promise<void>;
-  getHistory(roomId: string, options: MessageHistoryOptions): Promise<StoredMessage[]>;
-  getOfflineMessages(userId: string): Promise<StoredMessage[]>;
-}
-
-class PrismaMessageRepository implements MessageRepository {
-  constructor(private prisma: PrismaClient) {}
-  
-  async save(message: StoredMessage): Promise<void> {
-    await this.prisma.message.create({
-      data: {
-        id: message.id,
-        roomId: message.roomId,
-        userId: message.userId,
-        content: message.content,
-        type: message.type,
-        createdAt: new Date(message.timestamp),
-      }
-    });
-  }
-}
-
-// 2. 使用 Redis 作为缓存层
-import { Redis } from 'ioredis';
 import { createAdapter } from '@socket.io/redis-adapter';
+import { createClient } from 'redis';
 
-const pubClient = new Redis({ host: 'localhost', port: 6379 });
+// 在 createServer 中配置
+const pubClient = createClient({ url: process.env.REDIS_URL });
 const subClient = pubClient.duplicate();
 
-io.adapter(createAdapter(pubClient, subClient));
+await Promise.all([pubClient.connect(), subClient.connect()]);
+
+io = new SocketIOServer(httpServer, {
+  adapter: createAdapter(pubClient, subClient),
+  // ...其他配置
+});
 ```
 
 **预期效果**:
-- ✅ 消息持久化，服务器重启不丢失
-- ✅ 支持历史消息查询
-- ✅ 支持多服务器水平扩展
+- ✅ 支持多实例部署
+- ✅ 跨实例实时消息同步
+- ✅ 提升可用性和扩展性
+- ⚠️ 需额外 Redis 基础设施
 
 ---
 
-### 建议 2: 增强安全性措施
+### 📌 建议 2: 实现消息速率限制
 
-**优先级**: 🔴 高
+**当前状态**: 无速率限制
 
 **改进方案**:
-
 ```typescript
-// 1. 严格的 Origin 白名单
-const ALLOWED_ORIGINS = [
-  'https://7zi.studio',
-  'https://app.7zi.studio',
-  'https://staging.7zi.studio',
-];
+// src/lib/websocket/rate-limit.ts
 
-io = new SocketIOServer(httpServer, {
-  cors: {
-    origin: (origin, callback) => {
-      if (!origin || ALLOWED_ORIGINS.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    credentials: true,
-  },
-});
+interface RateLimitConfig {
+  windowMs: number;      // 时间窗口 (ms)
+  maxMessages: number;   // 最大消息数
+  maxRooms?: number;     // 最大加入房间数
+}
 
-// 2. 消息大小限制
-const MAX_MESSAGE_SIZE = 10 * 1024; // 10KB
+const RATE_LIMITS: RateLimitConfig = {
+  windowMs: 10000,       // 10秒窗口
+  maxMessages: 20,        // 最多20条消息
+  maxRooms: 10,           // 最多加入10个房间
+};
 
+// 在 socket handler 中使用
+function checkRateLimit(socket: AuthenticatedSocket, action: string): boolean {
+  const key = `${socket.data.user.id}:${action}`;
+  const now = Date.now();
+  
+  // 使用 Redis 或内存 Map 存储计数
+  // ...实现滑动窗口计数
+  
+  return true/false;
+}
+
+// 应用到 message:send
 socket.on('message:send', (data) => {
-  if (data.content && data.content.length > MAX_MESSAGE_SIZE) {
-    socket.emit('system:error', { 
-      message: 'Message too large', 
-      code: 'MESSAGE_TOO_LARGE' 
-    });
-    return;
-  }
-});
-
-// 3. 速率限制
-import { RateLimiterMemory } from 'rate-limiter-flexible';
-
-const rateLimiter = new RateLimiterMemory({
-  points: 100,              // 每分钟最多 100 条消息
-  duration: 60,             // 60 秒
-  blockDuration: 60,        // 超出后封禁 60 秒
-});
-
-socket.on('message:send', async (data) => {
-  try {
-    await rateLimiter.consume(socket.data.user.id);
-    // 处理消息...
-  } catch {
+  if (!checkRateLimit(socket, 'message:send')) {
     socket.emit('system:error', { 
       message: 'Rate limit exceeded', 
       code: 'RATE_LIMITED' 
     });
+    return;
   }
+  // ...正常处理
 });
-
-// 4. Token 定期刷新
-const SESSION_REFRESH_INTERVAL = 30 * 60 * 1000; // 30 分钟
-
-setInterval(async () => {
-  const user = socket.data.user;
-  const isValid = await validateSession(user.id);
-  if (!isValid) {
-    socket.emit('auth:session_expired');
-    socket.disconnect(true);
-  }
-}, SESSION_REFRESH_INTERVAL);
 ```
 
 **预期效果**:
-- ✅ 防止跨站 WebSocket 劫持 (CSWSH)
-- ✅ 防止消息洪泛攻击
-- ✅ 防止超大消息攻击
-- ✅ 会话安全性提升
+- ✅ 防止 DoS 攻击
+- ✅ 防止垃圾消息
+- ✅ 提升服务稳定性
+- ✅ 使用 Redis 可跨实例共享限制
 
 ---
 
-### 建议 3: 实现健壮的重连和容错机制
+### 📌 建议 3: 优化心跳检测机制
 
-**优先级**: 🟡 中
+**当前状态**: 120秒超时，10秒检查间隔
 
 **改进方案**:
-
 ```typescript
-// 1. 指数退避 + 抖动
-const BASE_RECONNECT_DELAY = 1000;
-const MAX_RECONNECT_DELAY = 30000;
-const JITTER_FACTOR = 0.3;
+// 方案 A: 缩短心跳超时 + 客户端配置优化
+const heartbeatConfig = {
+  // 服务器端
+  pingTimeout: 20000,      // 20秒 (原45000)
+  pingInterval: 10000,     // 10秒 (原25000)
+  
+  // 客户端 useEnhancedWebSocket.ts
+  heartbeatInterval: 15000, // 15秒 (原30000)
+  heartbeatTimeout: 20000,  // 20秒
+};
 
-function calculateReconnectDelay(attempt: number): number {
-  const delay = Math.min(
-    BASE_RECONNECT_DELAY * Math.pow(2, attempt),
-    MAX_RECONNECT_DELAY
-  );
-  const jitter = delay * JITTER_FACTOR * (Math.random() * 2 - 1);
-  return delay + jitter;
-}
+// 方案 B: 使用 Socket.IO 内置心跳 (已配置)
+// 当前的 pingTimeout/pingInterval 已配置，但值过大
 
-// 2. 消息确认机制
-interface MessageWithAck {
+// 方案 C: 添加应用层心跳确认
+socket.on('heartbeat', () => {
+  socket.data.lastHeartbeat = Date.now();
+  socket.emit('heartbeat:ack', { serverTime: Date.now() });
+});
+```
+
+**预期效果**:
+- ✅ 更快识别断线用户
+- ✅ 释放无效连接资源
+- ✅ 提升房间状态准确性
+- ⚠️ 可能增加网络流量
+
+---
+
+### 📌 建议 4: 实现消息确认与重试机制
+
+**当前状态**: fire-and-forget 模式
+
+**改进方案**:
+```typescript
+// src/lib/websocket/reliable-messaging.ts
+
+interface ReliableMessage {
   id: string;
-  content: string;
-  ack: boolean;
-  retries: number;
+  type: string;
+  payload: unknown;
+  timestamp: number;
+  retryCount: number;
+  maxRetries: number;
+  acknowledged: boolean;
 }
 
-const pendingMessages = new Map<string, MessageWithAck>();
+class ReliableMessaging {
+  private pendingMessages: Map<string, ReliableMessage> = new Map();
+  private ackTimeout: number = 5000; // 5秒
 
-function sendWithAck(type: string, payload: unknown, maxRetries = 3) {
-  const messageId = crypto.randomUUID();
-  const message: MessageWithAck = {
-    id: messageId,
-    content: JSON.stringify({ type, payload }),
-    ack: false,
-    retries: 0,
-  };
-  
-  pendingMessages.set(messageId, message);
-  
-  const sendAttempt = () => {
-    if (message.retries >= maxRetries) {
-      pendingMessages.delete(messageId);
-      return;
-    }
+  send(socket: AuthenticatedSocket, message: ReliableMessage): void {
+    // 存储待确认消息
+    this.pendingMessages.set(message.id, message);
     
-    socket.emit('message', { id: messageId, type, payload }, (ack: boolean) => {
-      if (ack) {
-        pendingMessages.delete(messageId);
+    // 发送消息
+    socket.emit(message.type, message.payload, (ack: { id: string; success: boolean }) => {
+      this.handleAck(message.id, ack);
+    });
+    
+    // 设置超时重试
+    setTimeout(() => this.checkPending(message.id), this.ackTimeout);
+  }
+
+  private handleAck(messageId: string, ack: { id: string; success: boolean }): void {
+    const msg = this.pendingMessages.get(messageId);
+    if (msg) {
+      msg.acknowledged = true;
+      if (!ack.success && msg.retryCount < msg.maxRetries) {
+        this.retry(messageId);
       } else {
-        message.retries++;
-        setTimeout(sendAttempt, calculateReconnectDelay(message.retries));
+        this.pendingMessages.delete(messageId);
       }
-    });
-  };
+    }
+  }
+}
+```
+
+**客户端配合**:
+```typescript
+// 在 send 时提供 ack 回调
+socket.emit('message:send', data, (ack) => {
+  if (ack.success) {
+    updateMessageStatus(messageId, 'delivered');
+  } else {
+    // 重试或显示失败
+  }
+});
+```
+
+**预期效果**:
+- ✅ 确保消息可靠送达
+- ✅ 提供发送状态反馈
+- ✅ 自动重试失败消息
+- ⚠️ 增加协议复杂度
+
+---
+
+### 📌 建议 5: 添加多域名 CORS 支持
+
+**当前状态**: 仅支持单一域名
+
+**改进方案**:
+```typescript
+// server.ts
+
+// 方案 A: 环境变量配置多个域名
+const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [
+  'https://7zi.studio',
+  'https://www.7zi.studio',
+];
+
+// 方案 B: 生产环境动态判断
+const corsOptions = {
+  origin: (origin: string | undefined, callback: Function) => {
+    // 允许没有 origin 的请求 (如移动端)
+    if (!origin) return callback(null, true);
+    
+    // 检查是否在允许列表中
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    // 开发环境允许 localhost
+    if (process.env.NODE_ENV === 'development' && origin.includes('localhost')) {
+      return callback(null, true);
+    }
+    
+    callback(new Error('Not allowed by CORS'));
+  },
+  methods: ['GET', 'POST'],
+  credentials: true,
+};
+
+io = new SocketIOServer(httpServer, {
+  cors: corsOptions,
+  // ...
+});
+```
+
+**预期效果**:
+- ✅ 支持多个前端域名
+- ✅ 便于开发环境调试
+- ✅ 适应微服务架构
+- ⚠️ 需更新环境变量配置
+
+---
+
+### 📌 建议 6: 实现消息内容加密
+
+**当前状态**: 明文传输
+
+**改进方案**:
+```typescript
+// src/lib/websocket/encryption.ts
+
+import crypto from 'crypto';
+
+const ALGORITHM = 'aes-256-gcm';
+const SECRET_KEY = Buffer.from(process.env.WS_ENCRYPTION_KEY!, 'hex');
+
+interface EncryptedPayload {
+  iv: string;          // 初始向量
+  encrypted: string;   // 加密数据
+  tag: string;         // 认证标签
+}
+
+function encrypt(data: unknown): EncryptedPayload {
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipheriv(ALGORITHM, SECRET_KEY, iv);
   
-  sendAttempt();
-}
-
-// 3. 连接状态恢复
-interface ConnectionStateSnapshot {
-  rooms: string[];
-  subscriptions: string[];
-  lastMessageId: string;
-}
-
-function saveConnectionState(): ConnectionStateSnapshot {
+  let encrypted = cipher.update(JSON.stringify(data), 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  
   return {
-    rooms: Array.from(socket.data.rooms),
-    subscriptions: Array.from(subscribedChannelsRef.current),
-    lastMessageId: lastMessageIdRef.current,
+    iv: iv.toString('hex'),
+    encrypted,
+    tag: cipher.getAuthTag().toString('hex'),
   };
 }
 
-function restoreConnectionState(snapshot: ConnectionStateSnapshot) {
-  snapshot.rooms.forEach(roomId => {
-    socket.emit('room:join', { roomId });
+function decrypt(payload: EncryptedPayload): unknown {
+  const decipher = crypto.createDecipheriv(
+    ALGORITHM, 
+    SECRET_KEY, 
+    Buffer.from(payload.iv, 'hex')
+  );
+  decipher.setAuthTag(Buffer.from(payload.tag, 'hex'));
+  
+  let decrypted = decipher.update(payload.encrypted, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  
+  return JSON.parse(decrypted);
+}
+
+// 在消息处理中使用
+socket.on('message:send', (data) => {
+  const encryptedContent = encrypt({
+    content: data.content,
+    type: data.type,
   });
   
-  // 从 lastMessageId 开始同步
-  socket.emit('sync:from', { messageId: snapshot.lastMessageId });
-}
-```
-
-**预期效果**:
-- ✅ 网络波动时自动恢复
-- ✅ 消息不丢失
-- ✅ 减少重连风暴
-
----
-
-### 建议 4: 统一架构，减少冗余实现
-
-**优先级**: 🟡 中
-
-**改进方案**:
-
-```typescript
-// 1. 统一实时通信接口
-interface RealtimeTransport {
-  connect(): Promise<void>;
-  disconnect(): void;
-  send(event: string, data: unknown): Promise<void>;
-  subscribe(channel: string): void;
-  unsubscribe(channel: string): void;
-  on(event: string, handler: Function): () => void;
-  getState(): ConnectionState;
-}
-
-// 2. 创建传输工厂
-class RealtimeTransportFactory {
-  static create(config: TransportConfig): RealtimeTransport {
-    switch (config.type) {
-      case 'websocket':
-        return new WebSocketTransport(config);
-      case 'socketio':
-        return new SocketIOTransport(config);
-      case 'sse':
-        return new SSETransport(config);
-      default:
-        throw new Error(`Unknown transport type: ${config.type}`);
-    }
-  }
-}
-
-// 3. 保留最佳实现，废弃冗余代码
-// 建议保留:
-// - src/lib/websocket/ (Socket.IO 实现 - 主要)
-// - src/lib/sse/stream.ts (作为降级方案)
-
-// 建议废弃:
-// - src/lib/realtime/useWebSocket.ts (功能重复)
-// - src/lib/realtime/notification-service.ts (应该集成到 websocket 模块)
-```
-
-**预期效果**:
-- ✅ 减少代码冗余
-- ✅ 降低维护成本
-- ✅ 统一的开发体验
-
----
-
-### 建议 5: 优化性能和资源使用
-
-**优先级**: 🟡 中
-
-**改进方案**:
-
-```typescript
-// 1. 安装性能优化依赖
-// npm install --save-optional bufferutil utf-8-validate
-
-// 2. 使用高性能 WebSocket 引擎
-import { Server } from 'socket.io';
-import { createServer } from 'http';
-// import { Server as EiowsServer } from 'eiows'; // 可选
-
-const httpServer = createServer();
-const io = new Server(httpServer, {
-  // wsEngine: EiowsServer, // 可选：使用 eiows 替代 ws
-  maxHttpBufferSize: 64 * 1024, // 降低到 64KB
-  perMessageDeflate: false,     // 禁用压缩（安全性考虑）
+  // 广播加密消息
+  io.to(data.roomId).emit('message:new:encrypted', {
+    id: data.id,
+    encrypted: encryptedContent,
+    timestamp: data.timestamp,
+  });
 });
+```
 
-// 3. 连接池管理
-class ConnectionPool {
-  private connections: Map<string, Set<Socket>> = new Map();
-  private maxConnectionsPerUser = 5;
-  
-  add(userId: string, socket: Socket): boolean {
-    const userConnections = this.connections.get(userId) || new Set();
-    
-    if (userConnections.size >= this.maxConnectionsPerUser) {
-      // 关闭最旧的连接
-      const oldest = Array.from(userConnections)[0];
-      oldest.disconnect(true);
-      userConnections.delete(oldest);
-    }
-    
-    userConnections.add(socket);
-    this.connections.set(userId, userConnections);
-    return true;
+**预期效果**:
+- ✅ 防止消息内容被中间人攻击
+- ✅ 保护敏感数据隐私
+- ⚠️ 增加 CPU 开销
+- ⚠️ 需要 key 管理基础设施
+
+---
+
+### 📌 建议 7: 完善断线重连状态恢复
+
+**当前状态**: 重连后需手动同步
+
+**改进方案**:
+```typescript
+// src/lib/websocket/state-recovery.ts
+
+interface ClientState {
+  socketId: string;
+  userId: string;
+  rooms: string[];
+  documentStates: Map<string, { content: string; revision: number }>;
+  cursors: Map<string, CursorPosition>;
+  pendingOperations: Operation[];
+}
+
+class StateRecoveryManager {
+  // 在 disconnect 时保存状态
+  saveState(socket: AuthenticatedSocket): ClientState {
+    return {
+      socketId: socket.id,
+      userId: socket.data.user.id,
+      rooms: Array.from(socket.data.rooms),
+      documentStates: this.captureDocumentStates(socket),
+      cursors: this.captureCursors(socket),
+      pendingOperations: this.getPendingOperations(socket),
+    };
   }
-  
-  remove(userId: string, socket: Socket) {
-    const userConnections = this.connections.get(userId);
-    if (userConnections) {
-      userConnections.delete(socket);
-      if (userConnections.size === 0) {
-        this.connections.delete(userId);
+
+  // 在 reconnect 时恢复状态
+  async recoverState(
+    socket: AuthenticatedSocket, 
+    previousState: ClientState
+  ): Promise<RecoveryResult> {
+    const results = {
+      roomsRejoined: [] as string[],
+      documentsSynced: [] as string[],
+      cursorsRestored: 0,
+      operationsRecovered: 0,
+    };
+
+    // 1. 重新加入房间
+    for (const roomId of previousState.rooms) {
+      const room = roomManager.get(roomId);
+      if (room) {
+        // 检查是否仍被允许加入
+        if (!permissionManager.isUserBanned(socket.data.user.id, roomId)) {
+          roomManager.join(roomId, { userId: socket.data.user.id, ... });
+          results.roomsRejoined.push(roomId);
+        }
       }
     }
+
+    // 2. 同步文档状态
+    for (const [docId, state] of previousState.documentStates) {
+      const currentState = roomManager.getDocumentState(docId);
+      if (currentState.revision > state.revision) {
+        // 服务器有新版本，发送 delta
+        socket.emit('doc:delta', {
+          docId,
+          baseRevision: state.revision,
+          operations: this.getOperationsBetween(state.revision, currentState.revision),
+        });
+      } else if (currentState.revision < state.revision) {
+        // 客户端有新版本，发送完整状态
+        socket.emit('doc:sync', { docId, ...currentState });
+      }
+      results.documentsSynced.push(docId);
+    }
+
+    // 3. 恢复光标位置
+    for (const [roomId, cursor] of previousState.cursors) {
+      roomManager.updateCursor(roomId, socket.data.user.id, cursor);
+      socket.to(roomId).emit('cursor:update', {
+        userId: socket.data.user.id,
+        ...cursor,
+      });
+      results.cursorsRestored++;
+    }
+
+    // 4. 重放未确认的操作
+    for (const op of previousState.pendingOperations) {
+      await this.replayOperation(socket, op);
+      results.operationsRecovered++;
+    }
+
+    return results;
   }
 }
 
-// 4. 消息批处理
-class MessageBatcher {
-  private batch: Message[] = [];
-  private timer: NodeJS.Timeout | null = null;
-  private batchSize = 50;
-  private batchInterval = 100; // 100ms
-  
-  add(message: Message) {
-    this.batch.push(message);
+// 在 useCollaboration.ts 中集成
+socket.on('connect', async () => {
+  const previousState = localStorage.getItem('ws_state');
+  if (previousState) {
+    const recovery = new StateRecoveryManager();
+    const result = await recovery.recoverState(socket, JSON.parse(previousState));
     
-    if (this.batch.length >= this.batchSize) {
-      this.flush();
-    } else if (!this.timer) {
-      this.timer = setTimeout(() => this.flush(), this.batchInterval);
+    // 显示恢复结果给用户
+    if (result.roomsRejoined.length > 0) {
+      showToast(`已恢复 ${result.roomsRejoined.length} 个房间`);
     }
   }
-  
-  private flush() {
-    if (this.batch.length === 0) return;
-    
-    const messages = [...this.batch];
-    this.batch = [];
-    
-    if (this.timer) {
-      clearTimeout(this.timer);
-      this.timer = null;
-    }
-    
-    // 批量发送
-    io.to(roomId).emit('messages:batch', messages);
-  }
-}
-
-// 5. 配置常量集中管理
-const WEBSOCKET_CONFIG = {
-  HEARTBEAT_INTERVAL: 25000,        // 25秒
-  HEARTBEAT_TIMEOUT: 45000,         // 45秒
-  CONNECTION_TIMEOUT: 60000,        // 60秒
-  MAX_MESSAGE_SIZE: 10 * 1024,      // 10KB
-  MAX_HTTP_BUFFER_SIZE: 64 * 1024,  // 64KB
-  MAX_HISTORY_SIZE: 1000,           // 每房间最多 1000 条消息
-  OFFLINE_MESSAGE_TTL: 7 * 24 * 60 * 60 * 1000, // 7天
-  MAX_OFFLINE_MESSAGES: 100,        // 每用户最多 100 条离线消息
-  MAX_CONNECTIONS_PER_USER: 5,      // 每用户最多 5 个连接
-} as const;
-```
-
-**预期效果**:
-- ✅ 提升服务器吞吐量
-- ✅ 减少内存占用
-- ✅ 配置集中管理
-
----
-
-### 建议 6: 完善监控和可观测性
-
-**优先级**: 🟢 低
-
-**改进方案**:
-
-```typescript
-// 1. Prometheus 指标
-import client from 'prom-client';
-
-const websocketConnections = new client.Gauge({
-  name: 'websocket_connections_total',
-  help: 'Total active WebSocket connections',
-  labelNames: ['room_type'],
-});
-
-const websocketMessages = new client.Counter({
-  name: 'websocket_messages_total',
-  help: 'Total WebSocket messages',
-  labelNames: ['type', 'direction'], // type: send/receive, direction: in/out
-});
-
-const websocketLatency = new client.Histogram({
-  name: 'websocket_message_latency_seconds',
-  help: 'WebSocket message latency',
-  buckets: [0.01, 0.05, 0.1, 0.5, 1, 2, 5],
-});
-
-// 2. 结构化日志
-import { logger } from '@/lib/logger';
-
-logger.info('WebSocket connection established', {
-  socketId: socket.id,
-  userId: user.id,
-  ip: socket.handshake.address,
-  userAgent: socket.handshake.headers['user-agent'],
-  roomCount: socket.data.rooms.size,
-});
-
-// 3. 健康检查端点
-app.get('/health/websocket', (req, res) => {
-  const stats = {
-    status: 'healthy',
-    connections: io.sockets.sockets.size,
-    rooms: roomManager.getStats(),
-    memory: process.memoryUsage(),
-    uptime: process.uptime(),
-  };
-  
-  res.json(stats);
-});
-
-// 4. 告警规则
-// 当以下情况发生时发送告警:
-// - 连接数超过阈值 (>1000)
-// - 消息延迟超过阈值 (>1s)
-// - 错误率超过阈值 (>5%)
-// - 房间数超过阈值 (>500)
-```
-
-**预期效果**:
-- ✅ 实时监控连接状态
-- ✅ 快速定位问题
-- ✅ 自动告警
-
----
-
-### 建议 7: 改进测试覆盖
-
-**优先级**: 🟢 低
-
-**改进方案**:
-
-```typescript
-// 1. 压力测试
-import { create } from 'loadtest';
-
-describe('WebSocket Stress Test', () => {
-  it('should handle 1000 concurrent connections', async () => {
-    const result = await loadTest({
-      url: 'ws://localhost:3000/api/ws',
-      concurrency: 1000,
-      maxSeconds: 60,
-    });
-    
-    expect(result.totalErrors).toBe(0);
-    expect(result.meanLatencyMs).toBeLessThan(100);
-  });
-});
-
-// 2. 故障注入测试
-describe('WebSocket Fault Injection', () => {
-  it('should handle network interruption gracefully', async () => {
-    const client = createClient();
-    
-    // 模拟网络中断
-    await disconnectNetwork();
-    
-    // 等待重连
-    await waitForReconnect(client, { timeout: 10000 });
-    
-    expect(client.connected).toBe(true);
-    
-    // 验证消息没有丢失
-    const messages = client.getPendingMessages();
-    expect(messages.length).toBe(0);
-  });
-});
-
-// 3. 集成测试
-describe('WebSocket Integration', () => {
-  it('should persist messages to database', async () => {
-    const client = createClient();
-    const message = { content: 'test message' };
-    
-    client.emit('message:send', message);
-    
-    await sleep(100);
-    
-    const saved = await prisma.message.findFirst({
-      where: { content: message.content }
-    });
-    
-    expect(saved).not.toBeNull();
-  });
 });
 ```
 
 **预期效果**:
-- ✅ 验证系统可靠性
-- ✅ 发现性能瓶颈
-- ✅ 提升代码质量
+- ✅ 断线重连后自动恢复状态
+- ✅ 减少用户手动操作
+- ✅ 保留重连前的操作上下文
+- ⚠️ 增加服务器存储开销
 
 ---
 
-## 📈 预期效果总结
+## 四、预期效果总结
 
-### 性能提升
+| 建议 | 优先级 | 工作量 | 效果 |
+|------|--------|--------|------|
+| Redis Adapter | 🔴 高 | 中 | 可扩展性提升 |
+| 消息速率限制 | 🔴 高 | 低 | 安全性提升 |
+| 优化心跳检测 | 🟡 中 | 低 | 资源利用率提升 |
+| 消息确认机制 | 🟡 中 | 中 | 可靠性提升 |
+| 多域名 CORS | 🟡 中 | 低 | 灵活性提升 |
+| 消息加密 | 🟢 低 | 高 | 安全性提升 |
+| 状态恢复 | 🟢 低 | 高 |用户体验提升 |
 
-| 指标 | 当前 | 优化后 | 提升 |
-|------|------|--------|------|
-| 最大连接数 | ~1000 | ~10000+ | 10x |
-| 消息延迟 | ~50ms | ~10ms | 80% |
-| 内存占用 | 高 | 中 | -30% |
-| 重连成功率 | ~90% | ~99% | 10% |
+### 关键指标改进预期
 
-### 安全性提升
-
-| 风险 | 当前状态 | 优化后 |
-|------|----------|--------|
-| CSWSH | ⚠️ 中风险 | ✅ 已缓解 |
-| DoS 攻击 | ⚠️ 中风险 | ✅ 已缓解 |
-| 消息注入 | ⚠️ 中风险 | ✅ 已缓解 |
-| 会话劫持 | ⚠️ 中风险 | ✅ 已缓解 |
-
-### 可维护性提升
-
-| 指标 | 当前 | 优化后 |
-|------|------|--------|
-| 代码冗余 | 高 | 低 |
-| 测试覆盖率 | ~60% | ~85% |
-| 文档完整性 | 中 | 高 |
-| 监控可见性 | 低 | 高 |
+1. **可扩展性**: 支持 10x+ 并发连接 (通过 Redis 水平扩展)
+2. **安全性**: 防止 DoS 和垃圾消息 (通过速率限制)
+3. **响应速度**: 更快识别断线 (心跳优化)
+4. **可靠性**: 消息送达确认 (可靠消息机制)
+5. **灵活性**: 多域名支持 (CORS 优化)
 
 ---
 
-## 🎯 实施优先级建议
+## 五、参考资料
 
-### 第一阶段 (立即实施)
-1. ✅ 修复心跳超时配置不一致
-2. ✅ 添加消息大小限制
-3. ✅ 实现速率限制
-4. ✅ 修复 Origin 验证
-
-### 第二阶段 (2-4周)
-1. 🔲 集成 Redis Adapter
-2. 🔲 实现消息持久化
-3. 🔲 改进重连策略
-4. 🔲 统一架构
-
-### 第三阶段 (1-2个月)
-1. 🔲 性能优化 (bufferutil, eiows)
-2. 🔲 完善监控告警
-3. 🔲 压力测试和故障注入测试
+1. Socket.IO 官方文档: https://socket.io/docs/v4/
+2. Socket.IO Redis Adapter: https://socket.io/docs/v4/redis-adapter/
+3. WebSocket 最佳实践 (MDN): https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
+4. Rate Limiting 模式: https://stripe.com/blog/rate-limiter
+5. WebSocket 安全指南: https://httptoolkit.com/blog/websocket-security/
 
 ---
 
-## 📚 参考资料
-
-1. [Socket.IO Performance Tuning](https://socket.io/docs/v4/performance-tuning/)
-2. [OWASP WebSocket Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/WebSocket_Security_Cheat_Sheet.html)
-3. [Socket.IO Redis Adapter](https://socket.io/docs/v4/redis-adapter/)
-4. [Scaling WebSocket Applications](https://medium.com/@elliekang/scaling-to-a-millions-websocket-concurrent-connections-at-spoon-radio-bbadd6ec1901)
-
----
-
-**报告完成** ✅
-
-该报告基于项目当前代码分析、业界最佳实践和安全指南综合生成。建议按优先级逐步实施改进措施。
+*本报告由咨询师子代理自动生成*
+*如需进一步技术细节，请联系架构师子代理*
