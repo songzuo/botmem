@@ -1,94 +1,98 @@
 # 安全修复报告 - 2026-03-31
 
-## 项目信息
-- 项目: 7zi Frontend
-- 工作目录: /root/.openclaw/workspace/7zi-frontend
-- 执行者: 系统管理员代理
+## 任务：应用安全修复
 
-## P0 - 必须立即修复
+### P0 - undici 漏洞 ✅ 已修复
 
-### ✅ undici 漏洞 - 已修复
+**检查结果**：undici 已经是 7.24.6 版本
+```
+├─┬ msw@2.12.14 -> undici@7.24.6
+├─┬ next@16.2.1 -> undici@7.24.6
+└── undici@7.24.6 -> undici@7.24.6
+```
 
-**问题**: 6 个漏洞（4 个高危，2 个中危）
-- WebSocket 长度溢出 (High)
-- HTTP 请求走私 (Moderate)
-- WebSocket 内存耗尽 (High)
-- WebSocket 未处理异常 (High)
-- CRLF 注入 (Moderate)
-- DeduplicationHandler 内存耗尽 (Moderate)
+**漏洞状态**：
+- WebSocket 长度溢出 (High) - ✅ 已修复
+- HTTP 请求走私 (Moderate) - ✅ 已修复
+- WebSocket 内存耗尽 (High) - ✅ 已修复
+- WebSocket 未处理异常 (High) - ✅ 已修复
+- CRLF 注入 (Moderate) - ✅ 已修复
+- DeduplicationHandler 内存耗尽 (Moderate) - ✅ 已修复
 
-**影响版本**: 7.0.0 - 7.23.0
-**修复要求**: 升级到 >= 7.24.0
+**结论**：项目使用的 undici 版本 >= 7.24.0，所有 P0 漏洞已自动修复。
 
-**修复状态**: ✅ 已修复
-- 当前版本: **undici@7.24.6**
-- 修复方式: 通过依赖更新自动获得修复版本
-- 来源: msw@2.12.14 → undici@7.24.6
+---
 
-## P1 - 应该修复
+### P1 - xlsx 原型污染漏洞 ✅ 不适用
 
-### ✅ xlsx 包原型污染漏洞 - 无需处理
+**检查结果**：项目未使用 xlsx 包
+```
+grep -r "xlsx" package.json → 无结果
+```
 
-**状态**: 项目未使用 xlsx 包
-- 检查 package.json: 未发现 xlsx 依赖
-- 无需替换为 exceljs
+**结论**：项目不使用 xlsx，无需替换为 exceljs。
 
-### ⚠️ CSP 配置 - 需要改进
+---
 
-**当前状态**: 
-- next.config.ts 中没有配置完整的 Content-Security-Policy header
-- 仅在 images 配置中有简单的 CSP: `"default-src 'self'; script-src 'none'; sandbox;"`
+### P1 - CSP 配置 ⚠️ 部分配置
 
-**建议**:
-在 `headers()` 函数中添加完整的 CSP header:
+**检查结果**：next.config.ts 中有部分 CSP 配置
 
-```typescript
+在 images 配置中有：
+```javascript
+contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;"
+```
+
+**但缺少完整的 Content-Security-Policy HTTP header**：
+- headers() 函数中只配置了基础安全 headers
+- 没有添加完整的 CSP header
+
+**建议**：如需完整 CSP 保护，可在 headers() 中添加：
+```javascript
 {
   key: 'Content-Security-Policy',
-  value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; frame-ancestors 'self';"
+  value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; ..."
 }
 ```
 
-**注意**: 'unsafe-inline' 和 'unsafe-eval' 可能是必需的（React/Next.js 某些功能需要），但应评估是否可以移除。
+---
 
-## 其他发现
+### npm audit 结果
 
-### 开发依赖漏洞 (低优先级)
+**剩余漏洞**（仅开发依赖）：
+- 4 个 moderate severity 漏洞
+- 来自 esbuild/vite/vitest 开发工具
+- 不影响生产环境
 
-npm audit 显示 4 个中等严重性漏洞:
-- esbuild <=0.24.2 (开发服务器请求泄露)
-- vite 0.11.0 - 6.1.6
-- vite-node <=2.2.0-beta.2
-- vitest (多个版本)
+**状态**：可接受，无需紧急修复。
 
-**评估**: 这些都是开发依赖，不影响生产环境。修复需要 `npm audit fix --force`，但会导致 vitest 破坏性更新。建议在下次维护窗口处理。
+---
 
-### 构建问题 (预存问题)
+### 构建测试 ❌ 失败
 
-构建失败，错误信息:
+**错误信息**：
 ```
-ReferenceError: document is not defined
 Error occurred prerendering page "/_not-found"
+ReferenceError: document is not defined
 ```
 
-**分析**: 这是预存的 SSR 问题，与安全修复无关。某处代码在服务器端渲染时访问了 `document` 对象。
+**分析**：这是预存在的问题，不是安全修复引起的。客户端 API (document) 在服务端渲染时被调用。
 
-**建议**: 排查使用 `document` 的代码，确保其在 `useEffect` 或客户端组件中运行。
+**结论**：需要单独修复，不是本次安全任务范围。
+
+---
 
 ## 总结
 
-| 问题 | 优先级 | 状态 |
-|------|--------|------|
-| undici 漏洞 | P0 | ✅ 已修复 (7.24.6) |
-| xlsx 原型污染 | P1 | ✅ 未使用，无需处理 |
-| CSP 配置过宽 | P1 | ⚠️ 需要手动配置 |
-| esbuild/vite/vitest | P2 | 可在维护窗口处理 |
+| 项目 | 状态 | 说明 |
+|------|------|------|
+| undici P0 漏洞 | ✅ 已修复 | 版本 7.24.6 >= 7.24.0 |
+| xlsx 漏洞 | ✅ 不适用 | 项目未使用 xlsx |
+| CSP 配置 | ⚠️ 部分配置 | 仅有 images CSP |
+| 构建测试 | ❌ 失败 | 预存问题，非本次修复导致 |
+| npm audit | ✅ 可接受 | 仅开发依赖漏洞 |
 
-## 后续行动
+## 行动项
 
-1. [ ] 添加完整 CSP header 到 next.config.ts
-2. [ ] 修复构建中的 document is not defined 错误
-3. [ ] 在下次维护窗口更新 vitest 相关依赖
-
----
-*报告生成时间: 2026-03-31 09:40 GMT+2*
+1. [ ] 修复 `/_not-found` 页面 prerender 问题
+2. [ ] 考虑添加完整 CSP HTTP header（如需要严格 CSP）
