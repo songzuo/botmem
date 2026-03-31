@@ -875,4 +875,606 @@ type CapabilityType =
   | 'documentation'                  // 文档生成
   | 'data_analysis'                  // 数据分析
   | 'ta[已移除]'                 // 任务执行
+  | 'customer_service'               // 客户服务
+  | 'research';                       // 研究分析
+
+// 模型选择结果
+interface ModelSelection {
+  modelId: string;
+  modelName: string;
+  reason: string;                     // 选择原因
+  confidence: number;                // 置信度 0-1
+  alternatives: AlternativeModel[]; // 备选模型
+  estimatedCost: number;             // 预估成本
+  estimatedLatency: number;          // 预估延迟（毫秒）
+}
+
+interface AlternativeModel {
+  modelId: string;
+  score: number;                     // 评分
+  reason: string;
+}
+
+// 模型信息
+interface ModelInfo {
+  id: string;
+  name: string;
+  provider: ModelProvider;
+  status: ModelStatus;
+  capabilities: ModelCapability[];
+  performance: ModelPerformance;
+  health: ModelHealth;
+}
+
+type ModelStatus = 'active' | 'inactive' | 'degraded' | 'unavailable';
+
+// 模型性能
+interface ModelPerformance {
+  avgLatency: number;                // 平均延迟
+  p95Latency: number;               // P95 延迟
+  successRate: number;              // 成功率
+  throughput: number;               // 吞吐量
+  costPer1kTokens: number;          // 每千 token 成本
+}
+
+// 模型健康
+interface ModelHealth {
+  status: 'healthy' | 'degraded' | 'unhealthy';
+  uptime: number;                   // 运行时间（百分比）
+  errorRate: number;                // 错误率
+  lastCheck: Date;
+  issues: HealthIssue[];
+}
+
+// 健康报告
+interface HealthReport {
+  overall: 'healthy' | 'degraded' | 'unhealthy';
+  timestamp: Date;
+  models: ModelHealth[];
+  alerts: HealthAlert[];
+}
+
+interface HealthAlert {
+  modelId: string;
+  severity: 'warning' | 'error' | 'critical';
+  message: string;
+  timestamp: Date;
+}
+```
+
+**模型选择算法**:
+
+```
+┌──────────────────────────────────────────────────┐
+│           智能模型选择算法                          │
+├──────────────────────────────────────────────────┤
+│                                                   │
+│  输入: Task (任务对象)                            │
+│                                                   │
+│  Step 1: 能力匹配 (权重 40%)                      │
+│  ├─ 匹配任务类型与模型能力                        │
+│  ├─ 计算能力匹配分数                             │
+│  └─ 过滤不满足最低要求的模型                      │
+│                                                   │
+│  Step 2: 性能评估 (权重 30%)                      │
+│  ├─ 响应时间评分                                 │
+│  ├─ 吞吐量评分                                   │
+│  └─ 成功率评分                                   │
+│                                                   │
+│  Step 3: 成本优化 (权重 20%)                      │
+│  ├─ Token 成本计算                               │
+│  ├─ 性价比评分                                   │
+│  └─ 预算约束检查                                 │
+│                                                   │
+│  Step 4: 可用性检查 (权重 10%)                    │
+│  ├─ 健康状态评分                                 │
+│  ├─ 配额余量评分                                 │
+│  └─ 速率限制评分                                 │
+│                                                   │
+│  输出: ModelSelection (最优模型)                  │
+│                                                   │
+└──────────────────────────────────────────────────┘
+```
+
+#### 2. MCP 协议增强 (Model Collaboration Protocol)
+
+**核心接口**:
+
+```typescript
+interface ModelCollaborationProtocol {
+  /**
+   * 发起协作会话
+   * @param task 任务对象
+   * @param models 参与模型列表
+   * @returns 协作会话
+   */
+  initiateCollaboration(task: Task, models: string[]): Promise<CollaborationSession>;
+  
+  /**
+   * 传递上下文
+   * @param sessionId 会话 ID
+   * @param fromModel 源模型
+   * @param toModel 目标模型
+   */
+  transferContext(sessionId: string, fromModel: string, toModel: string): Promise<void>;
+  
+  /**
+   * 合并结果
+   * @param results 模型结果列表
+   * @returns 合并后的结果
+   */
+  mergeResults(results: ModelResult[]): MergedResult;
+  
+  /**
+   * 解决冲突
+   * @param conflicts 冲突列表
+   * @returns 解决方案
+   */
+  resolveConflicts(conflicts: Conflict[]): Resolution;
+  
+  /**
+   * 结束协作会话
+   * @param sessionId 会话 ID
+   */
+  endCollaboration(sessionId: string): Promise<void>;
+}
+
+// 协作会话
+interface CollaborationSession {
+  id: string;
+  task: Task;
+  models: ModelParticipant[];
+  context: SharedContext;
+  status: CollaborationStatus;
+  createdAt: Date;
+  updatedAt: Date;
+  completedAt?: Date;
+}
+
+type CollaborationStatus = 
+  | 'initializing'    // 初始化中
+  | 'active'         // 进行中
+  | 'merging'        // 结果合并中
+  | 'completed'      // 已完成
+  | 'failed'         // 失败
+  | 'cancelled';     // 已取消
+
+// 模型参与者
+interface ModelParticipant {
+  modelId: string;
+  role: 'primary' | 'secondary' | 'coordinator';
+  status: 'waiting' | 'processing' | 'completed' | 'failed';
+  result?: ModelResult;
+  error?: string;
+  startTime?: Date;
+  endTime?: Date;
+}
+
+// 共享上下文
+interface SharedContext {
+  taskContext: TaskContext;           // 任务上下文
+  modelOutputs: Map<string, any>;    // 模型输出
+  intermediateData: Map<string, any>; // 中间数据
+  metadata: CollaborationMetadata;   // 元数据
+}
+
+// 任务上下文
+interface TaskContext {
+  originalTask: Task;               // 原始任务
+  decomposed: Task[];               // 分解后的子任务
+  sharedResources: SharedResource[]; // 共享资源
+  constraints: TaskConstraint[];     // 任务约束
+}
+
+// 模型结果
+interface ModelResult {
+  modelId: string;
+  output: any;
+  confidence: number;
+  processingTime: number;
+  tokensUsed: number;
+  metadata: Record<string, any>;
+}
+
+// 合并结果
+interface MergedResult {
+  output: any;
+  confidence: number;
+  sources: string[];                // 参与模型 ID
+  mergeStrategy: MergeStrategy;
+  quality: MergeQuality;
+  conflicts?: Conflict[];
+}
+
+type MergeStrategy = 
+  | 'vote'           // 投票
+  | 'weighted'       // 加权平均
+  | 'priority'       // 优先级
+  | 'ensemble';      // 集成学习
+
+// 合并质量
+interface MergeQuality {
+  score: number;                    // 质量评分 0-1
+  agreement: number;                // 一致性 0-1
+  coverage: number;                 // 覆盖率 0-1
+}
+
+// 冲突
+interface Conflict {
+  id: string;
+  type: ConflictType;
+  models: string[];                // 冲突的模型
+  options: ConflictOption[];        // 冲突选项
+  context: Record<string, any>;    // 冲突上下文
+}
+
+type ConflictType = 
+  | 'output_mismatch'   // 输出不匹配
+  | 'approach_diff'     // 方法差异
+  | 'quality_diff';     // 质量差异
+
+// 冲突选项
+interface ConflictOption {
+  modelId: string;
+  value: any;
+  confidence: number;
+  reasoning: string;
+}
+
+// 解决方案
+interface Resolution {
+  resolved: boolean;
+  strategy: ResolutionStrategy;
+  resolvedValue: any;
+  reasoning: string;
+}
+
+type ResolutionStrategy = 
+  | 'highest_confidence'  // 最高置信度
+  | 'majority_vote'      // 多数投票
+  | 'expert_override'     // 专家覆盖
+  | 'manual_review';     // 人工审核
+```
+
+**协作模式**:
+
+```
+┌──────────────────────────────────────────────────┐
+│           模型协作模式                              │
+├──────────────────────────────────────────────────┤
+│                                                   │
+│  1. 串行协作 (Sequential)                       │
+│  ┌────┐   ┌────┐   ┌────┐   ┌────┐             │
+│  │Task│──▶│Model A│──▶│Model B│──▶│Result│        │
+│  └────┘   └────┘   └────┘   └────┘             │
+│     │                           │                │
+│     └───────── 输出作为输入 ────┘                │
+│                                                   │
+│  2. 并行协作 (Parallel)                          │
+│  ┌────┐   ┌────┐                               │
+│  │Task│──▶│Model A│──┐                         │
+│  └────┘   └────┘   │   ┌────┐                  │
+│                     ├─▶│Merge│──▶│Result│        │
+│  ┌────┐   ┌────┐   │   └────┘                  │
+│  └────┘   │Model B│──┘                         │
+│  └────┘   └────┘                               │
+│                                                   │
+│  3. 层级协作 (Hierarchical)                     │
+│  ┌────┐                                         │
+│  │Coordinator│ (主模型，协调)                    │
+│  └────┬────┘                                    │
+│       │                                          │
+│  ┌────┴────┬────┐                               │
+│  │         │    │                               │
+│  ▼         ▼    ▼                               │
+│ ┌────┐ ┌────┐ ┌────┐                          │
+│ │SubA│ │SubB│ │SubC│ (子模型，执行子任务)       │
+│ └────┘ └────┘ └────┘                          │
+│                                                   │
+└──────────────────────────────────────────────────┘
+```
+
+---
+
+## ⚡ 性能架构优化
+
+### 整体架构
+
+```
+┌─────────────────────────────────────────────────────────┐
+│              性能优化引擎 (Performance Engine)           │
+├─────────────────────────────────────────────────────────┤
+│                                                          │
+│  ┌────────────────────────────────────────────────┐    │
+│  │         多级缓存系统 (Multi-Level Cache)        │    │
+│  │  ┌──────────┐ ┌──────────┐ ┌──────────┐       │    │
+│  │  │ L1 Cache │ │ L2 Cache │ │ L3 Cache │       │    │
+│  │  │ (内存)   │ │ (Redis)  │ │ (DB)     │       │    │
+│  │  └──────────┘ └──────────┘ └──────────┘       │    │
+│  └────────────────────────────────────────────────┘    │
+│                                                          │
+│  ┌────────────────────────────────────────────────┐    │
+│  │         API 网关优化 (API Gateway)              │    │
+│  │  ┌──────────┐ ┌──────────┐ ┌──────────┐      │    │
+│  │  │ 请求聚合  │ │ 批量处理 │ │ 限流熔断 │      │    │
+│  │  └──────────┘ └──────────┘ └──────────┘      │    │
+│  └────────────────────────────────────────────────┘    │
+│                                                          │
+│  ┌────────────────────────────────────────────────┐    │
+│  │         构建优化 (Build Optimization)           │    │
+│  │  ┌──────────┐ ┌──────────┐ ┌──────────┐      │    │
+│  │  │ 增量编译 │ │ 代码分割 │ │ 持久缓存 │      │    │
+│  │  └──────────┘ └──────────┘ └──────────┘      │    │
+│  └────────────────────────────────────────────────┘    │
+│                                                          │
+└─────────────────────────────────────────────────────────┘
+```
+
+### 1. 多级缓存系统
+
+```typescript
+interface MultiLevelCache {
+  // L1: 内存缓存 (毫秒级访问)
+  l1: MemoryCache;
+  
+  // L2: Redis 缓存 (毫秒级访问)
+  l2: RedisCache;
+  
+  // L3: 数据库缓存 (秒级访问)
+  l3: DatabaseCache;
+  
+  // 缓存策略
+  strategies: CacheStrategy[];
+  
+  // 缓存管理
+  manage(): CacheManager;
+}
+
+// 缓存配置
+interface CacheConfig {
+  name: string;
+  level: 1 | 2 | 3;
+  ttl: number;                      // 生存时间（秒）
+  maxSize?: number;                 // 最大大小
+  evictionPolicy: 'lru' | 'lfu' | 'fifo';
+  preload?: string[];               // 预加载键
+  compression?: boolean;             // 是否压缩
+  serializer?: 'json' | 'msgpack' | 'protobuf';
+}
+
+// 缓存策略
+interface CacheStrategy {
+  pattern: string;                  // 缓存键模式
+  level: 1 | 2 | 3;               // 缓存级别
+  ttl: number;                     // 生存时间
+  invalidateOn?: InvalidateEvent[]; // 失效事件
+  fallback?: FallbackConfig;       // 降级配置
+}
+
+interface InvalidateEvent {
+  event: 'write' | 'delete' | 'update';
+  keyPattern?: string;
+  entity?: string;
+}
+
+interface FallbackConfig {
+  enabled: boolean;
+  sourceLevel: 1 | 2 | 3;
+  timeout: number;
+}
+```
+
+**缓存层级设计**:
+
+```
+┌──────────────────────────────────────────────────┐
+│            缓存命中率目标                           │
+├──────────────────────────────────────────────────┤
+│                                                   │
+│  L1 (内存缓存)                                    │
+│  ├─ 目标命中率: 60-80%                           │
+│  ├─ 延迟: < 1ms                                 │
+│  ├─ 大小: 100MB                                  │
+│  └─ 淘汰策略: LRU                                │
+│                                                   │
+│  L2 (Redis 缓存)                                  │
+│  ├─ 目标命中率: 85-95%                           │
+│  ├─ 延迟: 1-5ms                                 │
+│  ├─ 大小: 1GB                                    │
+│  └─ 淘汰策略: LFU                                │
+│                                                   │
+│  L3 (数据库缓存)                                   │
+│  ├─ 目标命中率: 95-99%                           │
+│  ├─ 延迟: 10-50ms                                │
+│  ├─ 存储: 磁盘                                    │
+│  └─ 淘汰策略: TTL + 手动                          │
+│                                                   │
+│  整体命中率目标: > 95%                            │
+│                                                   │
+└──────────────────────────────────────────────────┘
+```
+
+### 2. API 响应时间优化
+
+```typescript
+interface APIOptimizer {
+  // 请求聚合
+  aggregate(requests: APIRequest[]): AggregatedRequest;
+  
+  // 批量处理
+  batch(operations: Operation[]): Promise<BatchResult>;
+  
+  // 预取
+  prefetch(keys: string[]): Promise<void>;
+  
+  // 索引优化
+  optimizeIndexes(): Promise<IndexRecommendation[]>;
+}
+
+// 批量操作
+interface BatchOperation {
+  type: 'read' | 'write' | 'delete';
+  entity: string;
+  ids: string[];
+  data?: any;
+}
+
+// 索引推荐
+interface IndexRecommendation {
+  table: string;
+  columns: string[];
+  type: 'btree' | 'hash' | 'gin' | 'gist';
+  estimatedImpact: number;
+  estimatedSize: number;
+}
+```
+
+**API 优化策略**:
+
+| 优化项 | 当前状态 | 目标状态 | 预期提升 |
+|--------|---------|---------|---------|
+| 查询优化 | 基础索引 | 复合索引 + 覆盖索引 | 30% ↓ |
+| 批量接口 | 单个操作 | 批量操作 (50x) | 40% ↓ |
+| 预取 | 无 | 智能预取 | 20% ↓ |
+| CDN | 无 | 边缘缓存 | 15% ↓ |
+| 压缩 | 无 | Brotli 压缩 | 10% ↓ |
+
+### 3. 构建性能优化
+
+```typescript
+interface BuildOptimizer {
+  // 增量编译配置
+  incremental: IncrementalConfig;
+  
+  // 代码分割策略
+  splitting: SplitChunksConfig;
+  
+  // 持久化缓存
+  persistentCache: PersistentCacheConfig;
+  
+  // 模块联邦
+  moduleFederation?: ModuleFederationConfig;
+}
+
+// 增量编译配置
+interface IncrementalConfig {
+  enabled: boolean;
+  buildInfo: boolean;
+  declarations: boolean;
+  exclude?: string[];
+}
+
+// 代码分割配置
+interface SplitChunksConfig {
+  chunks: 'all' | 'async' | 'initial';
+  maxSize: number;
+  minSize: number;
+  cacheGroups: CacheGroup[];
+}
+
+// 持久化缓存配置
+interface PersistentCacheConfig {
+  enabled: boolean;
+  cacheDirectory: string;
+  buildDependencies: string[];
+  compression: boolean;
+}
+```
+
+**构建优化目标**:
+
+| 指标 | v1.5.0 当前 | v1.6.0 目标 | 提升 |
+|------|------------|------------|------|
+| TypeScript 编译 | 52s | <30s | 42% ↓ |
+| 打包时间 | 54s | <30s | 44% ↓ |
+| 增量构建 | N/A | <10s | 新功能 |
+| 热更新 | ~8s | <3s | 62% ↓ |
+
+---
+
+## 📅 实施计划
+
+### 阶段 1: 基础设施 (Week 1-2)
+
+| 周次 | 任务 | 负责人 | 产出 |
+|------|------|--------|------|
+| W1-D1~2 | 数据存储层设计 | 🏗️ 架构师 | DB Schema、Redis 结构 |
+| W1-D3~4 | 核心接口定义 | 🏗️ 架构师 | TypeScript 接口 |
+| W1-D5 | 基础框架搭建 | ⚡ Executor | 基础代码结构 |
+| W2-D1~3 | TimePredictionEngine 实现 | 🏗️ 架构师 | 预测引擎 |
+| W2-D4~5 | 单元测试编写 | 🧪 测试员 | 测试用例 |
+
+### 阶段 2: 核心功能 (Week 3-4)
+
+| 周次 | 任务 | 负责人 | 产出 |
+|------|------|--------|------|
+| W3-D1~3 | CapabilityAssessor 实现 | ⚡ Executor | 能力评估器 |
+| W3-D4~5 | HistoryAnalyzer 实现 | 📚 咨询师 | 历史分析器 |
+| W4-D1~3 | ModelOrchestrator 设计 | 🏗️ 架构师 | 编排器设计 |
+| W4-D4~5 | MCP 协议实现 | ⚡ Executor | 协作协议 |
+
+### 阶段 3: 性能优化 (Week 5)
+
+| 周次 | 任务 | 负责人 | 产出 |
+|------|------|--------|------|
+| W5-D1~2 | 多级缓存实现 | 🛡️ 系统管理员 | 缓存系统 |
+| W5-D3~4 | API 优化实现 | 🛡️ 系统管理员 | 优化 API |
+| W5-D5 | 构建优化 | ⚡ Executor | 优化配置 |
+
+### 阶段 4: 集成测试 (Week 6)
+
+| 周次 | 任务 | 负责人 | 产出 |
+|------|------|--------|------|
+| W6-D1~2 | 集成测试 | 🧪 测试员 | 测试报告 |
+| W6-D3~4 | 性能测试 | 🧪 测试员 | 性能报告 |
+| W6-D5 | 发布准备 | 🛡️ 系统管理员 | 部署包 |
+
+---
+
+## 🔒 风险评估与缓解
+
+### 高风险
+
+| 风险 | 概率 | 影响 | 缓解措施 |
+|------|------|------|----------|
+| 时间预测精度不达标 | 中 | 高 | 保留规则引擎 fallback |
+| 多模型集成复杂 | 高 | 高 | 分阶段实施，MVP 优先 |
+| 性能优化影响稳定性 | 中 | 高 | 灰度发布，充分测试 |
+
+### 中风险
+
+| 风险 | 概率 | 影响 | 缓解措施 |
+|------|------|------|----------|
+| 开发周期延期 | 中 | 中 | 预留 buffer，预留 P2 功能空间 |
+| 依赖升级兼容 | 低 | 中 | 充分测试，分批升级 |
+
+---
+
+## ✅ 总结
+
+本文档定义了 v1.6.0 性能优化架构的完整设计，涵盖三大核心模块：
+
+1. **Agent Learning System 2.0**: 通过时间预测、能力评估和历史分析三大引擎，实现智能调度的全面升级
+2. **多模型协作框架**: 支持异构 AI 模型的无缝协作，实现模型能力互补和资源优化
+3. **性能架构优化**: 多级缓存、API 优化和构建优化，实现响应速度 50% 提升
+
+架构设计遵循以下原则：
+- **模块化**: 高内聚、低耦合
+- **可扩展**: 水平扩展和功能扩展支持
+- **容错性**: 降级策略和熔断保护
+- **可观测性**: 完整日志和监控
+
+---
+
+**文档状态**: ✅ 架构设计完成  
+**审核状态**: 待审核  
+**下一步**: 提交技术评审会议讨论
+
+---
+
+*本文档由 🏗️ 架构师 设计，生成于 2026-03-31*                      // UI 设计
+  | 'testing'                        // 测试
+  | 'documentation'                  // 文档生成
+  | 'data_analysis'                  // 数据分析
+  | 'ta[已移除]'                 // 任务执行
   | 'customer_service'               // 客
