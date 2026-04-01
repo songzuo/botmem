@@ -3,9 +3,9 @@
     "email": 1743411083,
     "calendar": null,
     "weather": 1743411083,
-    "project": 1743471519,
+    "project": 1743495480,
     "xlsx_migration_verified": 1743383980
   },
-  "lastHeartbeat": 1743495480,
-  "notes": "Heartbeat 2026-04-01 13:38 Berlin. TypeScript errors (10) still pending - React type mismatches (TS2322). Git status: ~20 modified files in workspace/7zi-frontend. Background exec failures (SIGTERM) from ng/web-vitals.ts and test suite - non-critical, dev processes being terminated."
+  "lastHeartbeat": 1743535020,
+  "notes": "Heartbeat 2026-04-02 00:37 Berlin. TypeScript 0 errors milestone achieved. 7zi-frontend has ~20 modified files (not committed). Gmail service unreachable locally (expected - runs on bot7/7zi.com). Late night - minimal activity."
 }
