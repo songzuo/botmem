@@ -2,10 +2,10 @@
   "lastChecks": {
     "email": 1743411083,
     "calendar": null,
-    "weather": null,
+    "weather": 1743411083,
     "project": 1743535020,
     "xlsx_migration_verified": 1743383980
   },
-  "lastHeartbeat": 1743536359,
-  "notes": "Heartbeat 2026-04-02 01:39 Berlin. Late night, minimal activity. TypeScript 0 errors confirmed. Exec completed successfully."
+  "lastHeartbeat": 1743537060,
+  "notes": "Heartbeat 2026-04-02 01:44 Berlin. Background exec completed (TypeScript check, exit 0). Late night - deep quiet hours. No action needed."
 }
