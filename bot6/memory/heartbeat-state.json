@@ -3,9 +3,9 @@
     "email": 1743411083,
     "calendar": null,
     "weather": 1743411083,
-    "project": 1743495480,
+    "project": 1743535020,
     "xlsx_migration_verified": 1743383980
   },
-  "lastHeartbeat": 1743536700,
-  "notes": "Heartbeat 2026-04-02 01:05 Berlin. EdgeTypes TS1161 error seen in system log (unterminated regex) - likely from killed exec. HEARTBEAT.md confirms TypeScript 0 errors milestone. Late night - staying quiet."
+  "lastHeartbeat": 1743539300,
+  "notes": "Heartbeat 2026-04-02 01:28 Berlin. Late night - minimal activity. Background exec completed (code 0). v1.8.0 Agent World Strategy doc completed."
 }
