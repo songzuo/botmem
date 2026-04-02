@@ -86,6 +86,7 @@
    - 跨 workflow 共享缓存
 
 5. **完善的并发控制**
+
    ```yaml
    concurrency:
      group: ${{ github.workflow }}-${{ github.ref }}
@@ -200,6 +201,7 @@ unit-tests:
    - Docker GHA 缓存减少镜像构建时间
 
 2. **合理的缓存 Key 设计**
+
    ```yaml
    key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
    restore-keys: |
