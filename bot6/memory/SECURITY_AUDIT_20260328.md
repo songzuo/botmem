@@ -428,6 +428,7 @@ DATABASE_PASSWORD=               # ⚠️ 如果使用外部数据库
    - 需要确认是否在 `.gitignore` 中
 
 2. **`.gitignore` 检查**
+
    ```gitignore
    # .gitignore 包含：
    .env
