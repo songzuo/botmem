@@ -1,11 +1,11 @@
 {
   "lastChecks": {
-    "email": null,
+    "email": 1743411083,
     "calendar": null,
-    "weather": null,
-    "project": 1743383980,
+    "weather": 1743411083,
+    "project": 1743495480,
     "xlsx_migration_verified": 1743383980
   },
-  "lastHeartbeat": 1743405300,
-  "notes": "Heartbeat 2026-03-31 07:15 Berlin. Git push pending (256+ files modified). System message: RoomMessage type error in marine-c session. 7zi-frontend has ~70 TypeScript errors. docs/ directory has many deleted API docs (cleaned up). Dashboard darkmode improvement docs in docs/DASHBOARD_DARKMODE_IMPROVEMENT_20260331.md."
+  "lastHeartbeat": 1743535020,
+  "notes": "Heartbeat 2026-04-02 00:37 Berlin. TypeScript 0 errors milestone achieved. 7zi-frontend has ~20 modified files (not committed). Gmail service unreachable locally (expected - runs on bot7/7zi.com). Late night - minimal activity."
 }
