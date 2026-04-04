@@ -1,14 +1,8 @@
 {
   "lastChecks": {
-    "system": 1742643796,
     "email": null,
     "calendar": null,
-    "weather": null
-  },
-  "systemStatus": {
-    "diskUsage": "57%",
-    "memoryUsage": "38%",
-    "loadAverage": "1.12",
-    "picoclaw": "running (since Mar11)"
+    "weather": null,
+    "system": 1743586800
   }
 }
