@@ -1,10 +1,24 @@
 {
-  "lastHeartbeat": "2026-04-07T19:16:00Z",
-  "nextScheduled": null,
-  "pendingTasks": [],
   "lastChecks": {
-    "email": null,
+    "调度器运行": "2026-04-14 06:24 UTC",
+    "email": 1744471140,
     "calendar": null,
-    "weather": null
-  }
+    "weather": null,
+    "memory-maintenance": 1715346900
+  },
+  "activeTasks": {
+    "调度时间": "2026-04-14 06:24 UTC",
+    "任务列表": [
+      "nextjs16-migration-fix (subagent:54c26865)",
+      "architecture-v2-detailed (subagent:9a6aa1b0)"
+    ],
+    "总数": 2,
+    "启动失败": [
+      "test-health-deep (gateway timeout)",
+      "prod-health-check (gateway timeout)",
+      "code-quality-audit (gateway timeout)"
+    ]
+  },
+  "gateway状态": "部分超时，但任务仍被接受",
+  "备注": "Gateway有超时问题，但部分任务已成功启动。继续监控。"
 }
