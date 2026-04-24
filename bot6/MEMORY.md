@@ -534,3 +534,42 @@ git push --force        # 使用 --force-with-lease 替代
 - ✅ 已创建 `memory/2026-04-19.md` 日志
 - ✅ 已创建 `memory/2026-04-21.md` 日志
 - ✅ 已创建 `memory/2026-04-22.md` 日志
+
+---
+
+## 📅 2026-04-24 重要发现
+
+### 1. 架构重大发现：项目实际目录位置
+
+**发现**：项目实际位于 `/root/.openclaw/workspace/7zi-frontend/`，而非 `/root/.openclaw/workspace/src/`
+
+| 项目 | 错误路径 | 正确路径 |
+|------|----------|----------|
+| 7zi 前端 | `/root/.openclaw/workspace/src/` | `/root/.openclaw/workspace/7zi-frontend/` |
+
+**影响**：所有涉及项目路径的操作需要使用正确路径
+
+---
+
+### 2. SSH 配置错误：7zi.com IP 地址过时
+
+**发现**：TOOLS.md 中记录的 7zi.com IP (165.99.43.61) 已过时，实际连接到的主机名为 `ecm-cd59`
+
+**修正**：需要更新 TOOLS.md 中的服务器配置，使用正确的主机名/IP
+
+---
+
+### 3. 子代理模型问题：volcengine token 易过期
+
+**发现**：使用 `volcengine/deepseek-v3-2-251201` 的子代理经常遇到 token 过期问题
+
+**建议**：所有子代理任务强制使用 `minimax/MiniMax-M2.7` 模型
+
+---
+
+### 4. 项目版本确认：v1.14.1
+
+**当前版本**：
+- **7zi**: v1.14.1
+- **Next.js**: 16.2.1
+- **React**: 19.2.4
