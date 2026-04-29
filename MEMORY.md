@@ -460,10 +460,12 @@ git push --force        # 使用 --force-with-lease 替代
 
 | 优先级 | 问题 | 状态 |
 |--------|------|------|
-| 🔴 高 | TypeScript 300+ 错误（bypassed with ignoreBuildErrors） | 待系统性清理 |
+| 🔴 高 | TypeScript 300+ 错误（311→307，逐步清理中） | 待系统性清理 |
+| 🔴 高 | 7zi.com 磁盘 99%（紧急！） | 需立即清理 |
 | 🔴 高 | xlsx 安全漏洞 | 待迁移 |
+| 🟡 中 | ai-site 中间件错误（next-intl locale） | 待修复 |
 | 🟡 中 | PWA 配置问题（sw.js, IndexedDB schema） | 待修复 |
-| 🟡 中 | 7zi.com 内容异常 | 待检查修复 |
+| 🟡 中 | permissions.ts 拆分（945行→5模块） | 已制定计划 |
 | 🟡 中 | 32 个 API 文档缺失（67% coverage） | 待补充 |
 
 ---
@@ -473,16 +475,213 @@ git push --force        # 使用 --force-with-lease 替代
 1. **2026-04-07**: 强制所有子代理使用 minimax 模型（Coze/Grok-3-mini 令牌持续过期）
 2. **2026-04-12**: Next.js 15 `params` 迁移已完成（11处修改）
 3. **2026-04-19**: 确认 7zi.com 新版重写完成（commit 0ebb1d63）
+4. **2026-04-21**: 修复 Nginx 配置错误（proxy_pass 3000→3001），解决 ai-site 227次重启问题
 
 ---
+
+## 📅 2026-04-22 状态更新
+
+### ✅ 完成的工作
+
+#### v1.14.x 开发进展
+- **架构状态审查**: 项目评级 6.5/10，核心模块完善但存在架构债务
+- **permissions.ts 拆分计划**: 已制定 5 模块拆分方案（P0优先级）
+  - models.ts, constants.ts, manager.ts, checker.ts, decorators.ts
+  - 预计影响 40+ 个文件
+- **Next.js 16.2.x 研究**: 完成迁移指南草案（Node.js 20.9+ 要求）
+- **TypeScript P0 修复**: 修复 4 个生产代码错误（311→307）
+
+#### 生产环境
+- **7zi.com**: ✅ 正常运行（7zi-main, 17h 无重启）
+- **ai-site**: ⚠️ 227 次重启后稳定，但中间件错误持续
+- **磁盘空间**: 🔴 7zi.com 磁盘 99%（仅剩1.1GB）- 严重危机
+
+#### Evomap Gateway
+- 节点注册正常 (`node_909148eee8a881a`)
+- GEP-A2A 协议合规
+- Heartbeat 正常，但 `claimed: false`，积分余额 0
+
+### ⚠️ 待处理的技术债务
+
+| 优先级 | 问题 | 状态 | 说明 |
+|--------|------|------|------|
+| 🔴 P0 | permissions.ts 拆分 | 计划已制定 | 945行→5模块，预计5小时 |
+| 🔴 P0 | 7zi.com 磁盘清理 | 紧急 | 99%使用率，可能导致服务中断 |
+| 🔴 P0 | TypeScript 错误清理 | 311个错误 | 已修复4个，剩余307个 |
+| 🟡 P1 | ai-site 中间件错误 | 持续 | `Unable to find next-intl locale` |
+| 🟡 P1 | permission-store.ts | 14830行过大 | 需拆分优化 |
+| 🟡 P1 | API 层不统一 | 需标准化 | `lib/api/` vs `lib/api-clients.ts` |
+| 🟡 P1 | 错误处理分散 | 需统一 | errors.ts vs api/error-handler.ts |
+| 🟡 P2 | 组件目录扁平化 | 需整理 | 新成员难以定位 |
+| 🟡 P2 | Context 与 Store 混合 | 需规范 | 状态管理混乱 |
+
+### 🔴 持续性危机
+
+| 项目 | 问题 | 影响 | 状态 |
+|------|------|------|------|
+| **API提供商** | coze/glm-4.7 令牌过期 | 子代理团队停摆 | 持续 |
+| **磁盘空间** | 7zi.com 99% 使用 | 可能导致服务中断 | 紧急 |
 
 ### 📊 项目版本状态
 
 | 版本 | 状态 | 说明 |
 |------|------|------|
 | v1.13.0 | ✅ 已部署 | 当前生产版本 |
-| v1.14.0 | 🔄 规划中 | 待实现（RAG、Enterprise Reporting） |
-| Next.js 16.x | ⏳ 待升级 | revalidateTag API 需修复 |
+| v1.14.0 | 🔄 开发中 | 权限系统重构、Next.js 16.2 升级 |
+| Next.js 16.2.4 | ⏳ 待升级 | 需修复 revalidateTag API |
 
 ### 记忆文件
 - ✅ 已创建 `memory/2026-04-19.md` 日志
+- ✅ 已创建 `memory/2026-04-21.md` 日志
+- ✅ 已创建 `memory/2026-04-22.md` 日志
+
+---
+
+## 📅 2026-04-24 重要发现
+
+### 1. 架构重大发现：项目实际目录位置
+
+**发现**：项目实际位于 `/root/.openclaw/workspace/7zi-frontend/`，而非 `/root/.openclaw/workspace/src/`
+
+| 项目 | 错误路径 | 正确路径 |
+|------|----------|----------|
+| 7zi 前端 | `/root/.openclaw/workspace/src/` | `/root/.openclaw/workspace/7zi-frontend/` |
+
+**影响**：所有涉及项目路径的操作需要使用正确路径
+
+---
+
+### 2. SSH 配置错误：7zi.com IP 地址过时
+
+**发现**：TOOLS.md 中记录的 7zi.com IP (165.99.43.61) 已过时，实际连接到的主机名为 `ecm-cd59`
+
+**修正**：需要更新 TOOLS.md 中的服务器配置，使用正确的主机名/IP
+
+---
+
+### 3. 子代理模型问题：volcengine token 易过期
+
+**发现**：使用 `volcengine/deepseek-v3-2-251201` 的子代理经常遇到 token 过期问题
+
+**建议**：所有子代理任务强制使用 `minimax/MiniMax-M2.7` 模型
+
+---
+
+### 4. 项目版本确认：v1.14.1
+
+**当前版本**：
+- **7zi**: v1.14.1
+- **Next.js**: 16.2.1
+- **React**: 19.2.4
+
+---
+
+## 📅 2026-04-25 内存维护更新
+
+### 最近7天完成的主要工作 (04-19 至 04-25)
+
+#### 紧急修复
+- ✅ **7zi.com Nginx SSL 修复** - 防火墙/证书/配置冲突解决
+- ✅ **7zi Gateway 服务修复** - 删除损坏插件，重启服务 (PID 525333+525576)
+- ✅ **7zi.com 磁盘清理** - 从 99% 降至 88%（清理11GB）
+- ✅ **Nginx 配置修复** - proxy_pass 3000→3001，解决 ai-site 227次重启
+
+#### 代码优化
+- ✅ **permissions.ts 拆分完成** - 945行→5模块，9/10健康度
+- ✅ **TypeScript 修复** - 11个核心错误修复 (311→300)
+- ✅ **Zod v4 → v3 降级** - 兼容性修复
+- ✅ **Three.js 懒加载优化** - 交互触发加载
+- ✅ **CI/CD 流水线加固** - 9个workflow安全修复
+- ✅ **安全漏洞修复** - serialize-javascript RCE、.gitignore缺失
+
+#### 架构工作
+- ✅ **lib 层代码审查** - 13处非测试代码any可优化
+- ✅ **React 性能分析** - 瓶颈识别 (Three.js/WorkflowEditor)
+- ✅ **Bundle 分析与优化** - 确认懒加载生效
+- ✅ **Next.js 16.2.x 研究** - 完成迁移指南草案
+- ✅ **Next.js 16 Cache Components 研究**
+- ✅ **7zi-frontend 架构审查** - 681个TS错误，lib臃肿需拆分
+
+#### 部署与运维
+- ✅ **Evomap 守护进程重启** - PID 575478
+- ✅ **bot5 健康检查** - 正常
+- ✅ **Git 同步** - main 与 origin/main 同步 (commit c5595274f)
+- ✅ **DNS 配置审查** - Cloudflare 正常
+- ✅ **生产服务健康检查** - 7zi.com/visa.7zi.com 正常
+
+### 生产环境状态
+
+| 服务器 | 状态 | 备注 |
+|--------|------|------|
+| **7zi.com** | ⚠️ PM2运行v1.3.0，仓库已是v1.14.1 | 需重新部署对齐 |
+| **7zi.com 磁盘** | ✅ 88% (11GB可用) | 从99%降至88% |
+| **ai-site** | ⚠️ 249次重启后稳定 | 仍需监控 |
+| **bot5 磁盘** | ✅ 63% | 正常 |
+| **bot6 磁盘** | ✅ 48% | 正常 |
+| **PM2 7zi-main** | ✅ 在线 17h+ | v1.3.0 |
+
+### ⚠️ 部署不一致问题
+
+| 项目 | PM2运行 | GitHub仓库 |
+|------|---------|------------|
+| **7zi** | v1.3.0 | v1.14.1 |
+| **ai-site** | v1.0.0 | - |
+
+**问题**: PM2中的版本与GitHub仓库版本严重落后，需重新部署
+
+### 测试状态 (截至04-24)
+
+| 指标 | 数量 |
+|------|------|
+| 总测试文件 | ~50+ |
+| 失败文件 | ~15 |
+| 通过率 | ~90% |
+
+**主要失败**:
+- act() 包装问题 (15+ 测试文件)
+- useSwipe 触摸模拟问题
+- useRoomWebSocket mock 问题
+- STTRouter 30s 超时问题
+- AgentStatusPanel waitFor 超时
+
+### 🔴 持续性危机：API提供商全灭
+
+| Provider | 状态 | 持续时间 |
+|----------|------|----------|
+| coze/grok-3-mini | HTTP 404 | 6天+ |
+| glm-4.7 | 令牌过期 | 6天+ |
+| volcengine | Rate limit | 持续 |
+| minimax direct | ✅ 可用 | 当前会话 |
+
+**影响**: 子代理团队几乎完全停摆
+
+### 待处理技术债务
+
+| 优先级 | 问题 | 状态 |
+|--------|------|------|
+| 🔴 P0 | PM2版本落后 - v1.3.0需升级到v1.14.1 | 需部署 |
+| 🔴 P0 | 54测试文件失败 | 待系统性修复 |
+| 🔴 P0 | lib/websocket 拆分 (1455行大文件) | 待执行 |
+| 🟡 P1 | ai-site 重启循环 (249次) | 监控中 |
+| 🟡 P1 | TypeScript ~300 错误 | 逐步清理 |
+| 🟡 P1 | 26个前端文件未提交Git | 待提交 |
+| 🟡 P2 | @hono/node-server 大版本风险 | 评估中 |
+| 🟡 P2 | @types/bull 已弃用 | 待替换 |
+
+### Evomap Gateway 状态
+
+| 项目 | 状态 |
+|------|------|
+| 节点注册 | ✅ 正常 (node_909148eee8a881a) |
+| GEP-A2A 协议 | ✅ 合规 |
+| Heartbeat | ✅ 正常 |
+| claimed | ❌ false |
+| 积分余额 | 0 |
+
+### 记忆文件更新
+- ✅ 已创建 `memory/2026-04-19.md`
+- ✅ 已创建 `memory/2026-04-21.md`
+- ✅ 已创建 `memory/2026-04-22.md`
+- ✅ 已创建 `memory/2026-04-23.md`
+- ✅ 已创建 `memory/2026-04-24.md`
+- ✅ 已创建 `memory/2026-04-25.md` (本文件)
