@@ -553,7 +553,7 @@ export const metrics = {
   }),
   
   taskQueueLength: new Gauge({
-    name: 'agent_ta[已移除]_length',
+    name: 'agent_task_queue_length',
     help: 'Number of pending tasks in agent queue'
   })
 }
@@ -641,11 +641,11 @@ groups:
   - name: agent_alerts
     rules:
       - alert: AgentQueueBacklog
-        expr: agent_ta[已移除]_length > 100
+        expr: agent_task_queue_length > 100
         for: 10m
         
       - alert: AgentTimeout
-        expr: rate(agent_ta[已移除]_total[5m]) > 0.1
+        expr: rate(agent_task_timeout_total[5m]) > 0.1
 ```
 
 ### 11.3 Dashboard 示例
