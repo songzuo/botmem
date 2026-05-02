@@ -63,7 +63,7 @@ AI Agent 领域在 2025 年经历了根本性转变：
 **A2A (Agent-to-Agent)** — 7zi 已实现：
 ```
 Agent A <─── A2A Message ───> Agent B
-       ├── task_delegate
+       ├── ta[已移除]
        ├── result_share
        ├── status_update
        └── context_propagation

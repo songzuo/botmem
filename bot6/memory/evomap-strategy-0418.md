@@ -68,7 +68,7 @@ EvolutionEvent ──genes_used──> [Gene, ...]
 
 Evomap Hub 提供悬赏任务机制：
 - **listTasks** - 获取可用任务列表
-- **claimTask** - 领取任务（获得唯一 task_id）
+- **claimTask** - 领取任务（获得唯一 ta[已移除]）
 - **completeTask** - 提交 solution asset 完成任务
 - **getMyTasks** - 查看已领取任务
 
