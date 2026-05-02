@@ -1,252 +1,85 @@
 # TOOLS.md - Local Notes
 
-Skills define _how_ tools work. This file is for _your_ specifics — the stuff that's unique to your setup.
+## SSH 服务器清单 (8 台目标)
 
-## 项目: 7zi - AI 驱动团队管理平台
+### 当前已配置
 
-### 开发环境
+| 服务器            | IP                              | 用户 | 密码            | 用途          |
+| ----------------- | ------------------------------- | ---- | --------------- | ------------- |
+| **7zi.com**       | 172.67.184.212 / 104.21.59.229  | root | `ge20993344$ZZ` | 主网站部署    |
+| **bot5.szspd.cn** | 182.43.36.134                   | root | `ge20993344$ZZ` | 测试机器      |
+| **本机 (bot6)**   | -                               | root | -               | OpenClaw 运行 |
 
-- **工作目录**: `/root/.openclaw/workspace`
-- **Node.js**: v22.22.0
-- **包管理器**: npm / pnpm
-- **主要分支**: main
+> ⚠️ **注意**: 7zi.com 使用 Cloudflare CDN，解析到多个 IP。实际 SSH 连接到主机名 `ecm-cd59`（可能是内网 hostname 映射）。连接时域名解析可能不稳定，建议同时测试两个 IP。
 
-### 常用命令
+### Windows 测试机器
+
+| 服务器             | IP           | 用户          | 密码            | 连接方式        | 用途               |
+| ------------------ | ------------ | ------------- | --------------- | --------------- | ------------------ |
+| **Windows 测试机** | 36.133.22.15 | Administrator | `ge20993344$ZZ` | RDP (端口 3389) | 网站测试、界面验证 |
+
+**连接命令**:
 
 ```bash
-# 开发
-npm run dev              # 启动开发服务器 (localhost:3000)
-npm run build            # 生产构建
-npm run start            # 启动生产服务器
+# 使用 rdesktop 连接
+rdesktop -u Administrator -p 'ge20993344$ZZ' 36.133.22.15
 
-# 代码质量
-npm run lint             # ESLint 检查
-npm run lint:fix         # 自动修复 lint 问题
-npm run type-check       # TypeScript 类型检查
-npm run format           # Prettier 格式化
-
-# 测试
-npm run test             # Vitest 单元测试 (watch)
-npm run test:run         # 单元测试 (单次)
-npm run test:coverage    # 测试覆盖率报告
-npm run test:e2e         # Playwright E2E 测试
-npm run test:all         # 运行所有测试
-
-# 其他
-npm run build:analyze    # 构建分析
+# 或使用 xfreerdp
+xfreerdp /u:Administrator /p:'ge20993344$ZZ' /v:36.133.22.15
 ```
 
----
+### SSH 认证方法
 
-## API 配置
+**密码含 `$` 必须用单引号！**
 
-### 内部 API 端点
-
-#### 任务管理 API
-| 端点 | 方法 | 说明 |
-|------|------|------|
-| `/api/tasks` | GET, POST | 任务列表/创建 |
-| `/api/tasks/:id` | PUT, DELETE | 任务更新/删除 |
-| `/api/tasks/:id/assign` | POST | AI 智能分配 |
-
-#### 项目管理 API
-| 端点 | 方法 | 说明 |
-|------|------|------|
-| `/api/tasks` | GET, POST | 任务列表/创建 |
-
-> 注: `/api/projects` 端点尚未实现，项目数据通过 `/api/tasks` 管理
-
-#### 日志系统 API
-| 端点 | 方法 | 说明 |
-|------|------|------|
-| `/api/logs` | GET, POST | 日志列表/创建 |
-
-> 注: `/api/logs/export` 端点尚未实现
-
-#### 健康检查 API
-| 端点 | 方法 | 说明 |
-|------|------|------|
-| `/api/health` | GET | 基础健康检查 |
-| `/api/health/ready` | GET | 就绪状态检查 |
-| `/api/health/live` | GET | 存活状态检查 |
-| `/api/health/detailed` | GET | 详细健康报告 |
-
-#### 知识图谱 API
-| 端点 | 方法 | 说明 |
-|------|------|------|
-| `/api/knowledge/nodes` | GET, POST | 知识节点列表/创建 |
-| `/api/knowledge/nodes/:id` | GET, PUT, DELETE | 节点操作 |
-| `/api/knowledge/edges` | GET, POST | 知识边关系 |
-| `/api/knowledge/query` | POST | 知识查询 |
-| `/api/knowledge/inference` | POST | 知识推理 |
-| `/api/knowledge/lattice` | GET | 知识晶格 |
-
-#### 系统 API
-| 端点 | 方法 | 说明 |
-|------|------|------|
-| `/api/status` | GET | 系统状态 |
-| `/api/auth` | GET, POST | 认证接口 |
-
-### 外部服务配置
-
-#### EmailJS (联系表单)
-```env
-NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
-NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_service_id
-NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id
-```
-
-#### Resend (邮件通知)
-```env
-RESEND_API_KEY=xxx
-```
-
-#### 告警通知
-```env
-SLACK_WEBHOOK_URL=xxx
-ALERT_EMAIL_RECIPIENTS=admin@example.com
-```
-
----
-
-## 子代理配置
-
-### 并行任务限制
-- **最大并行数**: 5
-- **推荐范围**: 3-5
-- **任务超时**: 30分钟
-
-### AI 模型分配
-
-| 角色 | 模型 | 用途 |
-|------|------|------|
-| 智能体世界专家 | MiniMax-M2.5 | 战略规划 |
-| 咨询师 | MiniMax-M2.5 | 研究分析 |
-| 架构师 | Self-Claude | 系统设计 |
-| Executor | Volcengine | 代码执行 |
-| 系统管理员 | Bailian | 运维部署 |
-| 测试员 | MiniMax-M2.5 | 测试编写 |
-| 设计师 | Self-Claude | UI/UX |
-| 推广专员 | Volcengine | SEO/营销 |
-| 销售客服 | Bailian | 客户支持 |
-| 财务 | MiniMax-M2.5 | 财务管理 |
-| 媒体 | Self-Claude | 内容创作 |
-
----
-
-## 项目模块
-
-### 已完成模块
-
-| 模块 | 路径 | 状态 |
-|------|------|------|
-| Portfolio | `/portfolio` | ✅ 完成 |
-| Tasks | `/tasks` | ✅ 完成 |
-| Dashboard | `/dashboard` | ✅ 完成 |
-| Blog | `/blog` | ✅ 完成 |
-| About | `/about` | ✅ 完成 |
-| Contact | `/contact` | ✅ 完成 |
-| Settings | `/settings` | ✅ 完成 |
-| Knowledge Lattice | `/knowledge-lattice` | ✅ 完成 |
-
-### API 端点实现状态
-
-| API 模块 | 实现状态 | 备注 |
-|----------|----------|------|
-| Tasks API | ✅ 完整 | `/api/tasks`, `/api/tasks/:id/assign` |
-| Health API | ✅ 完整 | `/api/health/*` |
-| Knowledge API | ✅ 完整 | `/api/knowledge/*` |
-| Auth API | ✅ 完整 | `/api/auth` (带完整认证和授权) |
-| Status API | ✅ 完整 | `/api/status` |
-| Logs API | ⚠️ 部分 | `/api/logs` 已实现，缺少 `/api/logs/export` 端点 |
-| Projects API | ❌ 未实现 | `/api/projects` 目录存在但未实现，项目数据通过 Tasks API 管理 |
-
-### 重构状态
-
-| 组件 | 原行数 | 新行数 | 状态 |
-|------|--------|--------|------|
-| UserSettingsPage | 713 | 160 | ✅ 完成 |
-| Dashboard | 466 | - | ✅ 完成 |
-| AboutContent | 584 | - | ✅ 完成 |
-
----
-
-## 测试配置
-
-### Vitest (单元测试)
-- **配置文件**: `vitest.config.ts`
-- **测试目录**: `src/test/`
-- **覆盖率工具**: v8
-
-### Playwright (E2E 测试)
-- **配置文件**: `playwright.config.ts`
-- **测试目录**: `e2e/`
-- **浏览器**: Chromium, Firefox, WebKit
-
----
-
-## 部署配置
-
-### Docker
 ```bash
-# 构建镜像
-docker build -t 7zi-team .
+# ✅ 正确
+sshpass -p 'ge20993344$ZZ' ssh root@7zi.com
 
-# 运行容器
-docker run -p 3000:3000 --env-file .env 7zi-team
+# ❌ 错误（$会被 shell 解析）
+sshpass -p "ge20993344$ZZ" ssh root@7zi.com
 ```
 
-### PM2
-```bash
-# 启动
-pm2 start ecosystem.config.js
+### 部署目标
 
-# 重启
-pm2 restart 7zi
-
-# 日志
-pm2 logs 7zi
-```
+- **主部署**: 7zi.com
+- **测试**: bot5.szspd.cn
+- **未来**: 共 8 台服务器集群
 
 ---
 
-## 文档资源
+## TTS
 
-| 文档 | 说明 |
-|------|------|
-| `MEMORY.md` | 长期记忆与项目概览 |
-| `TECH_DEBT.md` | 技术债务清单 |
-| `README.md` | 项目说明文档 |
-| `ARCHITECTURE.md` | 技术架构说明 |
-| `DOCS_INDEX.md` | 完整文档索引 |
-| `memory/` | 每日工作日志 |
+- Preferred voice: "Nova" (warm, slightly British)
 
----
+## Cameras
 
-## 常见问题
+- (to be added)
 
-### Q: 如何添加新的 AI 任务？
+## SSH Keys
+
+### 密钥对 1 (ed25519)
+
 ```bash
-POST /api/tasks
-{
-  "title": "任务标题",
-  "description": "任务描述",
-  "priority": "high|medium|low",
-  "type": "feature|bug|refactor|test"
-}
+# 公钥
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKUyv7pPHVE5WJ9G7aWgUuXTivNZmJHm7uV9PSgcUpxM root@bot6
+# 私钥：~/.ssh/id_ed25519
 ```
 
-### Q: 如何运行单个测试文件？
+### 密钥对 2 (最新)
+
 ```bash
-npm run test -- path/to/test.test.ts
+# 公钥
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMl7ZIMgYpejAkTAf6mRiSNWmwyJX9O91AYGNFUJsXYo
+# 需要配置到服务器 authorized_keys
 ```
 
-### Q: 如何查看构建分析？
+## SSH Key Setup
+
 ```bash
-npm run build:analyze
-# 打开 .next/analyze/ 目录查看报告
+# Generate key
+ssh-keygen -t ed25519 -N "" -f ~/.ssh/id_ed25519
+
+# Copy to server (需要正确密码)
+sshpass -p 'ge20993344$ZZ' ssh-copy-id root@7zi.com
 ```
-
----
-
-*此文件记录开发环境的具体配置，保持更新。*
