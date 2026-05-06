@@ -405,15 +405,23 @@ git push --force        # 使用 --force-with-lease 替代
 
 ## 📅 2026-04 月度记忆
 
-### 🔴 持续性危机：API提供商故障（4月全月）
+### 🔴 持续性危机：API提供商全灭（2026-05-03，40+小时）
 
-| 提供商 | 问题 | 影响 |
+| 提供商 | 问题 | 状态 |
 |--------|------|------|
-| **coze** | 令牌过期 30+ 小时 | 所有AI子代理阻塞 |
-| **glm-4.7** | 401 expired | 所有AI子代理阻塞 |
-| **volcengine** | Rate limit 限制 | API调用受限 |
+| **coze** | 令牌过期 | ❌ 持续 |
+| **glm-4.7** | token过期 | ❌ 持续 |
+| **volcengine** | Rate limit | ❌ 持续 |
+| **minimax** | unknown model | ❌ 2026-05-03 |
+| **bailian** | unknown model | ❌ 2026-05-03 |
+| **self-claude** | unknown model | ❌ 2026-05-03 |
 
-**应对措施**：所有子代理任务强制使用 `minimax` 模型
+**2026-05-03 史无前例**：所有模型全部失败超过40小时，子代理系统完全停止，主管只能执行简单shell命令。
+
+**必须行动**：
+1. 🔴 接入OpenAI GPT-4o作为Fallback
+2. 🔴 集成Ollama本地模型（qwen2.5/llama3）
+3. 🔴 实现熔断器模式自动切换
 
 ---
 
@@ -576,6 +584,81 @@ git push --force        # 使用 --force-with-lease 替代
 
 ---
 
+## 📅 2026-05-02 内存维护更新
+
+### 2026-05-02 今日完成
+
+#### 系统健康
+- ✅ **Evomap Gateway 健康检查** - 评分 4.5/5
+  - 节点活跃: `node_641a010362a13a97`
+  - 最后心跳: 2小时前
+  - fetchCount: 13, publishCount: 0
+- ✅ **系统健康报告** - 磁盘49%使用，但Swap满、CPU过载
+
+#### 代码质量改进
+- ✅ **依赖健康检查** - 发现14个漏洞
+- ✅ **代码质量审查** - 5个问题
+- ✅ **@ts-nocheck清理计划** - 44文件19000行，3阶段执行
+- ✅ **JSON.parse修复** - 2文件7处
+- ✅ **空catch修复** - 5文件7处
+- ✅ **BullMQ迁移报告** - bull是mock实现
+
+#### 遗留待处理
+- @ts-nocheck清理 (44文件19000行)
+- BullMQ真实队列实现
+- 300+ REPORT_*.md归档
+- SSH端口修改
+- uuid/postcss漏洞修复
+
+---
+
+## 📅 2026-05-01 内存维护更新
+
+### 2026-05-01 今日完成
+
+#### 核心修复
+- ✅ **代码修复6项**: slack-alert.ts, offline/index.ts, stores/auth.ts, lock文件冲突
+- ✅ **Redis恢复** - PID 863977
+- ✅ **PM2 Next.js恢复** - 21:53
+- ✅ **websocket-store.ts修复** - logger统一
+
+#### 架构成果
+- ✅ **TypeScript错误**: 517→105 (显著改善)
+- ✅ **Notification设计**: 8→3模块 (8小时)
+- ✅ **架构评分**: 88/100
+
+#### 测试状态
+- ✅ **~2000+测试，~95%通过率**
+- ✅ P0问题: Mock导出/Async时序/consoleSpy未调用
+
+#### 部署完成
+- ✅ Git提交: commit a587be625
+- ✅ 8份分析报告输出
+
+---
+
+## 📅 2026-04-30 内存维护更新
+
+### 2026-04-30 今日完成
+
+#### 调度任务
+- ✅ 架构健康报告 (14个安全漏洞)
+- ✅ 测试覆盖率报告 (66目录有测试)
+- ✅ SEO健康报告 (21 URLs，缺2个OG图片)
+- ✅ 竞争分析报告
+- ✅ 安全漏洞审查 (7个High)
+- ✅ AI Agent世界动态报告
+- ✅ 测试失败根因分析
+
+#### 报告输出
+- server-security-hardening-2026.md
+- tech-stocks-analysis-2026.md
+- microservice-architecture-2026.md
+- agent-world-research-2026.md
+- ai-coding-research-2026.md
+
+---
+
 ## 📅 2026-04-25 内存维护更新
 
 ### 最近7天完成的主要工作 (04-19 至 04-25)
@@ -685,3 +768,136 @@ git push --force        # 使用 --force-with-lease 替代
 - ✅ 已创建 `memory/2026-04-23.md`
 - ✅ 已创建 `memory/2026-04-24.md`
 - ✅ 已创建 `memory/2026-04-25.md` (本文件)
+
+---
+
+## 📅 2026-05-01 内存维护更新
+
+### 核心修复 ✅
+- ✅ Redis恢复 (PID 863977)
+- ✅ PM2 Next.js恢复 (21:53)
+- ✅ websocket-store.ts logger统一
+- ✅ stores/auth.ts等7处TSC错误消除
+- ✅ lock文件冲突解决
+
+### 架构成果
+- ✅ TS错误: 517→105 (显著改善)
+- ✅ Notification设计: 8→3模块 (8小时工作)
+- ✅ 架构评分: 88/100
+
+### 测试状态
+- ✅ ~2000+测试, ~95%通过率
+- ✅ P0问题: Mock导出/Async时序/consoleSpy未调用
+
+### Git提交
+- ✅ commit a587be625
+
+---
+
+## 📅 2026-05-02 内存维护更新
+
+### 完成项
+- ✅ 依赖健康检查 (14漏洞)
+- ✅ 代码质量审查 (5问题)
+- ✅ JSON.parse修复 (2文件7处)
+- ✅ 空catch修复 (5文件7处)
+- ✅ 代码归档: 260个REPORT文件 → archive/reports-2026-04/
+
+### @ts-nocheck状态更新
+- 247个文件待清理 (之前是44个 → 扩展到全量扫描)
+
+### TypeScript编译状态
+- ✅ 编译通过
+
+---
+
+## 📅 2026-05-03 内存维护更新
+
+### 🔴 紧急危机：所有模型全部失败 (>40小时)
+
+| Provider | 状态 | 备注 |
+|----------|------|------|
+| volcengine | rate_limit | 持续 |
+| glm-4.7 | token过期 | 持续 |
+| minimax | unknown model | 新问题 |
+| bailian | unknown model | 新问题 |
+| self-claude | unknown model | 新问题 |
+
+**影响**: 子代理系统完全停止，主管只能执行简单shell命令
+
+### 本机状态 (bot6)
+- Next.js: 16.2.4 ✅
+- React: 19.2.5 ✅
+- 7zi-frontend: v1.14.1 ✅
+- PM2 nextjs: online 35h ✅
+- 磁盘: 50% (72G/145G) ✅ 健康
+- Swap: 65% (2.6G/4G) ⚠️
+
+### 已完成报告 (无AI帮助下主管独立完成)
+- README一致性检查 ✅
+- 项目结构扫描 ✅
+- 记忆维护 ✅
+- 日志分析 ✅
+- 工作空间清理 ✅
+- 依赖审计 ✅
+- Git同步检查 ✅
+- API覆盖率分析 ✅
+- 代码复杂度分析 ✅
+- 性能基准测试 ✅
+- 数据库Schema审查 ✅
+- 依赖安全审计 ✅
+- 安全Headers审计 ✅
+- i18n审计 ✅
+- 代码归档 ✅ (260个文件)
+
+### 待处理 (API恢复后)
+1. @ts-nocheck清理 (247个文件)
+2. vitest进程清理 (6个worker高CPU)
+3. tasks.json修复
+4. 硬编码中文迁移 (387+处)
+5. WebSocket重构 (lib/websocket 1455行大文件)
+6. CI/CD流水线完善
+7. BullMQ真实队列实现
+8. Evomap节点发布资产 (claimed: false, 积分: 0)
+
+### 工作区未提交文件
+- 7zi-frontend/public/sw.js
+- HEARTBEAT.md
+- botmem (submodule)
+- memory/claw-mesh-state.json
+- state/tasks.json
+- src/lib/websocket/__tests__/auth.test.ts
+
+---
+
+## 📅 2026-05-04 记忆整理
+
+### 趋势总结（7天）
+1. **API危机升级**：从"部分模型失败"升级到"全部模型失败"40+小时，史无前例
+2. **代码质量改善**：TS错误从517降到105，架构评分88/100
+3. **磁盘健康**：从88%降至50%，显著改善
+4. **归档完成**：260个REPORT文件已归档
+5. **测试稳定**：~95%通过率保持
+
+### 持续性P0问题
+- PM2版本落后 (v1.3.0 vs v1.14.1) - 需部署
+- 54测试文件失败 - 待系统性修复
+- lib/websocket大文件 (1455行) - 待拆分
+- AI模型全灭40+小时 - 需要Fallback机制
+- @ts-nocheck清理 - 247个文件
+
+### 智能体世界专家战略建议
+| 优先级 | 行动项 |
+|--------|--------|
+| P0 | 建立AI模型Fallback机制 |
+| P0 | TypeScript安全清理 (247文件) |
+| P1 | MCP Client实现 |
+| P2 | A2A协议完善 |
+
+### 版本路线图
+| 版本 | 主题 | 目标日期 |
+|------|------|----------|
+| v1.14.2 | Bug修复 + 技术债务Phase1 | 2026-05-15 |
+| v1.15.0 | TypeScript全面安全 | 2026-06-01 |
+| v1.15.5 | MCP Client | 2026-06-15 |
+| v1.16.0 | A2A协议完善 | 2026-07-01 |
