@@ -418,6 +418,8 @@ git push --force        # 使用 --force-with-lease 替代
 
 **2026-05-03 史无前例**：所有模型全部失败超过40小时，子代理系统完全停止，主管只能执行简单shell命令。
 
+**2026-05-07 状态**：minimax模型已恢复，但危机未完全解除
+
 **必须行动**：
 1. 🔴 接入OpenAI GPT-4o作为Fallback
 2. 🔴 集成Ollama本地模型（qwen2.5/llama3）
