@@ -69,3 +69,7 @@ test-complexity-analysis.json
 unused-exports-analysis.json
 react19-detailed-analysis.json
 react19-fix-plan-detailed.json
+
+# Next.js 构建产物
+.next/
+**/.next/
