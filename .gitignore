@@ -47,3 +47,25 @@ build/
 # OS files
 .DS_Store
 Thumbs.db
+
+# ===== botmem 整理 (2026-09-21) =====
+# 环境与密钥：绝不入库
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# 运行时状态文件（每次同步都会变，历史噪音源）
+claw-mesh-state.json
+heartbeat-state.json
+server-monitor.json
+**/memory/claw-mesh-state.json
+**/memory/heartbeat-state.json
+
+# 生成的静态分析产物
+jscpd-report.json
+benchmark-results.json
+test-complexity-analysis.json
+unused-exports-analysis.json
+react19-detailed-analysis.json
+react19-fix-plan-detailed.json
