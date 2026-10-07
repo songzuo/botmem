@@ -1,0 +1,163 @@
+{
+  "lastHeartbeat": "2026-07-20T06:00:38+08:00",
+  "lastHB": 603,
+  "consecutiveSilentHBs": 603,
+  "lastChecks": {
+    "paper_pids": 1784498438,
+    "paper_state_json": 1784498438,
+    "paper_state_e_json": 1784498438,
+    "s7_state_json": 1784498438,
+    "sqlite_open_check": 1784498438,
+    "fapi_marks": 1784498438,
+    "hl_watchdog": 1784498438,
+    "paper_summary": 1784498438,
+    "live_balances": 1784498438,
+    "all_alive": 1784498438,
+    "btc_mark": 1784498438,
+    "zbt_book_ticker": 1784498438
+  },
+  "pids": {
+    "v3_paper": {
+      "pid": 739211,
+      "alive": true,
+      "etime": "5d16h+",
+      "state_age_min": 0.1
+    },
+    "v3_paper_e": {
+      "pid": 1064310,
+      "alive": true,
+      "etime": "4d21h+",
+      "state_age_min": 0.1
+    },
+    "s7_funding": {
+      "pid": 975389,
+      "alive": true,
+      "etime": "5d2h+",
+      "state_age_min": 178.4
+    }
+  },
+  "sqlite": {
+    "paper_trades_db": {
+      "open": 0,
+      "closed": 88,
+      "pnl_gross": -7.8390,
+      "size_bytes": 40960
+    },
+    "paper_trades_e_db": {
+      "open": 0,
+      "closed": 9,
+      "pnl_gross": 3.1498,
+      "wr_pct": 100.0,
+      "size_bytes": 20480
+    },
+    "s7_trades_db": {
+      "open": 0,
+      "closed": 12,
+      "pnl_gross": -25.4618,
+      "size_bytes": 12288
+    },
+    "grand_sim_pnl": -30.15
+  },
+  "grand_sim_pnl": -30.15,
+  "zbt_shadow_uPnL": -3.3220,
+  "tripwire_minus_10": {
+    "breached": true,
+    "buffer": -23.47
+  },
+  "hard_stop_minus_30": {
+    "safe": false,
+    "buffer": -3.47,
+    "hit_count": 7,
+    "deepest_hb": 603,
+    "prior_deepest": 602,
+    "note": "grand $-30.15+ZBT $-3.32 = $-33.47, vs #602 $-32.71 = $-0.76 deeper; HIT 7th DEEPEST ⚠️"
+  },
+  "open_state": {
+    "S2E_ZBTUSDT": {
+      "side": "BUY",
+      "entry": 0.10623,
+      "qty": 282.0,
+      "notional": 29.956860000000002,
+      "lev": 5,
+      "ts_open": 1784432162,
+      "ts_open_human": "2026-07-19 11:36:02 CST",
+      "opened_age_h": 18.4,
+      "signal_type": "REVERSAL_DOWN",
+      "reason_open": "REVERSAL_DOWN chg24h=+19.09% flip=SELL→BUY",
+      "chg24h_open": 19.092,
+      "mark_now_mid": 0.09445,
+      "mark_now_last": 0.0945,
+      "uPnL_gross": -3.3220,
+      "uPnL_pct_notional": -11.09,
+      "uPnL_pct_margin": -55.45,
+      "tp_target": 0.10735,
+      "tp_distance_pct": 13.66,
+      "maxhold_expire": "2026-07-20 11:36:02 CST",
+      "maxhold_remaining": "5.6h",
+      "high_24h": 0.10709,
+      "low_24h": 0.0935,
+      "quoteVol_24h_M": 4.21,
+      "chg24h_now": -7.35,
+      "spread": 0.0001
+    }
+  },
+  "live_balances": {
+    "binance_fapi": 584.62,
+    "hl": 41.195535,
+    "spot_usdc": 93,
+    "pm_pos": 16.23,
+    "pcs_total": 2.02,
+    "total": 737.07,
+    "safe": true
+  },
+  "hl_watchdog": {
+    "bal": 41.195535,
+    "pnl_peak": 26.22,
+    "pnl_lock_active": false,
+    "safe": true
+  },
+  "pm_watchdog": {
+    "pnl_peak": 0.0,
+    "pnl_lock_active": false,
+    "last_alert": "[POS-CAP] 5>=5, 评估平仓 (v4.3 soft=4)",
+    "last_alert_time": "2026-07-20T04:00:06.902927"
+  },
+  "pcs_watchdog": {
+    "last_usdc_balance": 1.8550111039353208,
+    "last_bnb_balance": 0.000298460260586802,
+    "last_total_usd": 2.024536531948624,
+    "last_bnb_price": 568.0,
+    "last_check": "2026-07-20T04:00:07.977931",
+    "last_alert": "[ARB-WINDOW] BNB $568.00 deviates -8.39% from grid base $620.0, consider grid activation"
+  },
+  "btc_mark": 64541.99,
+  "btc_chg24h": -0.38,
+  "zbt_mark": 0.09445,
+  "zbt_book_ticker": {
+    "bid": 0.0944,
+    "ask": 0.0945,
+    "spread": 0.0001
+  },
+  "zbt_chg24h": -7.35,
+  "zbt_vol24h_M": 4.21,
+  "paper_summary_mtime": "2026-07-20 05:29 CST (age=31m)",
+  "human_silence_hours": 132.0,
+  "human_silence_strict_count": 81,
+  "decision_budget": {
+    "status": "FRESH",
+    "reset_at": "2026-07-19 22:56 CST",
+    "elapsed_h": 7.07,
+    "remaining_min": 296,
+    "amount_per_window": 300,
+    "window_hours": 12
+  },
+  "next_checks": {
+    "budget_reset": "7/20 10:56 CST (~4h56m)",
+    "paper_summary_cron": "~07:29 7/20 (~89min)",
+    "zbt_maxhold_expire": "7/20 11:36 (~5h36m) ⭐"
+  },
+  "grand_sim_pnl_effective": -33.47,
+  "tripwire_minus_10_buffer": -23.47,
+  "hard_stop_minus_30_buffer": -3.47,
+  "hit_count_summary": "#587 → #589 2nd → #591 3rd → #593/#595 4th → #596 osc → #599/#600 5th → #602 6th → #603 7th DEEPEST ⚠️ (due to ZBT uPnL deepening, NOT new closed-trade damage)"
+}

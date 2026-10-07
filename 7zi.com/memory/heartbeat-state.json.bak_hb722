@@ -1,0 +1,114 @@
+{
+  "lastHB": 722,
+  "lastHBTime": "2026-07-25T17:23+08:00",
+  "prevHB": 721,
+  "prevHBTime": "2026-07-25T17:18+08:00",
+  "cycle_gap_min": 5,
+  "consecutiveSilentHBs": 92,
+  "lastChecks": {
+    "all_pids": 1784971408,
+    "watchdog_state": 1784971408,
+    "sqlite_pnl": 1784971408,
+    "fapi_direct_fetch": 1784971408,
+    "hl_direct_fetch": 1784971408,
+    "pm_direct_fetch": 1784971408,
+    "pcs_direct_fetch": 1784971408,
+    "pm_manual_disambig": 1784971408,
+    "risk_manager_log": 1784971408,
+    "bsc_rpc_fallback": 1784971408
+  },
+  "pids": {
+    "v3_paper": {
+      "pid": 739211,
+      "alive": false,
+      "etime": "DEAD_2026-07-22T17:14:55_reboot (72h08m+)",
+      "note": "DEAD - no auto-restart, PAST 72h mark"
+    },
+    "v3_paper_e": {
+      "pid": 1064310,
+      "alive": false,
+      "etime": "DEAD_2026-07-22T17:14:55_reboot (72h08m+)",
+      "note": "DEAD - no auto-restart, PAST 72h mark"
+    },
+    "s7_funding": {
+      "pid": 975389,
+      "alive": false,
+      "etime": "DEAD_2026-07-22T17:14:55_reboot (72h08m+)",
+      "note": "DEAD - no auto-restart, PAST 72h mark"
+    },
+    "risk_manager": {
+      "pid": 943,
+      "alive": true,
+      "etime": "3-00:07:58",
+      "note": "MONITORING ONLY, Emergency stop active since 2026-06-02T19:41:36"
+    },
+    "watchdogd": {
+      "pid": 125,
+      "alive": true,
+      "etime": "3-00:09:27",
+      "note": "watchdogd alive past 72h uptime mark"
+    }
+  },
+  "grand_pnl_closed": -30.7744,
+  "grand_pnl_breakdown": {
+    "paper": -6.87302500000003,
+    "paper_e": 0.906786999999993,
+    "s7": -24.8081766
+  },
+  "paper_strategy_breakdown": {
+    "S1_MOMENTUM_BASELINE": -2.789,
+    "S2_REVERSE_5MIN": 3.491,
+    "S3_TIGHT_TPSL": -3.06,
+    "S4_WIDER_TPSL": -4.8101,
+    "S5_ULTRA_TIGHT_30MIN": -0.3718,
+    "S6_REVERSE_TIGHT_30MIN": 0.6669
+  },
+  "hard_stop_buffer": -0.7744,
+  "hard_stop_status": "CRITICAL_CROSSED_15th_DEEPEST_frozen",
+  "tripwire_buffer": -20.7744,
+  "tripwire_status": "BREACHED_frozen",
+  "live_est_grand": 730.5588,
+  "live_breakdown": {
+    "hl_spot": 41.195535,
+    "pm_pos_value": 10.2986,
+    "pcs_total": 2.0239,
+    "spot_usdc": 93.010624,
+    "fapi_est": 584.03021680
+  },
+  "decision_budget": {
+    "cycle_start": "2026-07-25T16:33+08:00",
+    "cycle_end": "2026-07-26T04:33+08:00",
+    "now": "2026-07-25T17:23+08:00",
+    "elapsed_h": 0.83,
+    "remaining_h": 11.17,
+    "fresh_budget": 300,
+    "next_reset": "2026-07-26T04:33+08:00"
+  },
+  "owner_silent_hours": 233.05,
+  "owner_strict_silence_days": 9,
+  "owner_active_axis": "OpenSquilla decisions only (per HB #633 拍板 4541-4543)",
+  "posture": "YELLOW_SILENT_WATCH",
+  "consecutive_in_posture": 92,
+  "market_regime": "BTC chg24h -1.684% (vs #721 -1.706%, +0.022pp LESS bearish ↗); ZBT chg24h -1.085% (vs #721 -1.001%, -0.084pp MORE bearish ↘ marginal oscillating); ETH chg24h -1.470% (vs #721 -1.480%, +0.010pp marginal LESS bearish ↗); BNB chg24h -0.254% (vs #721 -0.339%, +0.085pp LESS bearish ↗); ZBT vs BTC divergence +0.599pp (vs #721 +0.705pp, -0.106pp NARROWER ↘ — POSITIVE territory sustained ⭐⭐)",
+  "btc": 63869.8,
+  "zbt": 0.11303,
+  "eth": 1853.87,
+  "bnb": 565.78,
+  "uptime": "3 days, 9 min = 72h08m since 7/22 17:14 reboot (PAST 72h mark, +5m vs #721)",
+  "lastBtcPrice": 63869.8,
+  "lastBtcChg24h": -1.684,
+  "lastZbtPrice": 0.11303,
+  "lastZbtChg24h": -1.085,
+  "lastEthPrice": 1853.87,
+  "lastEthChg24h": -1.47,
+  "lastBnbPrice": 565.78,
+  "lastBnbChg24h": -0.254,
+  "zbtVsBtcDivergence": 0.599,
+  "hostUptimeHours": 72.13,
+  "btc24hLo": 63666.0,
+  "zbt24hLo": 0.10552,
+  "eth24hLo": 1846.17,
+  "bnb24hHi": 568.93,
+  "bnb24hLo": 556.12,
+  "live_verify_note": "FULL DIRECT-VERIFY at #722: HL spot $41.195535 ✅ (direct POST spotClearinghouseState w/ correct wallet 0x0e2a8150...E2E2, used total field); PCS USDC $1.8550111 + BNB 0.000298460260587×$565.78=$0.1689 = $2.0239 ✅ (bsc-rpc.publicnode.com direct eth_call — 1rpc.io/bnb returned 403 this HB); PM pos $10.2986 (4 pos UNCH VT-gov LIVE/Iran SL-HIT/Hormuz $0.0274/Spain SL-HIT); Spot USDC $93.010624 ✅ signed /api/v3/account GET (NOT /sapi/v3/asset/getUserAsset which returns HTTP 404 GET not supported); Fapi $584.03021680 ✅ signed /fapi/v3/account (vs #721 $584.02267514 +$0.0076 minor uptick); GRAND live est $730.5588"
+}

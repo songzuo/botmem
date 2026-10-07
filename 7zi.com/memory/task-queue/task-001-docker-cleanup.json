@@ -1,0 +1,13 @@
+{
+  "id": "T-2026-06-29-001",
+  "title": "Docker 磁盘清理 (1.5G 可回收)",
+  "priority": "medium",
+  "status": "pending",
+  "category": "housekeeping",
+  "created": "2026-06-29T06:32:00+08:00",
+  "owner": "agent",
+  "blocked_by": "user_approval",
+  "rationale": "/var/lib/docker 占用 1.5G; 当前无运行容器 (PM2 进程全在 host)。需要 'docker system prune -a' 权限确认。",
+  "estimate_impact": "回收 1.5G, 风险低（无活跃容器）",
+  "action_on_approval": "ssh host 'docker system prune -af' 后报告回收量"
+}

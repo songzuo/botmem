@@ -1,0 +1,16 @@
+{
+  "lastCheck": "2026-06-30T13:34:00+08:00",
+  "priorCheck": "2026-06-30T12:20:00+08:00",
+  "interval_min": 74,
+  "verdict": "silent",
+  "endpoints": "all green (no new probe)",
+  "pm2_deltas": {
+    "binance-trader": "R=9 stable (unchanged since 12:20)",
+    "martin-mini": "R=9 stable (unchanged)",
+    "anti-v3": "R=48 stable (unchanged)"
+  },
+  "resources": {"disk": "78%", "mem": "4.5/7.8Gi", "load": "1.64/1.68/1.59", "uptime": "9D 3H"},
+  "alerts_persistent": "6 (T-012..T-018, all known, no new)",
+  "tasks": "5 active, 8 in queue (unchanged)",
+  "next_cron": {"30min_health": "13:34 (this minute)", "4h_pnl": "16:08-ish", "daily_3bot": "14:00 (not registered)", "eod": "23:00"}
+}

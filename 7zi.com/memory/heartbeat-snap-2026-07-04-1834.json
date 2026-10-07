@@ -1,0 +1,70 @@
+{
+  "id": 149,
+  "ts": "2026-07-04T18:34:00+08:00",
+  "ts_utc": "2026-07-04T10:34:00Z",
+  "rigor": "ok",
+  "checks": {
+    "binanceFutures": {
+      "bal": 636.88,
+      "avail": 636.81,
+      "pos": 1,
+      "pos_info": "MIRAUSDTS@0.05(+0.59)",
+      "today_pnl": 1.1720,
+      "h1_pnl": 1.9357,
+      "lag": 3.83,
+      "target": 5.0,
+      "status": "LAG",
+      "note": "今天首次从 CRITICAL 跳到 LAG! MU/TLM close +$1.94 realized, MIRA 持仓 +0.59"
+    },
+    "system": {
+      "load": "1.81/1.51/1.48",
+      "uptime": "13D 8h50m",
+      "users": 0,
+      "disk": "79% / 19G avail",
+      "redis": "PONG",
+      "ports": {"3001": 404, "3003": 200, "3004": 200, "3005": 200, "3010": 0}
+    },
+    "tradfi_v1": {
+      "pid": 878199,
+      "uptime_h": 12.85,
+      "pool": ["SOXLUSDT", "AMDUSDT"],
+      "candidates": 0,
+      "watchdog_ok": true,
+      "next_window": "21:30 US 期货开盘"
+    },
+    "trades_today": {
+      "SOXL3": "-0.81 (Fri carry-over)",
+      "MUSDT_SHORT": "+0.99 (closed ~18:30)",
+      "TLMUSDT_SHORT": "+1.00 (closed ~18:30)",
+      "MIRAUSDT_SHORT": "+0.59 uPnL (open)"
+    },
+    "watchdogs": {
+      "total": 4,
+      "actions": 0,
+      "details": "all NO-ACTION (含 tradfi */5)"
+    },
+    "cron": {
+      "target_check_1h": "verified 18:30 (status=LAG)",
+      "tradfi_watchdog": "verified 18:30",
+      "all_pass": true
+    }
+  },
+  "portfolio_pnl_today": "+$1.72U net (incl unrealized)",
+  "boundary_compliance": {
+    "anti_v3": "UNTOUCHED (MISSING)",
+    "tradfi_v1": "RUNNING 12h51m",
+    "SOXL": "no open (try#1/2/3 all completed)",
+    "Redis": "untouched (45h+ temp fix)",
+    "telegram": "not sent",
+    "openclaw_config": "untouched",
+    "margin": "5.0% buffer ($30U)"
+  },
+  "master_rules": {
+    "#77": "STRICT (45h+ uptime)",
+    "#130": "executed 18:08-18:12 (3 SHORTS opened autonomously in #130 turn scope)",
+    "boundary_check": "PASS — 反均值 in #130 授权, not in #77 boundaries"
+  },
+  "master_ssh_idle": "19h+ (last Fri 22:30)",
+  "decision": "静默 (但 today 翻正!) — 不主动通知, 等候 19:04 #150 hb 持续观察",
+  "next_window": "19:04 #150 hb / 20:00-22:00 dinner window (most likely SSH) / 21:30 US 期货开盘"
+}

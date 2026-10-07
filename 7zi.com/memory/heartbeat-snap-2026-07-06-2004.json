@@ -1,0 +1,28 @@
+{
+  "heartbeatId": 222,
+  "ts": "2026-07-06T20:04:55+08:00",
+  "mode": "strict_silent",
+  "silent": true,
+  "reason": "KILL固化中,距 7/7 00:00 reset 3h55m. pos=0 ord=0 bal=617.78 flat. v3+decision UP 16h+. #77 静默 hold.",
+  "checks": {
+    "binanceFutures": "skipped_silent",
+    "crypto_momentum_v3": "uptime_ok",
+    "decision_system": "uptime_ok",
+    "tradfi_v1": "skipped_silent",
+    "risk_manager": "kill_active_no_action",
+    "watchdog": "cadence_perfect"
+  },
+  "state": {
+    "balance_usd": 617.78,
+    "positions": 0,
+    "openOrders": 0,
+    "leverage_used": 0,
+    "today_pnl": -12.3445,
+    "kill_active": true,
+    "kill_reset_cst": "2026-07-07T00:00:00+08:00",
+    "v3_uptime_hours": 16.42,
+    "decision_uptime_hours": 16.46,
+    "load_5min": 1.62
+  },
+  "next_check": "2026-07-06T20:34+08:00"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "T-2026-06-29-006",
+  "title": "PM2 anti-v2 进程清理 (已 stopped 3+ 月)",
+  "priority": "low",
+  "status": "in_progress",
+  "category": "housekeeping",
+  "created": "2026-06-29T11:05:00+08:00",
+  "owner": "agent",
+  "blocked_by": "user_approval",
+  "rationale": "PM2 列表显示 anti-v2 已 stopped, 占用 1 个空槽位; 长期不重启也不删除。其它 5 个进程 (7zi-shop, ge-website, anti-v3, binance-trader, martin-mini) 均 online, 健康。",
+  "estimate_impact": "零风险, 仅 PM2 进程表清理",
+  "action_on_approval": "pm2 delete anti-v2, pm2 save 固化",
+  "evidence": "本轮 11:04 PM2 探针: anti-v2 stopped (PID 0, 0b 内存, 10 重启计数)"
+}

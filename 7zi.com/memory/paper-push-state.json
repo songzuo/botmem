@@ -1,0 +1,17 @@
+{
+  "last_push_ts": 1785529753,
+  "last_push_ts_iso": "2026-08-01 04:29 CST",
+  "last_best": "S2_REVERSE_5MIN",
+  "last_best_pnl": 3.491,
+  "last_grand_total": -6.873,
+  "last_closed": {
+    "S1_MOMENTUM_BASELINE": 8,
+    "S2_REVERSE_5MIN": 22,
+    "S3_TIGHT_TPSL": 12,
+    "S4_WIDER_TPSL": 8,
+    "S5_ULTRA_TIGHT_30MIN": 20,
+    "S6_REVERSE_TIGHT_30MIN": 20
+  },
+  "alert_v3_dead_pushed": true,
+  "alert_grand_loss_pushed": true
+}

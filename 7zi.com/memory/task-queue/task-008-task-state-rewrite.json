@@ -1,0 +1,11 @@
+{
+  "id": "T-2026-06-29-008",
+  "title": "task-state.json 状态写实 (重写为当前实际)",
+  "priority": "low",
+  "status": "completed",
+  "category": "housekeeping",
+  "created": "2026-06-29T11:05:00+08:00",
+  "owner": "agent",
+  "completed": "2026-06-29T11:06:00+08:00",
+  "result": "tasks-state.json 重写为 5 任务: 2 completed + 3 in_progress (T-006, T-007 done, T-008 done, T-004 in_progress 实际)"
+}

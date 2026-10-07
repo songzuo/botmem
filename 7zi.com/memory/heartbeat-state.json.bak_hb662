@@ -1,0 +1,129 @@
+{
+  "lastHeartbeat": "2026-07-23 13:48 CST",
+  "lastHB": 662,
+  "consecutiveSilentHBs": 30,
+  "lastChecks": {
+    "ps_paper_pids": 1784785794,
+    "btc_mark": 1784785794,
+    "zbt_mark": 1784785794,
+    "watchdog_refresh_check": 1784785794,
+    "cron_state_check": 1784785794,
+    "all_alive": 1784785794,
+    "fapi_direct_fetch": 1784785794,
+    "hl_direct_fetch": 1784785794,
+    "hl_sdk_verify": 1784782817,
+    "pm_direct_fetch": 1784785794,
+    "pcs_state_check": 1784785794,
+    "eth_mark": 1784785794,
+    "sqlite_paper_recheck": 1784785794
+  },
+  "pids": {
+    "v3_paper": {
+      "pid": 739211,
+      "alive": false,
+      "etime": "DEAD_2026-07-22T17:14:55_reboot",
+      "note": "DEAD - killed by host reboot, no auto-restart"
+    },
+    "v3_paper_e": {
+      "pid": 1064310,
+      "alive": false,
+      "etime": "DEAD_2026-07-22T17:14:55_reboot",
+      "note": "DEAD - killed by host reboot, no auto-restart"
+    },
+    "s7_funding": {
+      "pid": 975389,
+      "alive": false,
+      "etime": "DEAD_2026-07-22T17:14:55_reboot",
+      "note": "DEAD - killed by host reboot, no auto-restart"
+    },
+    "risk_manager": {
+      "pid": 943,
+      "alive": true,
+      "etime": "20h34m",
+      "note": "ALIVE since reboot 7/22 17:14 — MONITORING ONLY (emergency stop active since 2026-06-02)"
+    }
+  },
+  "sqlite": {
+    "paper_trades_db": {
+      "path": "/opt/trader/paper/paper_trades.db",
+      "open": 0,
+      "closed": 90,
+      "pnl_gross": -6.873
+    },
+    "paper_trades_e_db": {
+      "path": "/opt/trader/paper/paper_trades_e.db",
+      "open": 0,
+      "closed": 13,
+      "pnl_pnl_gross": 0.9068
+    },
+    "s7_trades_db": {
+      "path": "/opt/trader/paper/s7_trades.db",
+      "open": 0,
+      "closed": 14,
+      "pnl_gross": -24.8082
+    }
+  },
+  "grand_sim_pnl": -30.7744,
+  "tripwire_minus_10": {
+    "breached": true,
+    "buffer": -20.7744
+  },
+  "hard_stop_minus_30": {
+    "safe": false,
+    "buffer": -0.7744,
+    "hit_count": 15,
+    "note": "15th DEEPEST closed-only sustained (crossed -$30 closed-only since 7/21 crystallization)"
+  },
+  "open_state": {},
+  "live_balances_estimate": {
+    "fapi_direct": 584.26,
+    "hl_direct": 41.2,
+    "hl_direct_method": "WATCHDOG authoritative + Python SDK spot_user_state() confirmed 41.195535; raw curl to api.hyperliquid.xyz returns empty (signature required)",
+    "spot_usdc": 93.01,
+    "pm_pos": 10.32,
+    "pcs": 2.025,
+    "total_estimate": 730.84,
+    "note": "Fapi direct auth $584.26 UNCH. HL SDK spot_user_state 41.195535 AUTHORITATIVE. Spot USDC $93.01 UNCH. PM $10.32 UNCH. PCS $2.025 UNCH. Grand est $730.84 UNCH."
+  },
+  "btc_mark_now": 65700.0,
+  "btc_chg24h_now": -0.443,
+  "zbt_mark_now": 0.10325,
+  "zbt_chg24h_now": 2.278,
+  "zbt_mark_method": "FRESH curl-verified 13:48",
+  "hl_curl_status": "CONFIRMED (from #654): raw curl to api.hyperliquid.xyz/info returns empty for user queries; Python SDK signs requests and works (watchdog authoritative).",
+  "human_silence_hours_trading": 177.0,
+  "human_silence_strict_count": 103,
+  "silence_threshold_strict": "7d+",
+  "decision_budget": {
+    "status": "FRESH",
+    "reset_at": "2026-07-22 22:56 CST",
+    "next_reset": "2026-07-23 22:56 CST",
+    "window_end": "2026-07-23 10:56 CST (PASSED)",
+    "current_cycle": "2026-07-23 10:56 → 22:56 (12h, $300 fresh budget)",
+    "since_cycle_start_min": 172,
+    "amount_per_window": 300,
+    "window_hours": 12
+  },
+  "watchdog_states": {
+    "hl": "bal 41.20 pnl_peak 26.22 lock inactive max_lev 0.0x 0 positions NO-ACTION (mtime 13:45 fresh) WATCHDOG AUTHORITATIVE",
+    "pm": "[SL-HIT] Iran uranium enrichment -$6.25 last alert 13:45 — 4 active positions via /tmp/pm_check.json",
+    "pcs": "BNB $569.78 deviates -8.10% from grid base $620.0 [ARB-WINDOW] + LOW-USDC $1.855 + LOW-BNB 0.000298 + GAS-LOW (mtime 13:45 fresh)",
+    "generic_watchdog_state": "watchdog_state.json (generic) stale 2026-07-15 03:20 — generic watchdog is for live sims dead since 7/15 lock",
+    "binance_fapi": "DIRECT auth BTCUSDT 13:48 $65,700.00 chg24h -0.443% vol24h $7.63B; account totalWalletBalance $584.26, 0 positions"
+  },
+  "reboot_pending": {
+    "reboot_at": "2026-07-22T17:14:55+08:00",
+    "root_cause": "unknown - pre-reboot journal rolled",
+    "uptime_hours": 20.57,
+    "sims_dead": [
+      "v3_paper",
+      "v3_paper_e",
+      "s7_funding"
+    ],
+    "auto_restart": null,
+    "master_decision_pending": true
+  },
+  "notes": "HB #662 13:48 CST 7/23 Thu +28m vs #661 13:20. Same posture #633-#661 (30 HBs in a row), sims DEAD 20h34m, watchdogs fresh 13:45. BTC $65,700.00 chg24h -0.443% (vs #661 $65,626.80/-0.786%, +$73.20/+0.343pp LESS bearish — moderating further from sustained NEGATIVE bias). ZBT $0.10325 chg24h +2.278% (vs #661 $0.10370/+2.339%, -$0.00045/-0.061pp LESS bullish — POSITIVE preserved). GRAND frozen -$30.7744 UNCH (sqlite-authoritative: paper 90/-6.873 + paper_e 13/+0.9068 + s7 14/-24.8082). Grand live est ~$730.84 UNCH. Owner silent 177h+ (#103 strict 7d+). Fresh budget cycle in progress (10:56→22:56, $300, 2h52m in, 9h08m remaining). NO-ACTION.",
+  "eth_mark_now": 1921.15,
+  "eth_chg24h_now": -0.783
+}

@@ -1,0 +1,67 @@
+{
+  "ts": "2026-07-19 10:43 CST",
+  "ts_unix": 1784428980,
+  "hb_num": 575,
+  "delta_vs_prev": "+29m vs #574 (10:14)",
+  "status": "🟡 STATUS QUO 125 连",
+  "pids": {
+    "v3_paper_739211": {"etime": "4d22h05m", "state": "alive"},
+    "s7_975389": {"etime": "4d08h01m", "state": "alive_paused_consec2"},
+    "v3_paper_e_1064310": {"etime": "4d02h39m", "state": "alive"}
+  },
+  "open_positions": {
+    "S2E_SKHYUSDT_BUY": {
+      "qty": 0.19,
+      "entry": 152.15,
+      "mark": 153.30,
+      "uPnL": 0.2185,
+      "uPnL_pct": 0.76,
+      "TP_target": 153.6715,
+      "distance_to_TP_pct": 0.244,
+      "MaxHold_expire": "7/20 00:00 CST",
+      "MaxHold_remaining_h": 13.26,
+      "chg24h_signal": "-7.05% flip=SELL→BUY MOMENTUM_DOWN",
+      "hold_h": 10.72
+    }
+  },
+  "sqlite_counts": {
+    "paper_trades.db": {"open": 0, "closed": 86, "pnl": -7.5551, "best": "S2_REVERSE_5MIN +2.8089 (11/18 61.1%)"},
+    "paper_trades_e.db": {"open": 0, "closed": 8, "pnl": 2.8458, "best": "8/8 TP hit +1.0% avg 1.21%"},
+    "s7_trades.db": {"open": 0, "closed": 10, "pnl": -22.6146, "recent": "ESPORTS x2 SL -$19.35 disaster 7/19 05:07"}
+  },
+  "grand_sim": {
+    "sum_pnl": -27.3239,
+    "tripwire_-10": "BREACHED UNCH",
+    "tripwire_breached_since": "05:08 (5h35m+)",
+    "hard_stop_-30_buffer": 2.6761,
+    "hard_stop_safe": true,
+    "if_SKHY_TP_fires": -27.1054
+  },
+  "live_balance": {
+    "fapi_USDT": 584.62,
+    "HL_USDC": 41.195535,
+    "hl_pnl_peak": 26.22,
+    "hl_lock_active": false,
+    "spot_USDC": 93,
+    "TOTAL_USD": 718.82,
+    "status": "SAFE"
+  },
+  "btc_mark": 64812.50,
+  "btc_delta_vs_prev": "-$56.60 micro DOWN",
+  "owner_silence_h": 115.92,
+  "owner_silence_note": "#77 strict, 4d19h55m+, Sun early morning asleep",
+  "paipan_EXHAUSTED_reset": "14:56 7/19 (~4h13m)",
+  "daily_cap_state": {
+    "S2": "2/2 today ✅ HIT (until 7/20 00:00 ~13h17m)",
+    "S2E": "0/2 today (1 OPEN SKHY)",
+    "S7": "2/2 today ✅ HIT consec=2 paused (until 7/20 00:00 ~13h17m)"
+  },
+  "next_natural_checks": {
+    "HB_576": "~11:14 CST (~31m)",
+    "paper_summary_4h_cron": "14:12 7/19 (~3h29m)",
+    "paipan_reset": "14:56 7/19 (~4h13m)",
+    "daily_cap_reset": "7/20 00:00 (~13h17m)",
+    "daily_report": "7/19 23:00 (~12h17m)"
+  },
+  "not_action_list_count": 19
+}

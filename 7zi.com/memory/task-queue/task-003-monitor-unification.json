@@ -1,0 +1,13 @@
+{
+  "id": "T-2026-06-29-003",
+  "title": "监控统一实施 (从 03-16 BLOCKED 继承)",
+  "priority": "high",
+  "status": "blocked",
+  "category": "infra",
+  "created": "2026-06-29T06:32:00+08:00",
+  "owner": "agent",
+  "blocked_by": "ssh_auth",
+  "rationale": "节点间 SSH 认证问题,需要用户协助配置 ssh key 或提供密码。",
+  "estimate_impact": "统一监控后减少 5+ cron 重复探针, 降低系统负载",
+  "action_on_unblock": "用户回复 SSH 凭据后,实施统一探针"
+}

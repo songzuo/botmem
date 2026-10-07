@@ -1,0 +1,231 @@
+{
+  "hb": 300,
+  "time_cst": "14:05-14:12",
+  "date": "2026-07-09",
+  "wallet": 612.3969,
+  "available": 608.907,
+  "positions_count": 1,
+  "positions": [
+    {
+      "symbol": "EVAAUSDT",
+      "side": "SHORT",
+      "qty": 7.3,
+      "entry": "2.4472999999999994",
+      "leverage": "5",
+      "margin": 3.55389117,
+      "uPnL": 0.0958341
+    }
+  ],
+  "today_NET_fresh_api": -1.2448,
+  "today_fills": 28,
+  "today_W": 12,
+  "today_L": 16,
+  "today_WR_pct": 42.9,
+  "yesterday_7_8_NET": -3.7745,
+  "two_day_cumulative": -5.0193,
+  "kill_buffer_2day": -0.0193,
+  "per_symbol": {
+    "TRIAUSDT": {
+      "count": 1,
+      "W": 1,
+      "L": 0,
+      "net": 0.3707
+    },
+    "JTOUSDT": {
+      "count": 3,
+      "W": 0,
+      "L": 3,
+      "net": -0.798
+    },
+    "GRASSUSDT": {
+      "count": 1,
+      "W": 0,
+      "L": 1,
+      "net": -0.3075
+    },
+    "POWERUSDT": {
+      "count": 9,
+      "W": 5,
+      "L": 4,
+      "net": -0.4001
+    },
+    "CLOUSDT": {
+      "count": 1,
+      "W": 0,
+      "L": 1,
+      "net": -0.3029
+    },
+    "AGLDUSDT": {
+      "count": 3,
+      "W": 1,
+      "L": 2,
+      "net": -0.113
+    },
+    "KORUUSDT": {
+      "count": 2,
+      "W": 0,
+      "L": 2,
+      "net": -0.455
+    },
+    "SKYAIUSDT": {
+      "count": 6,
+      "W": 3,
+      "L": 3,
+      "net": 0.5018
+    },
+    "EVAAUSDT": {
+      "count": 1,
+      "W": 1,
+      "L": 0,
+      "net": 0.3423
+    },
+    "SYNUSDT": {
+      "count": 1,
+      "W": 1,
+      "L": 0,
+      "net": 0.364
+    }
+  },
+  "fills_chronological": [
+    {
+      "time": "00:29:27",
+      "symbol": "TRIAUSDT",
+      "income": 0.3707
+    },
+    {
+      "time": "01:03:40",
+      "symbol": "JTOUSDT",
+      "income": -0.2576
+    },
+    {
+      "time": "04:05:03",
+      "symbol": "GRASSUSDT",
+      "income": -0.3075
+    },
+    {
+      "time": "04:18:01",
+      "symbol": "POWERUSDT",
+      "income": 0.2592
+    },
+    {
+      "time": "04:34:02",
+      "symbol": "POWERUSDT",
+      "income": -0.3979
+    },
+    {
+      "time": "05:14:40",
+      "symbol": "CLOUSDT",
+      "income": -0.3029
+    },
+    {
+      "time": "06:08:13",
+      "symbol": "JTOUSDT",
+      "income": -0.2688
+    },
+    {
+      "time": "08:28:27",
+      "symbol": "JTOUSDT",
+      "income": -0.2716
+    },
+    {
+      "time": "08:36:27",
+      "symbol": "AGLDUSDT",
+      "income": 0.357
+    },
+    {
+      "time": "09:07:30",
+      "symbol": "AGLDUSDT",
+      "income": -0.242
+    },
+    {
+      "time": "09:17:13",
+      "symbol": "AGLDUSDT",
+      "income": -0.228
+    },
+    {
+      "time": "09:34:52",
+      "symbol": "POWERUSDT",
+      "income": 0.0765
+    },
+    {
+      "time": "09:34:52",
+      "symbol": "POWERUSDT",
+      "income": 0.1376
+    },
+    {
+      "time": "09:34:52",
+      "symbol": "POWERUSDT",
+      "income": 0.025
+    },
+    {
+      "time": "09:48:29",
+      "symbol": "POWERUSDT",
+      "income": -0.2645
+    },
+    {
+      "time": "10:05:06",
+      "symbol": "POWERUSDT",
+      "income": 0.4889
+    },
+    {
+      "time": "10:24:04",
+      "symbol": "POWERUSDT",
+      "income": -0.3875
+    },
+    {
+      "time": "11:01:05",
+      "symbol": "POWERUSDT",
+      "income": -0.3373
+    },
+    {
+      "time": "11:22:28",
+      "symbol": "KORUUSDT",
+      "income": -0.2165
+    },
+    {
+      "time": "11:47:40",
+      "symbol": "KORUUSDT",
+      "income": -0.2385
+    },
+    {
+      "time": "12:01:30",
+      "symbol": "SKYAIUSDT",
+      "income": -0.3687
+    },
+    {
+      "time": "12:18:28",
+      "symbol": "SKYAIUSDT",
+      "income": 0.3331
+    },
+    {
+      "time": "12:31:50",
+      "symbol": "SKYAIUSDT",
+      "income": 0.3963
+    },
+    {
+      "time": "12:46:58",
+      "symbol": "SKYAIUSDT",
+      "income": -0.0229
+    },
+    {
+      "time": "12:46:58",
+      "symbol": "SKYAIUSDT",
+      "income": -0.1512
+    },
+    {
+      "time": "13:02:00",
+      "symbol": "SKYAIUSDT",
+      "income": 0.3153
+    },
+    {
+      "time": "13:26:37",
+      "symbol": "EVAAUSDT",
+      "income": 0.3423
+    },
+    {
+      "time": "13:53:53",
+      "symbol": "SYNUSDT",
+      "income": 0.364
+    }
+  ]
+}

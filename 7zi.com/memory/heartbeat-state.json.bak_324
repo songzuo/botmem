@@ -1,0 +1,102 @@
+{
+  "lastHB": 1783670700,
+  "hbNumber": 324,
+  "date": "2026-07-10",
+  "time_human": "14:05 CST",
+  "status": "V313_DORMANT_FLAT_BUFFER_HOLDING_4H30M_BEST_SAFE_ZONE",
+  "host": "7zi",
+  "wallet_usd": 609.54566856,
+  "wallet_source": "v3 state.json mtime 14:06 fresh, +0.02 from #323 (1h drift, no new closes)",
+  "wallet_v3_state": 609.54566856,
+  "state_daily_pnl": -0.18225,
+  "decision_income_fresh_pnl": -0.1823,
+  "decision_fills": 209,
+  "today_pnl_fresh_api": -0.4342,
+  "today_pnl_realized": -0.1823,
+  "yesterday_7_9_fresh_api": -3.7855,
+  "rolling_2day_cumulative": -4.2197,
+  "kill_line": -5.0,
+  "buffer_to_kill": 0.7803,
+  "buffer_status": "HOLDING +$0.78 buffer vs -$5 KILL, FLAT 7 HBs since #317 (4h30m, LONGEST safe zone since V313 start)",
+  "openPositions_count": 0,
+  "v313_dormant_min": 474,
+  "decision_state": {
+    "base_override": 18,
+    "base_override_until_epoch": 1783685159.6365185,
+    "base_override_until_human": "20:05 CST",
+    "minutes_remaining": 359,
+    "adjust_reason": "24h WR 40% < 45% threshold, 18U trial 6h rolling",
+    "kill_bot": false,
+    "pause_until": 0,
+    "skip_long": false,
+    "skip_short": false,
+    "skip_short_reason": null,
+    "correction_vs_hb320": "skip_short FALSE in state file (was TRUE momentary at 11:29:29, now stable confirmed)"
+  },
+  "WR": "40% below 45% threshold 5pp, ADJUST 18U 续 rolling since 14:06 (was 13:05)",
+  "daily_8d": {
+    "2026-07-03": -0.81,
+    "2026-07-04": 0.65,
+    "2026-07-05": -4.64,
+    "2026-07-06": -13.63,
+    "2026-07-07": -0.08,
+    "2026-07-08": -3.77,
+    "2026-07-09": -1.69,
+    "2026-07-10": -0.43
+  },
+  "pids": {
+    "v3": 3200864,
+    "v3_uptime": "11h18m",
+    "decision": 2701181,
+    "decision_uptime": "1d18h24m"
+  },
+  "next_events": [
+    "14:35 next HB #325",
+    "14:11+ next decision fetch (5min cadence, 14:06:00 fresh ADJUST)",
+    "14:21 next v3 cycle (~15min cadence, daily_trades cap 触发 skip → flat likely)",
+    "20:05 CST decision 18U window rolling expire (~5h59m, rolled +80min from #323 18:45)",
+    "16:00 funding wave (~1h54m, 0 charge if positions=0)",
+    "00:00 7/11 daily reset (~9h54m, KILL fresh window — 7/11 + 7/10 = new rolling 2-day)"
+  ],
+  "market": {
+    "btc_last": 63850.0,
+    "btc_24h_chg_pct": 3.015,
+    "eth_24h_chg_pct": 5.401,
+    "sentiment": "broad uptrend +3% BTC, market 24h median +3.2% (no active short gate, but skip_short=FALSE)"
+  },
+  "data_sources_audit": {
+    "state_file_mtime": "crypto_momentum_v3_state.json 14:06:00 fresh (decision_system save)",
+    "decision_state_ts": "14:06:00.7174313",
+    "cycle_log": "last logged cycle 206 (13:06:47), next ~14:21",
+    "watchdog_log": "13:00:08 STATUS (limit=100 BUG), pnl_state fresh"
+  },
+  "v314_todo": [
+    "TRACKED bot ADJUST 18U 6h rolling — base_extension_until 20:05 CST (rolled +80min from #323 18:45)",
+    "TRACKED skip_short confirmed FALSE in state file (was TRUE momentary at 11:29:29)",
+    "TRACKED 2-day buffer holding stable 7 HBs (#317-#323) since 09:35 ≈ 4h30m = LONGEST safe zone since V313 start 02:47",
+    "TRACKED V313 dormant 7h54m = longest single dormant period since V313 start 02:47",
+    "TRACKED today_pnl 209 fills frozen 4h07m (7 consecutive decision fetches) = bot genuinely dormant",
+    "TRACKED today_pnl fresh API -$0.4342 frozen 4h54m (since 09:11 USUSDT close) = no realized P&L change",
+    "TRACKED v3 wallet drift +$0.02 (state 14:06 vs #323 cycle 206 13:06, 1h) = minimal natural drift",
+    "TRACKED market BTC +3.02% ETH +5.40% broad uptrend (no active short gate)",
+    "TRACKED v3 state.json phantom LABUSDT position (qty=9 entry=1.991 from 7/5, NOT live, stale state)",
+    "TRACKED v3 state.json daily_trades only has 7/5 entry (stale, counter elsewhere)",
+    "TRACKED v3 state.json blacklist top-level empty (lives in decision_system memory, known clobber)"
+  ],
+  "policy_notes": "rule 77 strict no-push 35d+ SSH silent V313 reversal since 02:47 no patches",
+  "honest_gap": "FAPI keys not at /etc/keys/*, decision uses signed urllib, /tmp/income.json stale, decision fetches live; pnl_state limit=100 BUG persists",
+  "master_ssh_silent_days": 35,
+  "blacklist_entries": 3,
+  "blacklist_symbols": [
+    "LABUSDT",
+    "TRIAUSDT",
+    "USUSDT"
+  ],
+  "v3_daily_trades_7_10": 2,
+  "margin_buffer_pct": 12.4,
+  "v3_skipped_signals_last_cycle": 10,
+  "observation": "HB #324 14:05 — bot dormant 7h54m (longest since V313 start 02:47), 2-day buffer +$0.78 HOLDING 7 HBs #317-#323 ≈ 4h30m LONGEST safe zone, today_pnl 209 fills frozen 7 decision fetches, fresh API -$0.4342 frozen 4h54m, decision fresh ADJUST 18U rolling until 20:05 CST (rolled +80min from #323 18:45), v3 state.json 14:06:00 fresh with phantom LABUSDT (cosmetic, positions_count=0 confirms flat), skip_short=FALSE confirmed, BTC +3.02% ETH +5.40% broad uptrend, no new bypasses, master 35d SSH silent #77 strict no-push",
+  "minutes_remaining": 359,
+  "base_override_until_human": "20:05 CST",
+  "base_override_until_epoch": 1783685159.6365185
+}

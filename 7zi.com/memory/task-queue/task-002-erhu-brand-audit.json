@@ -1,0 +1,13 @@
+{
+  "id": "T-2026-06-29-002",
+  "title": "/var/www/erhu-brand 14G 静态文件审计",
+  "priority": "medium",
+  "status": "pending",
+  "category": "housekeeping",
+  "created": "2026-06-29T06:32:00+08:00",
+  "owner": "agent",
+  "blocked_by": "user_approval",
+  "rationale": "14G 静态文件长期占用,需先扫描内容确认是否仍被 nginx/网站引用再决定删除。",
+  "estimate_impact": "可能回收 5-10G, 风险中（需先审计再删）",
+  "action_on_approval": "扫描目录结构 + 引用关系,生成可删清单,等待二次确认"
+}

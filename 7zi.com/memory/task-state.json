@@ -1,0 +1,27 @@
+{
+  "lastHeartbeat": "2026-06-30T18:34:00+08:00",
+  "status": "idle",
+  "currentTask": null,
+  "currentPhase": null,
+  "gatewayStatus": "running",
+  "gatewayStartTime": "2026-06-21T00:00:00+08:00",
+  "activeSessions": 1,
+  "activeSubagents": 0,
+  "subagents": [],
+  "recoveryFiles": [],
+  "queue": {
+    "total": 5,
+    "pending": 3,
+    "blocked": 1,
+    "running": 0,
+    "completed": 1
+  },
+  "pendingTasks": [
+    "T-001 Docker 1.5G 清理 (medium, 待用户批准)",
+    "T-002 /var/www/erhu-brand 14G 审计 (medium, 待用户批准)",
+    "T-003 监控统一实施 (high, BLOCKED: SSH 认证问题, 3 个月未解)",
+    "T-004 SSL 证书到期监控 (medium, 88 天, 未实施)"
+  ],
+  "lastCheck": "2026-06-30T18:34:00+08:00",
+  "checkResult": "Heartbeat #15 18:34 - 静默轮询, 状态零变化 (vs #14 30min, 距 16:34 大清理 2h), 现在 PM2 4 个: 7zi-shop / ge-website / anti-v2 (stopped) / anti-v3, 交易进程仅 anti-v3 + risk_manager, 端点全绿 (api/health 在 3001 端口修正), 4h PnL cron 16:00 ran silent, 2h 零反弹确认主人决策彻底生效, 等主人下指令: 1) 更新 cron payload 2) 14:00 daily 3-bot cron 决定 3) T-006 标 complete"
+}

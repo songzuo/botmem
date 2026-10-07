@@ -1,0 +1,579 @@
+{
+  "positions": {},
+  "daily_trades": {
+    "2026-07-05": 4
+  },
+  "cooldown_until": 0,
+  "consecutive_losses": 0,
+  "total_trades": 4,
+  "total_pnl": 0.0,
+  "open_time_MAGMAUSDT": 1783197771.51619,
+  "open_time_SLXUSDT": 1783195802.644759,
+  "open_time_LABUSDT": 1783196244.3283353,
+  "decision": {
+    "pause_until": 0,
+    "pause_reason": "",
+    "base_override": 18,
+    "base_override_until": 1783366691.6572511,
+    "adjust_reason": "24h WR 33% < 45%, \u7f29\u4ed3\u5230 18U \u8bd5 6h",
+    "skip_short": false,
+    "skip_long": false,
+    "kill_bot": false,
+    "ts": 1783345092.0743086
+  },
+  "recent_fills": [
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.25513620",
+      "asset": "USDT",
+      "time": 1782937457000,
+      "info": "143837765",
+      "tranId": 96081143837765,
+      "tradeId": "143837765"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.06456500",
+      "asset": "USDT",
+      "time": 1782937457000,
+      "info": "143837766",
+      "tranId": 96081143837766,
+      "tradeId": "143837766"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.06443250",
+      "asset": "USDT",
+      "time": 1782937457000,
+      "info": "143837767",
+      "tranId": 96081143837767,
+      "tradeId": "143837767"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.12264840",
+      "asset": "USDT",
+      "time": 1782937457000,
+      "info": "143837768",
+      "tranId": 96081143837768,
+      "tradeId": "143837768"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.12042800",
+      "asset": "USDT",
+      "time": 1782937457000,
+      "info": "143837769",
+      "tranId": 96081143837769,
+      "tradeId": "143837769"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-3.50983080",
+      "asset": "USDT",
+      "time": 1782937524000,
+      "info": "143854893",
+      "tranId": 96081143854893,
+      "tradeId": "143854893"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-1.87608960",
+      "asset": "USDT",
+      "time": 1782937772000,
+      "info": "143931524",
+      "tranId": 96081143931524,
+      "tradeId": "143931524"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "0.38794070",
+      "asset": "USDT",
+      "time": 1782938149000,
+      "info": "144023616",
+      "tranId": 96081144023616,
+      "tradeId": "144023616"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "0.91397282",
+      "asset": "USDT",
+      "time": 1782938149000,
+      "info": "144023617",
+      "tranId": 96081144023617,
+      "tradeId": "144023617"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "0.40899296",
+      "asset": "USDT",
+      "time": 1782938149000,
+      "info": "144023618",
+      "tranId": 96081144023618,
+      "tradeId": "144023618"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "1.53848190",
+      "asset": "USDT",
+      "time": 1782938149000,
+      "info": "144023619",
+      "tranId": 96081144023619,
+      "tradeId": "144023619"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.51370620",
+      "asset": "USDT",
+      "time": 1782938218000,
+      "info": "144035650",
+      "tranId": 96081144035650,
+      "tradeId": "144035650"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.33122880",
+      "asset": "USDT",
+      "time": 1782938347000,
+      "info": "144054609",
+      "tranId": 96081144054609,
+      "tradeId": "144054609"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-2.83238400",
+      "asset": "USDT",
+      "time": 1782938347000,
+      "info": "144054610",
+      "tranId": 96081144054610,
+      "tradeId": "144054610"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.11680020",
+      "asset": "USDT",
+      "time": 1782938592000,
+      "info": "144102970",
+      "tranId": 96081144102970,
+      "tradeId": "144102970"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.22145540",
+      "asset": "USDT",
+      "time": 1782938592000,
+      "info": "144102971",
+      "tranId": 96081144102971,
+      "tradeId": "144102971"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.73855480",
+      "asset": "USDT",
+      "time": 1782938592000,
+      "info": "144102972",
+      "tranId": 96081144102972,
+      "tradeId": "144102972"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "0.96621700",
+      "asset": "USDT",
+      "time": 1782938655000,
+      "info": "144114259",
+      "tranId": 96081144114259,
+      "tradeId": "144114259"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "0.96421800",
+      "asset": "USDT",
+      "time": 1782938655000,
+      "info": "144114260",
+      "tranId": 96081144114260,
+      "tradeId": "144114260"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "0.09841650",
+      "asset": "USDT",
+      "time": 1782938655000,
+      "info": "144114261",
+      "tranId": 96081144114261,
+      "tradeId": "144114261"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "1.39160040",
+      "asset": "USDT",
+      "time": 1782938839000,
+      "info": "144140501",
+      "tranId": 96081144140501,
+      "tradeId": "144140501"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.07485150",
+      "asset": "USDT",
+      "time": 1782939145000,
+      "info": "144174659",
+      "tranId": 96081144174659,
+      "tradeId": "144174659"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.61776000",
+      "asset": "USDT",
+      "time": 1782939145000,
+      "info": "144174660",
+      "tranId": 96081144174660,
+      "tradeId": "144174660"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-2.80389340",
+      "asset": "USDT",
+      "time": 1782939814000,
+      "info": "144255673",
+      "tranId": 96081144255673,
+      "tradeId": "144255673"
+    },
+    {
+      "symbol": "NOMUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-1.24789500",
+      "asset": "USDT",
+      "time": 1782940367000,
+      "info": "97014742",
+      "tranId": 10309197014742,
+      "tradeId": "97014742"
+    },
+    {
+      "symbol": "NFPUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-1.64869080",
+      "asset": "USDT",
+      "time": 1782940615000,
+      "info": "144365663",
+      "tranId": 96081144365663,
+      "tradeId": "144365663"
+    },
+    {
+      "symbol": "TAIKOUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-1.28240000",
+      "asset": "USDT",
+      "time": 1782940615000,
+      "info": "15666564",
+      "tranId": 10133115666564,
+      "tradeId": "15666564"
+    },
+    {
+      "symbol": "SOXLUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.95480000",
+      "asset": "USDT",
+      "time": 1782955017000,
+      "info": "55745819",
+      "tranId": 10612155745819,
+      "tradeId": "55745819"
+    },
+    {
+      "symbol": "SOXLUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "0.19200000",
+      "asset": "USDT",
+      "time": 1782976681000,
+      "info": "56127162",
+      "tranId": 10612156127162,
+      "tradeId": "56127162"
+    },
+    {
+      "symbol": "SOXLUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.51030000",
+      "asset": "USDT",
+      "time": 1783031663000,
+      "info": "60286543",
+      "tranId": 10612160286543,
+      "tradeId": "60286543"
+    },
+    {
+      "symbol": "SOXLUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.69960000",
+      "asset": "USDT",
+      "time": 1783059365000,
+      "info": "61001073",
+      "tranId": 10612161001073,
+      "tradeId": "61001073"
+    },
+    {
+      "symbol": "SOXLUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.12720000",
+      "asset": "USDT",
+      "time": 1783059365000,
+      "info": "61001074",
+      "tranId": 10612161001074,
+      "tradeId": "61001074"
+    },
+    {
+      "symbol": "SOXLUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.03190000",
+      "asset": "USDT",
+      "time": 1783059365000,
+      "info": "61001075",
+      "tranId": 10612161001075,
+      "tradeId": "61001075"
+    },
+    {
+      "symbol": "RPLUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.01750000",
+      "asset": "USDT",
+      "time": 1783103806000,
+      "info": "63259048",
+      "tranId": 9765063259048,
+      "tradeId": "63259048"
+    },
+    {
+      "symbol": "RPLUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.74000000",
+      "asset": "USDT",
+      "time": 1783103806000,
+      "info": "63259049",
+      "tranId": 9765063259049,
+      "tradeId": "63259049"
+    },
+    {
+      "symbol": "MUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "0.99110000",
+      "asset": "USDT",
+      "time": 1783159983000,
+      "info": "217441207",
+      "tranId": 101651217441207,
+      "tradeId": "217441207"
+    },
+    {
+      "symbol": "TLMUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "1.01737300",
+      "asset": "USDT",
+      "time": 1783160978000,
+      "info": "119926752",
+      "tranId": 94561119926752,
+      "tradeId": "119926752"
+    },
+    {
+      "symbol": "MIRAUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.50784000",
+      "asset": "USDT",
+      "time": 1783162827000,
+      "info": "101495390",
+      "tranId": 102931101495390,
+      "tradeId": "101495390"
+    },
+    {
+      "symbol": "MAGMAUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.00250000",
+      "asset": "USDT",
+      "time": 1783195712000,
+      "info": "86540110",
+      "tranId": 10427186540110,
+      "tradeId": "86540110"
+    },
+    {
+      "symbol": "MAGMAUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.00410000",
+      "asset": "USDT",
+      "time": 1783195712000,
+      "info": "86540111",
+      "tranId": 10427186540111,
+      "tradeId": "86540111"
+    },
+    {
+      "symbol": "MAGMAUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.00410000",
+      "asset": "USDT",
+      "time": 1783195712000,
+      "info": "86540112",
+      "tranId": 10427186540112,
+      "tradeId": "86540112"
+    },
+    {
+      "symbol": "MAGMAUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-0.00040000",
+      "asset": "USDT",
+      "time": 1783195712000,
+      "info": "86540113",
+      "tranId": 10427186540113,
+      "tradeId": "86540113"
+    },
+    {
+      "symbol": "LABUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-1.47600000",
+      "asset": "USDT",
+      "time": 1783195943000,
+      "info": "577284952",
+      "tranId": 103411577284952,
+      "tradeId": "577284952"
+    },
+    {
+      "symbol": "MAGMAUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-1.51284000",
+      "asset": "USDT",
+      "time": 1783197663000,
+      "info": "86578196",
+      "tranId": 10427186578196,
+      "tradeId": "86578196"
+    },
+    {
+      "symbol": "LABUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-1.04400000",
+      "asset": "USDT",
+      "time": 1783197807000,
+      "info": "577427537",
+      "tranId": 103411577427537,
+      "tradeId": "577427537"
+    },
+    {
+      "symbol": "SLXUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "0.12920000",
+      "asset": "USDT",
+      "time": 1783198847000,
+      "info": "84443191",
+      "tranId": 10655184443191,
+      "tradeId": "84443191"
+    },
+    {
+      "symbol": "SLXUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "0.91960000",
+      "asset": "USDT",
+      "time": 1783198847000,
+      "info": "84443192",
+      "tranId": 10655184443192,
+      "tradeId": "84443192"
+    },
+    {
+      "symbol": "SLXUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "0.25840000",
+      "asset": "USDT",
+      "time": 1783198847000,
+      "info": "84443193",
+      "tranId": 10655184443193,
+      "tradeId": "84443193"
+    },
+    {
+      "symbol": "SLXUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "0.18240000",
+      "asset": "USDT",
+      "time": 1783198847000,
+      "info": "84443194",
+      "tranId": 10655184443194,
+      "tradeId": "84443194"
+    },
+    {
+      "symbol": "MAGMAUSDT",
+      "incomeType": "REALIZED_PNL",
+      "income": "-1.58544000",
+      "asset": "USDT",
+      "time": 1783200282000,
+      "info": "86619622",
+      "tranId": 10427186619622,
+      "tradeId": "86619622"
+    }
+  ],
+  "recent_trades_24h": [
+    {
+      "pnl": -0.0025,
+      "ts": 1783195712000
+    },
+    {
+      "pnl": -0.0041,
+      "ts": 1783195712000
+    },
+    {
+      "pnl": -0.0041,
+      "ts": 1783195712000
+    },
+    {
+      "pnl": -0.0004,
+      "ts": 1783195712000
+    },
+    {
+      "pnl": -1.476,
+      "ts": 1783195943000
+    },
+    {
+      "pnl": -1.51284,
+      "ts": 1783197663000
+    },
+    {
+      "pnl": -1.044,
+      "ts": 1783197807000
+    },
+    {
+      "pnl": 0.1292,
+      "ts": 1783198847000
+    },
+    {
+      "pnl": 0.9196,
+      "ts": 1783198847000
+    },
+    {
+      "pnl": 0.2584,
+      "ts": 1783198847000
+    },
+    {
+      "pnl": 0.1824,
+      "ts": 1783198847000
+    },
+    {
+      "pnl": -1.58544,
+      "ts": 1783200282000
+    }
+  ],
+  "wallet": 0.0,
+  "daily_pnl": 0,
+  "positions_count": 0
+}

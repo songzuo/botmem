@@ -1,0 +1,43 @@
+{
+  "hb": 300,
+  "time_cst": "14:05",
+  "date": "2026-07-09",
+  "wallet": 612.4261,
+  "available": 608.6597,
+  "positions_count": 1,
+  "positions": [
+    {
+      "symbol": "EVAAUSDT",
+      "side": "SHORT",
+      "qty": 7.3,
+      "entry": "2.4472999999999994",
+      "leverage": "5",
+      "margin": 3.6057,
+      "markPrice": "2.475000"
+    }
+  ],
+  "today_NET_decision_fresh": -1.2448,
+  "today_fills": 0,
+  "today_W": 0,
+  "today_L": 0,
+  "today_WR_pct": 0,
+  "yesterday_7_8_NET": -3.7745,
+  "two_day_cumulative": -5.0193,
+  "kill_buffer_2day": -0.0193,
+  "decision": {
+    "base_override": null,
+    "base_override_until": null,
+    "adjust_reason": "",
+    "skip_long": null,
+    "skip_short": null,
+    "kill_bot": null,
+    "ts": null
+  },
+  "v3": {
+    "positions_count": null,
+    "total_trades": null,
+    "daily_trades": {},
+    "bug_detected": false
+  },
+  "pnl_state_buggy": -1.2358909700000005
+}

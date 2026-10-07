@@ -1,0 +1,14 @@
+{
+  "id": "T-2026-06-29-004",
+  "title": "SSL 证书到期监控 (7zi.com: 2026-09-25)",
+  "priority": "medium",
+  "status": "in_progress",
+  "category": "monitoring",
+  "created": "2026-06-29T06:32:00+08:00",
+  "owner": "agent",
+  "blocked_by": "cron_install_approval",
+  "rationale": "当前 88 天到期, 需在 30/15/7/1 天前自动告警, 避免 9 月裸奔。脚本已就绪: /root/.openclaw/workspace/tools/ssl_expiry_watch.sh",
+  "estimate_impact": "零风险, 纯 cron + 日志, 阈值 30/15/7/1 天",
+  "action_on_approval": "在 crontab 中加入 '0 9 * * *' 每日 9 点检查, 仅触发阈值时输出",
+  "evidence": "本轮心跳 11:04 测试运行 exit=0, 7zi.com=88d OK, ge-website.com SKIP (DNS NXDOMAIN)"
+}

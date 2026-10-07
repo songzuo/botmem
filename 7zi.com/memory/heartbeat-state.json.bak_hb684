@@ -1,0 +1,107 @@
+{
+  "lastHB": 684,
+  "lastHBTime": "2026-07-24T09:48+08:00",
+  "consecutiveSilentHBs": 52,
+  "lastChecks": {
+    "all_pids": 1784858883,
+    "watchdog_state": 1784858883,
+    "sqlite_pnl": 1784858883,
+    "fapi_direct_fetch": 1784858883,
+    "hl_direct_fetch": 1784858883,
+    "pm_direct_fetch": 1784858883,
+    "pcs_state_check": 1784858883,
+    "risk_manager_log": 1784858883,
+    "eth_mark": 1784858883
+  },
+  "pids": {
+    "v3_paper": {"pid": 739211, "alive": false, "etime": "DEAD_2026-07-22T17:14:21_reboot (40h34m+)", "note": "DEAD - no auto-restart"},
+    "v3_paper_e": {"pid": 1064310, "alive": false, "etime": "DEAD_2026-07-22T17:14:21_reboot (40h34m+)", "note": "DEAD - no auto-restart"},
+    "s7_funding": {"pid": 975389, "alive": false, "etime": "DEAD_2026-07-22T17:14:21_reboot (40h34m+)", "note": "DEAD - no auto-restart"},
+    "risk_manager": {"pid": 943, "alive": true, "etime": "1-16:33:00", "note": "ALIVE - MONITORING ONLY (emergency stop active since 2026-06-02)"}
+  },
+  "sqlite": {
+    "paper_trades_db": {"path": "/opt/trader/paper/paper_trades.db", "table": "paper_trades", "open": 0, "closed_count": 90, "closed_pnl_gross_sum": -6.873025},
+    "paper_trades_e_db": {"path": "/opt/trader/paper/paper_trades_e.db", "table": "paper_trades", "open": 0, "closed_count": 13, "closed_pnl_gross_sum": 0.906787},
+    "s7_trades_db": {"path": "/opt/trader/paper/s7_trades.db", "table": "s7_trades", "open": 0, "closed_count": 14, "closed_pnl_gross_sum": -24.808177},
+    "grand_total": -30.7744
+  },
+  "balances": {
+    "hl_spot_usd": 41.195535,
+    "hl_spot_source": "hl_watchdog_state.json _bal (last SDK-verified 12:48 7/23, direct curl regression empty balances)",
+    "pm_positions_active_count": 2,
+    "pm_positions_value_usd": 10.3162,
+    "pm_positions_detail": "VT-gov LIVE size=12.375 curValue=$10.27 pnl=+3.75% + Hormuz SL-HIT size=5 curValue=$0.04 pnl=-98.57%; Iran/Spain SL-HIT positions aged out (4 total positions in pm_check.json frozen from 7/22 23:02)",
+    "pcs_total_usd": 2.0245,
+    "pcs_usdc": 1.855,
+    "pcs_bnb_amount": 0.000298,
+    "pcs_bnb_usd": 0.17,
+    "pcs_bnb_price": 567.89,
+    "spot_usdc": 93.01,
+    "spot_usdc_source": "last live direct 03:21 7/23",
+    "fapi_est_usd": 584.26,
+    "fapi_source": "risk_manager log frozen since sims DEAD",
+    "grand_live_est_usd": 730.84,
+    "grand_live_total": 730.84,
+    "last_update": "2026-07-24T09:48+08:00"
+  },
+  "last_market_data": {
+    "btc_usd": 65098.9,
+    "btc_chg24h_pct": -1.021,
+    "btc_24h_high": 65834.8,
+    "btc_24h_low": 64636.0,
+    "btc_vol24h_usd": 8020000000,
+    "zbt_usd": 0.11611,
+    "zbt_chg24h_pct": 13.967,
+    "zbt_24h_high": 0.1167,
+    "zbt_24h_low": 0.10074,
+    "zbt_vol24h_usd": 11840000,
+    "eth_usd": 1875.48,
+    "eth_chg24h_pct": -2.671,
+    "eth_24h_high": 1930.74,
+    "eth_24h_low": 1858.0,
+    "divergence_zbt_btc_pp": 14.988,
+    "cross_asset_alert": "BTC modest bounce reclaiming $65k + ETH marginal recovery / ZBT STRONG breakout fresh local high $0.11670 sustaining RECORD chg24h +13.967% with vol +1.4M ⭐⭐⭐⭐⭐"
+  },
+  "watchdogs_fresh": true,
+  "watchdog_mtimes": {
+    "hl": "2026-07-24T09:45:05",
+    "pm": "2026-07-24T09:45:04",
+    "pcs": "2026-07-24T09:45:05",
+    "generic": "2026-07-24T09:45:14",
+    "risk_manager": "2026-07-24T09:47:31"
+  },
+  "buffers": {
+    "hard_stop_minus_30_buffer": -0.7744,
+    "hard_stop_status": "CRITICAL_CROSSED_15th_DEEPEST_FROZEN",
+    "tripwire_minus_10_buffer": -20.7744,
+    "tripwire_status": "BREACHED"
+  },
+  "decision_budget": {
+    "cycle_start": "2026-07-23T22:56+08:00",
+    "cycle_end": "2026-07-24T10:56+08:00",
+    "budget_fresh_usd": 300,
+    "elapsed_minutes": 592,
+    "remaining_minutes": 68,
+    "next_reset": "2026-07-24T10:56+08:00"
+  },
+  "owner_silent_hours": 203,
+  "posture": "YELLOW_SILENT_WATCH",
+  "next_action": "none",
+  "lastCheckTime": "2026-07-24T09:48+08:00",
+  "market": {
+    "BTC": {"price": 65098.9, "chg24h_pct": -1.021, "hi24h": 65834.8, "lo24h": 64636.0, "vol24h_b": 8.02},
+    "ZBT": {"price": 0.11611, "chg24h_pct": 13.967, "hi24h": 0.1167, "lo24h": 0.10074, "vol24h_m": 11.84},
+    "ETH": {"price": 1875.48, "chg24h_pct": -2.671, "hi24h": 1930.74, "lo24h": 1858.0},
+    "divergence_zbt_btc_pp": 14.988,
+    "snapshot_time": "2026-07-24T09:48+08:00"
+  },
+  "uptime_hours": 40.57,
+  "grand_closed_pnl": -30.774415,
+  "hard_stop_buffer": -0.774415,
+  "zbt_btc_divergence_pp": 14.988,
+  "btc": {"price": 65098.9, "chg24h": -1.021, "lo24h": 64636.0, "hi24h": 65834.8, "vol24h_b": 8.02},
+  "zbt": {"price": 0.11611, "chg24h": 13.967, "lo24h": 0.10074, "hi24h": 0.1167, "vol24h_m": 11.84},
+  "eth": {"price": 1875.48, "chg24h": -2.671, "lo24h": 1858.0, "hi24h": 1930.74, "vol24h_b": 6.93},
+  "sims_dead": true,
+  "pm_live_total_usd": 10.3162
+}

@@ -1,0 +1,108 @@
+{
+  "lastHB": 717,
+  "lastHBTime": "2026-07-25T12:48+08:00",
+  "prevHB": 716,
+  "prevHBTime": "2026-07-25T11:48+08:00",
+  "cycle_gap_min": 30,
+  "consecutiveSilentHBs": 87,
+  "lastChecks": {
+    "all_pids": 1784951411,
+    "watchdog_state": 1784951411,
+    "sqlite_pnl": 1784951411,
+    "fapi_direct_fetch": 1784951411,
+    "hl_direct_fetch": 1784951411,
+    "pm_direct_fetch": 1784951411,
+    "pcs_direct_fetch": 1784951411,
+    "pm_manual_disambig": 1784951411,
+    "risk_manager_log": 1784951411,
+    "bsc_rpc_fallback": 1784951411
+  },
+  "pids": {
+    "v3_paper": {
+      "pid": 739211,
+      "alive": false,
+      "etime": "DEAD_2026-07-22T17:14:55_reboot (66h04m+)",
+      "note": "DEAD - no auto-restart, PAST 66h mark"
+    },
+    "v3_paper_e": {
+      "pid": 1064310,
+      "alive": false,
+      "etime": "DEAD_2026-07-22T17:14:55_reboot (66h04m+)",
+      "note": "DEAD - no auto-restart, PAST 66h mark"
+    },
+    "s7_funding": {
+      "pid": 975389,
+      "alive": false,
+      "etime": "DEAD_2026-07-22T17:14:55_reboot (66h04m+)",
+      "note": "DEAD - no auto-restart, PAST 66h mark"
+    },
+    "risk_manager": {
+      "pid": 943,
+      "alive": true,
+      "etime": "2-18:02:53",
+      "note": "MONITORING ONLY, Emergency stop active since 2026-06-02T19:41:36"
+    }
+  },
+  "grand_pnl_closed": -30.7744,
+  "grand_pnl_breakdown": {
+    "paper": -6.873,
+    "paper_e": 0.9068,
+    "s7": -24.8082
+  },
+  "paper_strategy_breakdown": {
+    "S1_MOMENTUM_BASELINE": -2.789,
+    "S2_REVERSE_5MIN": 3.491,
+    "S3_TIGHT_TPSL": -3.06,
+    "S4_WIDER_TPSL": -4.8101,
+    "S5_ULTRA_TIGHT_30MIN": -0.3718,
+    "S6_REVERSE_TIGHT_30MIN": 0.6669
+  },
+  "hard_stop_buffer": -0.7744,
+  "hard_stop_status": "CRITICAL_CROSSED_15th_DEEPEST_frozen",
+  "tripwire_buffer": -20.7744,
+  "tripwire_status": "BREACHED_frozen",
+  "live_est_grand": 730.542,
+  "live_breakdown": {
+    "hl_spot": 41.195535,
+    "pm_pos_value": 10.2986,
+    "pcs_total": 2.0239,
+    "spot_usdc": 93.010624,
+    "fapi_est": 584.013309
+  },
+  "decision_budget": {
+    "cycle_start": "2026-07-25T04:33+08:00",
+    "cycle_end": "2026-07-25T16:33+08:00",
+    "now": "2026-07-25T12:48+08:00",
+    "elapsed_h": 8.26,
+    "remaining_h": 3.74,
+    "fresh_budget": 300,
+    "next_reset": "2026-07-25T16:33+08:00"
+  },
+  "owner_silent_hours": 227.82,
+  "owner_strict_silence_days": 9,
+  "owner_active_axis": "OpenSquilla decisions only (per HB #633 拍板 4541-4543)",
+  "posture": "YELLOW_SILENT_WATCH",
+  "consecutive_in_posture": 87,
+  "market_regime": "BTC chg24h -1.748% (vs #716 -2.015%, +0.267pp LESS bearish ↗); ZBT chg24h -0.977% (vs #716 +2.132%, -3.109pp FLIPPED BACK TO NEG ⚠️ — was +2.132%, now -0.977%); ETH chg24h -0.776% (vs #716 -1.098%, +0.322pp LESS bearish ↗); BNB chg24h -0.382% (vs #716 -0.713%, +0.331pp LESS bearish ↗); ZBT vs BTC divergence +0.771pp (vs #716 +4.147pp, -3.376pp NARROW ⚠️ — decoupling fading back)",
+  "btc": 64158.5,
+  "zbt": 0.11153,
+  "eth": 1860.77,
+  "bnb": 565.92,
+  "uptime": "2 days, 19:34 = 67h34m since 7/22 17:14 reboot (PAST 67h mark, +1h vs #716)",
+  "lastBtcPrice": 64158.5,
+  "lastBtcChg24h": -1.748,
+  "lastZbtPrice": 0.11153,
+  "lastZbtChg24h": -0.977,
+  "lastEthPrice": 1860.77,
+  "lastEthChg24h": -0.776,
+  "lastBnbPrice": 565.92,
+  "lastBnbChg24h": -0.382,
+  "zbtVsBtcDivergence": 0.771,
+  "hostUptimeHours": 67.56,
+  "btc24hLo": 63666.0,
+  "zbt24hLo": 0.10552,
+  "eth24hLo": 1846.17,
+  "bnb24hHi": 571.62,
+  "bnb24hLo": 556.12,
+  "live_verify_note": "FULL DIRECT-VERIFY at #717: HL spot $41.195535 ✅ (direct POST spotClearinghouseState w/ correct wallet 0x0e2a8150...E2E2); PCS USDC $1.8550 + BNB 0.000298×$565.92=$0.1689 = $2.0239 ✅ (1rpc.io/bnb direct eth_call works! BSC dataseed still 302); PM pos $10.2986 (4 pos UNCH VT-gov LIVE/Iran SL-HIT/Hormuz $0.0274/Spain SL-HIT); Spot USDC $93.010624 ✅ signed /api/v3/account; Fapi $584.013309 ✅ signed /fapi/v3/account (vs #716 $584.082 -$0.07 minor); GRAND live est $730.5420"
+}

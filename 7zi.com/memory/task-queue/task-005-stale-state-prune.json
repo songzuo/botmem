@@ -1,0 +1,14 @@
+{
+  "id": "T-2026-06-29-005",
+  "title": "清理陈旧 state 文件 (task-state.json 仍为 03-16 数据)",
+  "priority": "low",
+  "status": "completed",
+  "completed_at": "2026-06-29T06:32:00+08:00",
+  "category": "housekeeping",
+  "created": "2026-06-29T06:32:00+08:00",
+  "owner": "agent",
+  "blocked_by": null,
+  "rationale": "task-state.json lastHeartbeat 还是 2026-03-16,与现实 3 个月脱节;应重写为当前实际状态。",
+  "estimate_impact": "零风险, 仅 JSON 重写",
+  "action_on_approval": "下一步心跳时直接重写 task-state.json"
+}

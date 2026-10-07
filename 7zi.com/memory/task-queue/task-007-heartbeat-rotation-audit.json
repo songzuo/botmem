@@ -1,0 +1,11 @@
+{
+  "id": "T-2026-06-29-007",
+  "title": "HEARTBEAT.md 重复探针轮换审计 (4 个 cron vs 心跳)",
+  "priority": "low",
+  "status": "completed",
+  "category": "optimization",
+  "created": "2026-06-29T11:05:00+08:00",
+  "owner": "agent",
+  "completed": "2026-06-29T11:06:00+08:00",
+  "result": "审计 4 cron (github_upload 0/8/16, claw-mesh */5, indexnow 8, seo 6) 与心跳 30min 覆盖范围: 无直接重复, T-004 SSL 建议 9:00 cron 接管释放心跳"
+}

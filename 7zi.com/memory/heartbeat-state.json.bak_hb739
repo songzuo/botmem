@@ -1,0 +1,54 @@
+{
+  "lastHB": "2026-07-26T02:48:21+08:00",
+  "hbNum": 738,
+  "consecutiveSilentHBs": 109,
+  "simsDEADuptimeHours": 81.61,
+  "ownerSilentHours": 231.30,
+  "grandLiveEst": 730.575,
+  "grandPaperClosedPnL": -30.7744,
+  "hardStopBuffer": -0.7744,
+  "tripwireBuffer": -20.7744,
+  "decisionBudgetRemainingHours": 1.75,
+  "nextBudgetReset": "2026-07-26T04:33",
+  "nextHB": "2026-07-26T03:18",
+  "watchdogsFresh": true,
+  "allWatchdogsAlive": true,
+  "pmWatchdogReFired": true,
+  "pidsAlive": {
+    "risk_manager": 943,
+    "watchdogd": 125
+  },
+  "endpoints": {
+    "7zi_com_shop": 200,
+    "api_7zi_com_health": 200,
+    "ge_website_local_3005": 200,
+    "ge_website_docker_hostname_3005": 0,
+    "binance_trader_local_307": 0
+  },
+  "pm2": {
+    "ge_website": "online",
+    "7zi_shop": "online",
+    "anti_v2": "stopped"
+  },
+  "containers": {
+    "rabbitmq_dating": "up 3d",
+    "mysql_dating": "up 3d",
+    "microclaw": "up 3d"
+  },
+  "lastMarkets": {
+    "BTC": {"price": 64384.10, "chg24h": 0.289},
+    "ZBT": {"price": 0.10826, "chg24h": 2.007},
+    "ETH": {"price": 1873.11, "chg24h": 0.611},
+    "BNB": {"price": 569.20, "chg24h": 1.193}
+  },
+  "zbt_btc_div": 1.718,
+  "all4pos_hb_streak": 6,
+  "bnb_pos_streak": 11,
+  "loadavg": [1.44, 1.48, 1.52],
+  "uptime_sec": 293784,
+  "host_uptime_str": "3 days, 9:34",
+  "risk_manager_etime": "3-09:34:42",
+  "mem_used_mb": 4291,
+  "mem_total_mb": 7936,
+  "disk_pct": 84
+}
