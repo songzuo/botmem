@@ -28,6 +28,9 @@
 - ✅ 清除共享仓库中的 token 明文，脱敏范围由"本机目录"扩展到全仓库
 - ✅ 五节点凭据统一由 clawmesh-credential.sh 管理，脚本内不再有明文 token
 - ✅ 推送时间全集群错峰（bot2 :00 / bot4 :15 / bot6 :30 / bot3 :45）
+- ✅ 定位 bot4 SSH 反复掉线根因：SSHLIMIT 规则按源IP计数，误伤集群节点自身
+- ✅ bot3/bot4 增加集群 IP 白名单（置于 SSHLIMIT 之前），快速连接 0/8 → 8/8
+- ✅ 修正 bot6 时区错配（Europe/Berlin → Asia/Shanghai），消除 6 小时时间偏移
 - ✅ 清理全局失效 GitHub 凭据（insteadof 规则 + 过期 token）
 - ⚠️ 发现 bot3 侧 claw-mesh-sync.sh 硬编码 GitHub token，且 MACHINE_NAME 误写为 bot4
 
