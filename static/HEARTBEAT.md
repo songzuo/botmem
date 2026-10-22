@@ -88,3 +88,11 @@ git ls-remote origin main
 
 ## 推送时间（已错峰，勿改成同一时刻）
 bot2 `:00` / bot4 `:15` / bot6 `:30` / bot3 `:45` / bot5 `*/5`
+
+## ✅ 2026-10-22 心跳 (20:12 CST / 22日 12:12 UTC)
+- Picoclaw ✅ (PID 900830)
+- openclaw-gateway ✅ (port 18789 → 200)
+- 端口3000 ❌ (HTTP 000 — 7zi 未运行，持续 82+ 天，属已知状态)
+- 内存 931MB/1963MB (~47%) ✅, 可用 834MB ✅
+- 磁盘 26G/40G (65%) ✅
+- 晚间时段，状态无变化，HEARTBEAT_OK（未打扰用户）
