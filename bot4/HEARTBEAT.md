@@ -134,6 +134,15 @@ systemctl show picoclaw.service -p NRestarts
 
 ---
 
+## 10. 工作区文件被外部误删（2026-10-22 新增）
+`docs/` 全树 305 个文件曾在 20:38 被外部进程直接删除，git reflog 无痕迹。
+防护：`workspace-guard.sh`（每5分钟）用 `git ls-files --deleted` 检测并自动恢复。
+```bash
+git ls-files --deleted | head -20        # 应为空
+ls docs/ | wc -l                          # 应为 305
+```
+**提交前务必看 diff 规模** —— 18 万行删除绝不该静默提交进去。
+
 ## 已知遗留（需用户决策，勿擅自处理）
 - git 历史中可能仍残留旧 token —— 彻底清除需重写历史 + 强制推送
 - 仓库内 7.5 万个 node_modules 文件 —— 清理需重写历史
