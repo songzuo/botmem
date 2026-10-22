@@ -2,7 +2,7 @@
 
 This folder is home. Treat it that way.
 
-**最[[已移除][已移除][已移除][已移除][已移除][已移除][已移除][已移除][已移除]]��更新**: 2026-03-17 12:10 CET
+**最后更新**: 2026-03-17 12:10 CET
 
 ## Workspace Overview
 
@@ -34,7 +34,7 @@ You wake up fresh each session. These files are your continuity:
 
 Capture what matters. Decisions, context, things to remember. Skip the secrets unless asked to keep them.
 
-### �[[已移除][已移除][已移除][已移除][已移除][已移除][已移除][已移除][已移除]]� MEMORY.md - Your Long-Term Memory
+### 🧠 MEMORY.md - Your Long-Term Memory
 
 - **ONLY load in main session** (direct chats with your human)
 - **DO NOT load in shared contexts** (Discord, group chats, sessions with other people)
@@ -110,9 +110,9 @@ On platforms that support reactions (Discord, Slack), use emoji reactions natura
 
 **React when:**
 
-- You appreciate something but don't need to reply (👍, �[[已移除][已移除][已移除][已移除][已移除][已移除][已移除][已移除][已移除]]️, �[[已移除][已移除][已移除][已移除][已移除][已移除][已移除][已移除][已移除]]�)
+- You appreciate something but don't need to reply (👍, ❤️, 🙌)
 - Something made you laugh (😂, 💀)
-- You find it interesting or thought-provoking (�[[已移除][已移除][已移除][已移除][已移除][已移除][已移除][已移除][已移除]]�, 💡)
+- You find it interesting or thought-provoking (🤔, 💡)
 - You want to acknowledge without interrupting the flow
 - It's a simple yes/no or approval situation (✅, 👀)
 
