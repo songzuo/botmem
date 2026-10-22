@@ -54,7 +54,7 @@
 ---
 
 ## 重要配置
-- GitHub Token: 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
+- GitHub Token: [已移除]
 - 目标仓库: https://github.com/songzuo/botmem
 
 ## 定时任务
