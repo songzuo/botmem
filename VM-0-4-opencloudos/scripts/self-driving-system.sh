@@ -124,21 +124,21 @@ END
 }
 
 # 执行任务级别的自主循环
-execute_task_cycle() {
-    local task_name="$1"
-    local log_file="$HISTORY_DIR/task-cycle-$task_name.log"
+execute_ta[已移除]() {
+    local ta[已移除]="$1"
+    local log_file="$HISTORY_DIR/task-cycle-$ta[已移除].log"
     
-    log "🎯 开始任务 $task_name 的自主循环"
+    log "🎯 开始任务 $ta[已移除] 的自主循环"
     
     python3 - <<END
 import json
 from datetime import datetime
 
 cycle_info = {
-    "task_name": "$task_name",
+    "ta[已移除]": "$ta[已移除]",
     "start_time": $(date +%s),
     "status": "running",
-    "task_info": {},
+    "ta[已移除]": {},
     "operations": []
 }
 
@@ -147,35 +147,35 @@ with open('$log_file', 'w') as f:
 END
 
     # 评估任务
-    log "🔍 评估任务 $task_name"
+    log "🔍 评估任务 $ta[已移除]"
     
-    task_info=$(python3 - <<END
+    ta[已移除]=$(python3 - <<END
 import json
 with open('$EXECUTOR_DIR/memory/tasks.json') as f:
     tasks = json.load(f)
     
 for t in tasks.get('tasks', []):
-    if t.get('title') == "$task_name" or t.get('id') == "$task_name":
+    if t.get('title') == "$ta[已移除]" or t.get('id') == "$ta[已移除]":
         import json
         print(json.dumps(t))
 END
     )
     
-    log "🎯 任务信息: $task_info"
+    log "🎯 任务信息: $ta[已移除]"
     
     # 执行任务
-    log "⚡ 执行任务 $task_name"
+    log "⚡ 执行任务 $ta[已移除]"
     
-    task_success=$(python3 - <<END
+    ta[已移除]=$(python3 - <<END
 import json
 import subprocess
 
 try:
-    task_data = json.loads('$task_info')
-    task_script = task_data.get('script', '')
+    ta[已移除] = json.loads('$ta[已移除]')
+    ta[已移除] = ta[已移除].get('script', '')
     
-    if task_script and task_script.endswith('.sh'):
-        script_path = f'{EXECUTOR_DIR}/scripts/{task_script}'
+    if ta[已移除] and ta[已移除].endswith('.sh'):
+        script_path = f'{EXECUTOR_DIR}/scripts/{ta[已移除]}'
         
         result = subprocess.run(['bash', script_path], capture_output=True, text=True, timeout=60)
         
@@ -191,8 +191,8 @@ except Exception as e:
 END
     )
     
-    if [ "$task_success" = "success" ]; then
-        log "✅ 任务 $task_name 执行成功"
+    if [ "$ta[已移除]" = "success" ]; then
+        log "✅ 任务 $ta[已移除] 执行成功"
         
         python3 - <<END
 import json
@@ -200,7 +200,7 @@ with open('$log_file', 'r') as f:
     cycle_info = json.load(f)
     
 cycle_info["status"] = "completed"
-cycle_info["task_result"] = "success"
+cycle_info["ta[已移除]"] = "success"
 cycle_info["end_time"] = $(date +%s)
 cycle_info["operations"].append({
     "operation": "run_task",
@@ -212,7 +212,7 @@ with open('$log_file', 'w') as f:
     json.dump(cycle_info, f, indent=2, ensure_ascii=False)
 END
     else
-        log "❌ 任务 $task_name 执行失败"
+        log "❌ 任务 $ta[已移除] 执行失败"
         
         python3 - <<END
 import json
@@ -220,13 +220,13 @@ with open('$log_file', 'r') as f:
     cycle_info = json.load(f)
     
 cycle_info["status"] = "failed"
-cycle_info["task_result"] = "failed"
+cycle_info["ta[已移除]"] = "failed"
 cycle_info["end_time"] = $(date +%s)
 cycle_info["operations"].append({
     "operation": "run_task",
     "timestamp": $(date +%s),
     "success": False,
-    "error": "$task_success"
+    "error": "$ta[已移除]"
 })
 
 with open('$log_file', 'w') as f:
@@ -264,7 +264,7 @@ END
 import subprocess
 
 result = subprocess.run(
-    ['sshpass', '-p', 'ge2099334\$ZZ', 'ssh', 
+    ['sshpass', '-p', '[已移除]\$ZZ', 'ssh', 
      '-o', 'StrictHostKeyChecking=no', '-o', 'ConnectTimeout=5',
      f'root@{node_name}', 'echo "Success"'],
     capture_output=True,
@@ -289,7 +289,7 @@ END
 import subprocess
 
 result = subprocess.run(
-    ['sshpass', '-p', 'ge2099334\$ZZ', 'ssh', 
+    ['sshpass', '-p', '[已移除]\$ZZ', 'ssh', 
      '-o', 'StrictHostKeyChecking=no', '-o', 'ConnectTimeout=10',
      f'root@{node_name}', 'uname -a; hostname; uptime'],
     capture_output=True,
@@ -368,8 +368,8 @@ for filename in sorted(os.listdir(history_dir)):
         
         if 'cycle_name' in data:
             print(f"🎯 循环: {data['cycle_name']}")
-        elif 'task_name' in data:
-            print(f"🎯 任务: {data['task_name']}")
+        elif 'ta[已移除]' in data:
+            print(f"🎯 任务: {data['ta[已移除]']}")
         elif 'node_name' in data:
             print(f"🎯 节点: {data['node_name']}")
             
@@ -404,7 +404,7 @@ main() {
                 log "使用示例: $0 task '任务名称'"
                 exit 1
             fi
-            execute_task_cycle "$2"
+            execute_ta[已移除] "$2"
             ;;
             
         node)

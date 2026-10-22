@@ -19,9 +19,9 @@
 ### 2. SSH连接尝试
 
 **尝试的连接方式**:
-- `sshpass -p 'ge20993344$ZZ' ssh root@172.67.184.212` → ❌ Connection timed out
-- `sshpass -p 'ge20993344$ZZ' ssh root@104.21.59.229` → ❌ Connection timed out
-- `sshpass -p 'ge20993344$ZZ' ssh root@7zi.com` → ❌ Connection timed out
+- `sshpass -p '[已移除]4$ZZ' ssh root@172.67.184.212` → ❌ Connection timed out
+- `sshpass -p '[已移除]4$ZZ' ssh root@104.21.59.229` → ❌ Connection timed out
+- `sshpass -p '[已移除]4$ZZ' ssh root@7zi.com` → ❌ Connection timed out
 - SSH密钥认证 → ❌ Connection timed out
 - 备用端口 2222 → ❌ Connection timed out
 

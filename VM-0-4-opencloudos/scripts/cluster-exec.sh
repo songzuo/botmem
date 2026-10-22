@@ -6,7 +6,7 @@
 #   ./cluster-exec.sh -f script.sh                 # 执行脚本文件
 #   ./cluster-exec.sh -f script.sh node1           # 指定节点执行脚本
 
-SSH_PASS='ge2099334$ZZ'
+SSH_PASS='[已移除]'
 SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=5 -o ServerAliveInterval=10"
 ALL_NODES="7zi.com bot.szspd.cn bot2.szspd.cn bot3.szspd.cn bot4.szspd.cn bot5.szspd.cn"
 RESULT_DIR="/tmp/cluster-results/$(date +%s)"

@@ -17,15 +17,15 @@ while true; do
 
     # 检查7zi.com
     {
-        export SSHPASS="ge2099334\$ZZ"
+        export SSHPASS="[已移除]\$ZZ"
         sshpass -e ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@7zi.com "
             echo '{'
             echo '  \"node\": \"7zi.com\",'
             echo '  \"timestamp\": \"'$(date -Iseconds)'\",'
             echo '  \"status\": \"online\",'
             echo '  \"load_average\": \"'$(uptime | awk -F'load' '{print $2}' | sed 's/^[[:space:]]*//')'\",'
-            echo '  \"disk_usage\": \"'$(df / | tail -1 | awk '{print $5}' | cut -d% -f1)'\",'
-            echo '  \"disk_warning\": '$(df / | tail -1 | awk '{print $5}' | cut -d% -f1 | awk '{if ($1 > 80) print "true"; else print "false"}')','
+            echo '  \"di[已移除]\": \"'$(df / | tail -1 | awk '{print $5}' | cut -d% -f1)'\",'
+            echo '  \"di[已移除]\": '$(df / | tail -1 | awk '{print $5}' | cut -d% -f1 | awk '{if ($1 > 80) print "true"; else print "false"}')','
             echo '  \"services\": {'
             echo '    \"docker\": \"'$(systemctl is-active docker 2>/dev/null || echo 'unknown')'\",'
             echo '    \"ssh\": \"running\"'
@@ -38,15 +38,15 @@ while true; do
 
     # 检查bot2.szspd.cn
     {
-        export SSHPASS="ge2099334\$ZZ"
+        export SSHPASS="[已移除]\$ZZ"
         sshpass -e ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@bot2.szspd.cn "
             echo '{'
             echo '  \"node\": \"bot2.szspd.cn\",'
             echo '  \"timestamp\": \"'$(date -Iseconds)'\",'
             echo '  \"status\": \"online\",'
             echo '  \"load_average\": \"'$(uptime | awk -F'load' '{print $2}' | sed 's/^[[:space:]]*//')'\",'
-            echo '  \"disk_usage\": \"'$(df / | tail -1 | awk '{print $5}' | cut -d% -f1)'\",'
-            echo '  \"disk_warning\": '$(df / | tail -1 | awk '{print $5}' | cut -d% -f1 | awk '{if ($1 > 80) print "true"; else print "false"}')','
+            echo '  \"di[已移除]\": \"'$(df / | tail -1 | awk '{print $5}' | cut -d% -f1)'\",'
+            echo '  \"di[已移除]\": '$(df / | tail -1 | awk '{print $5}' | cut -d% -f1 | awk '{if ($1 > 80) print "true"; else print "false"}')','
             echo '  \"services\": {'
             echo '    \"docker\": \"'$(systemctl is-active docker 2>/dev/null || echo 'unknown')'\",'
             echo '    \"ssh\": \"running\"'
@@ -58,7 +58,7 @@ while true; do
     echo ']}' >> "$HEALTH_FILE"
 
     # 检查是否有警告
-    WARNINGS=$(grep -c '"disk_warning": true' "$HEALTH_FILE" 2>/dev/null || echo 0)
+    WARNINGS=$(grep -c '"di[已移除]": true' "$HEALTH_FILE" 2>/dev/null || echo 0)
     if [ "$WARNINGS" -gt 0 ]; then
         echo "[$(date)] ⚠️ 发现 $WARNINGS 个磁盘使用率警告" | tee -a "$LOG"
 
@@ -71,7 +71,7 @@ while true; do
 警告数量: $WARNINGS
 
 详细信息:
-$(cat "$HEALTH_FILE" | grep -A 10 'disk_warning: true')
+$(cat "$HEALTH_FILE" | grep -A 10 'di[已移除]: true')
 "
             /workspace/projects/workspace/scripts/setup-telegram.sh "test" 2>&1 | grep -v "未配置"
         fi

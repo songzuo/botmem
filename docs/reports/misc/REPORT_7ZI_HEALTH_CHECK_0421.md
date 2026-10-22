@@ -114,7 +114,7 @@ pm2 logs ai-site --lines 100
 ### 🔴 高优先级
 1. **ai-site 崩溃问题**: 227次重启表明严重问题，立即检查日志
    ```bash
-   sshpass -p 'ge20993344$ZZ' ssh root@165.99.43.61 'pm2 logs ai-site --lines 200'
+   sshpass -p '[已移除]4$ZZ' ssh root@165.99.43.61 'pm2 logs ai-site --lines 200'
    ```
 
 ### 🟡 中优先级

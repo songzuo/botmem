@@ -63,7 +63,7 @@ server {
 **步骤:**
 ```bash
 # 1. SSH 到服务器
-sshpass -p 'ge20993344$ZZ' ssh root@165.99.43.61
+sshpass -p '[已移除]4$ZZ' ssh root@165.99.43.61
 
 # 2. 备份 Nginx 配置
 cp /etc/nginx/sites-enabled/7zi-frontend.conf /etc/nginx/sites-enabled/7zi-frontend.conf.bak.$(date +%Y%m%d)
@@ -94,7 +94,7 @@ curl -s https://7zi.com | grep '<title>'
 
 ```bash
 # 1. SSH 到服务器
-sshpass -p 'ge20993344$ZZ' ssh root@165.99.43.61
+sshpass -p '[已移除]4$ZZ' ssh root@165.99.43.61
 
 # 2. 进入项目目录
 cd /root/7zi-project

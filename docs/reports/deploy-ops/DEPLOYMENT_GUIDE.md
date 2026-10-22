@@ -279,7 +279,7 @@ healthcheck:
 
 ```bash
 # 检查 SSH 连接
-sshpass -p 'ge20993344$ZZ' ssh -o StrictHostKeyChecking=no root@7zi.com
+sshpass -p '[已移除]4$ZZ' ssh -o StrictHostKeyChecking=no root@7zi.com
 
 # 检查服务器 IP
 ping 7zi.com

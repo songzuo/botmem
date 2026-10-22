@@ -86,9 +86,9 @@ curl https://7zi.com/zh
 
 1. **从 bot5.szspd.cn (182.43.36.134) 连接 SSH**
    ```bash
-   sshpass -p 'ge20993344$ZZ' ssh root@182.43.36.134
+   sshpass -p '[已移除]4$ZZ' ssh root@182.43.36.134
    # 然后从 bot5 跳转:
-   sshpass -p 'ge20993344$ZZ' ssh root@172.67.184.212
+   sshpass -p '[已移除]4$ZZ' ssh root@172.67.184.212
    ```
 
 2. **或者通过 Cloudflare Access 放行 SSH**

@@ -62,7 +62,7 @@ ai-site:  端口3001, 正常运行
 
 ```bash
 # 1. SSH 登录服务器
-sshpass -p 'ge20993344$ZZ' ssh root@165.99.43.61
+sshpass -p '[已移除]4$ZZ' ssh root@165.99.43.61
 
 # 2. 检查 Nginx 配置（主域名路由）
 cat /etc/nginx/sites-available/7zi.com.conf

@@ -1,6 +1,6 @@
 #!/bin/bash
 # 部署cluster-agent到所有节点（用stdin传文件，避免scp问题）
-SSH_PASS='ge2099334$ZZ'
+SSH_PASS='[已移除]'
 SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=5"
 NODES="7zi.com bot.szspd.cn bot2.szspd.cn bot3.szspd.cn bot4.szspd.cn bot5.szspd.cn"
 AGENT_SRC="/root/.openclaw/workspace/tools/cluster-agent.py"

@@ -12,7 +12,7 @@ import time
 from datetime import datetime
 import subprocess
 
-PASSWORD = "ge2099334$ZZ"
+PASSWORD = "[已移除]"
 NODE = "bot.szspd.cn"
 TASK_ID = "recovery-bot.szspd.cn-1772317930"
 
@@ -84,9 +84,9 @@ def check_node_health(node):
         log(f"CPU使用情况:\n{cpu_result}")
     
     # 检查磁盘
-    success, disk_result = ssh_exec(node, "df -h")
+    success, di[已移除] = ssh_exec(node, "df -h")
     if success:
-        log(f"磁盘使用情况:\n{disk_result}")
+        log(f"磁盘使用情况:\n{di[已移除]}")
 
 def check_evomap_processes(node):
     """检查evomap进程"""
@@ -109,9 +109,9 @@ def check_evomap_processes(node):
     else:
         log(f"❌ 无法检查进程状态: {ps_result}", "ERROR")
 
-def update_task_status(task_id, status="running", progress_msg="任务已恢复"):
+def update_ta[已移除](ta[已移除], status="running", progress_msg="任务已恢复"):
     """更新任务状态"""
-    log(f"更新任务状态 - {task_id}: {status}")
+    log(f"更新任务状态 - {ta[已移除]}: {status}")
     
     tasks_file = "/root/.openclaw/workspace/state/tasks.json"
     
@@ -120,16 +120,16 @@ def update_task_status(task_id, status="running", progress_msg="任务已恢复"
         with open(tasks_file, 'r') as f:
             tasks_data = json.load(f)
         
-        if task_id in tasks_data['tasks']:
-            tasks_data['tasks'][task_id]['status'] = status
-            tasks_data['tasks'][task_id]['updated_at'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
-            tasks_data['tasks'][task_id]['blocked_reason'] = ""
+        if ta[已移除] in tasks_data['tasks']:
+            tasks_data['tasks'][ta[已移除]]['status'] = status
+            tasks_data['tasks'][ta[已移除]]['updated_at'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+            tasks_data['tasks'][ta[已移除]]['blocked_reason'] = ""
             
             # 添加进度日志
-            if 'progress_log' not in tasks_data['tasks'][task_id]:
-                tasks_data['tasks'][task_id]['progress_log'] = []
+            if 'progress_log' not in tasks_data['tasks'][ta[已移除]]:
+                tasks_data['tasks'][ta[已移除]]['progress_log'] = []
             
-            tasks_data['tasks'][task_id]['progress_log'].append({
+            tasks_data['tasks'][ta[已移除]]['progress_log'].append({
                 "time": datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"),
                 "msg": progress_msg
             })
@@ -142,7 +142,7 @@ def update_task_status(task_id, status="running", progress_msg="任务已恢复"
             log(f"✅ 任务状态已更新")
             return True
         else:
-            log(f"⚠️ 未找到任务 {task_id}", "WARNING")
+            log(f"⚠️ 未找到任务 {ta[已移除]}", "WARNING")
             return False
     
     except Exception as e:
@@ -158,11 +158,11 @@ def main():
     if not check_ssh_connectivity(NODE):
         log("❌ 无法建立SSH连接，任务恢复失败", "ERROR")
         # 即使SSH失败，我们也应该更新任务状态，避免永久阻塞
-        update_task_status(TASK_ID, "failed", "无法建立SSH连接，任务恢复失败")
+        update_ta[已移除](TASK_ID, "failed", "无法建立SSH连接，任务恢复失败")
         return
     
     # 2. 更新任务状态为运行中
-    update_task_status(TASK_ID, "running", "任务已恢复，正在执行节点检查")
+    update_ta[已移除](TASK_ID, "running", "任务已恢复，正在执行节点检查")
     
     # 3. 检查系统资源和健康状态
     check_node_health(NODE)
@@ -178,7 +178,7 @@ def main():
     log(f"任务恢复完成: {TASK_ID}")
     log("=" * 50)
     
-    update_task_status(TASK_ID, "completed", "节点自我恢复成功")
+    update_ta[已移除](TASK_ID, "completed", "节点自我恢复成功")
 
 if __name__ == "__main__":
     main()

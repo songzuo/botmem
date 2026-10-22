@@ -6,8 +6,8 @@
 
 | 服务器            | IP                              | 用户 | 密码            | 用途          |
 | ----------------- | ------------------------------- | ---- | --------------- | ------------- |
-| **7zi.com**       | 172.67.184.212 / 104.21.59.229  | root | `ge20993344$ZZ` | 主网站部署    |
-| **bot5.szspd.cn** | 182.43.36.134                   | root | `ge20993344$ZZ` | 测试机器      |
+| **7zi.com**       | 172.67.184.212 / 104.21.59.229  | root | `[已移除]4$ZZ` | 主网站部署    |
+| **bot5.szspd.cn** | 182.43.36.134                   | root | `[已移除]4$ZZ` | 测试机器      |
 | **本机 (bot6)**   | -                               | root | -               | OpenClaw 运行 |
 
 > ⚠️ **注意**: 7zi.com 使用 Cloudflare CDN，解析到多个 IP。实际 SSH 连接到主机名 `ecm-cd59`（可能是内网 hostname 映射）。连接时域名解析可能不稳定，建议同时测试两个 IP。
@@ -16,16 +16,16 @@
 
 | 服务器             | IP           | 用户          | 密码            | 连接方式        | 用途               |
 | ------------------ | ------------ | ------------- | --------------- | --------------- | ------------------ |
-| **Windows 测试机** | 36.133.22.15 | Administrator | `ge20993344$ZZ` | RDP (端口 3389) | 网站测试、界面验证 |
+| **Windows 测试机** | 36.133.22.15 | Administrator | `[已移除]4$ZZ` | RDP (端口 3389) | 网站测试、界面验证 |
 
 **连接命令**:
 
 ```bash
 # 使用 rdesktop 连接
-rdesktop -u Administrator -p 'ge20993344$ZZ' 36.133.22.15
+rdesktop -u Administrator -p '[已移除]4$ZZ' 36.133.22.15
 
 # 或使用 xfreerdp
-xfreerdp /u:Administrator /p:'ge20993344$ZZ' /v:36.133.22.15
+xfreerdp /u:Administrator /p:'[已移除]4$ZZ' /v:36.133.22.15
 ```
 
 ### SSH 认证方法
@@ -34,10 +34,10 @@ xfreerdp /u:Administrator /p:'ge20993344$ZZ' /v:36.133.22.15
 
 ```bash
 # ✅ 正确
-sshpass -p 'ge20993344$ZZ' ssh root@7zi.com
+sshpass -p '[已移除]4$ZZ' ssh root@7zi.com
 
 # ❌ 错误（$会被 shell 解析）
-sshpass -p "ge20993344$ZZ" ssh root@7zi.com
+sshpass -p "[已移除]4$ZZ" ssh root@7zi.com
 ```
 
 ### 部署目标
@@ -81,5 +81,5 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMl7ZIMgYpejAkTAf6mRiSNWmwyJX9O91AYGNFUJsXYo
 ssh-keygen -t ed25519 -N "" -f ~/.ssh/id_ed25519
 
 # Copy to server (需要正确密码)
-sshpass -p 'ge20993344$ZZ' ssh-copy-id root@7zi.com
+sshpass -p '[已移除]4$ZZ' ssh-copy-id root@7zi.com
 ```

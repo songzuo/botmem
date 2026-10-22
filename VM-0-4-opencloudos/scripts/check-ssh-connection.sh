@@ -2,7 +2,7 @@
 # 检查SSH连接
 NODE1="bot.szspd.cn"
 NODE2="bot2.szspd.cn"
-PASSWORD="ge2099334\$ZZ"
+PASSWORD="[已移除]\$ZZ"
 
 log() {
     local level="${2:-INFO}"
@@ -15,7 +15,7 @@ check_ssh() {
     log "检查 $node 的SSH连接..."
     
     # 使用 sshpass 检查连接
-    SSH_RESULT=$(sshpass -p 'ge2099334$ZZ' ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$node "uptime" 2>&1)
+    SSH_RESULT=$(sshpass -p '[已移除]' ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$node "uptime" 2>&1)
     
     if [ $? -eq 0 ]; then
         log "✅ SSH连接正常 - $node"

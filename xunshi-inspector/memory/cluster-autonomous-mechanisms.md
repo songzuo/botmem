@@ -82,24 +82,24 @@
 
 ## 📊 任务调度系统
 
-### task_scheduler.py 命令
+### ta[已移除].py 命令
 ```bash
 # 查看任务看板
-python3 tools/task_scheduler.py dashboard
+python3 tools/ta[已移除].py dashboard
 
 # 获取下一个任务
-python3 tools/task_scheduler.py next
+python3 tools/ta[已移除].py next
 
 # 任务状态管理
-python3 tools/task_scheduler.py start <id>           # 开始任务
-python3 tools/task_scheduler.py step <id> <name>     # 更新步骤
-python3 tools/task_scheduler.py resume-info <id> <instructions>  # 写恢复指令
-python3 tools/task_scheduler.py complete <id>        # 完成
-python3 tools/task_scheduler.py suspend <id>          # 挂起
-python3 tools/task_scheduler.py block <id>           # 阻塞
+python3 tools/ta[已移除].py start <id>           # 开始任务
+python3 tools/ta[已移除].py step <id> <name>     # 更新步骤
+python3 tools/ta[已移除].py resume-info <id> <instructions>  # 写恢复指令
+python3 tools/ta[已移除].py complete <id>        # 完成
+python3 tools/ta[已移除].py suspend <id>          # 挂起
+python3 tools/ta[已移除].py block <id>           # 阻塞
 
 # 恢复中断任务
-python3 tools/task_scheduler.py recover
+python3 tools/ta[已移除].py recover
 ```
 
 ### 任务状态流转
@@ -126,7 +126,7 @@ python3 tools/heartbeat-manager.py recover
 ### 断点续传流程 (最高优先级)
 ```
 1. checkpoint_manager.recover → 检查是否需要恢复
-2. task_scheduler.recover → 检查阻塞任务
+2. ta[已移除].recover → 检查阻塞任务
 3. 解析恢复指令 (resume_instructions)
 4. 为每个任务启动子agent
 5. 更新任务状态
@@ -139,7 +139,7 @@ python3 tools/heartbeat-manager.py recover
 python3 checkpoint_manager.py recover
 
 # 2. 任务恢复检查
-python3 task_scheduler.py recover
+python3 ta[已移除].py recover
 
 # 3. 记录心跳ping
 python3 checkpoint_manager.py ping
@@ -251,7 +251,7 @@ ls /root/.openclaw/cron/runs/
 │
 ├── tools/                       # 50+ 核心工具
 │   ├── cluster-coordinator-api.py
-│   ├── task_scheduler.py
+│   ├── ta[已移除].py
 │   ├── heartbeat-manager.py
 │   └── ...
 │
@@ -310,7 +310,7 @@ class Node:
     address: str
 ```
 
-### 2. 任务状态机 (task_scheduler.py)
+### 2. 任务状态机 (ta[已移除].py)
 ```python
 状态:
 - pending    → 等待分配
@@ -357,7 +357,7 @@ python3 scripts/telegram-notifier.py --channel ddingtalk --message "..."
 
 ### SSH密码 (统一)
 ```
-ge2099334$ZZ
+[已移除]
 ```
 
 ---

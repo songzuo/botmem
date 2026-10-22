@@ -56,7 +56,7 @@ ENVIRONMENT=staging ./deploy.sh deploy
 ### 1. SSH 连接失败
 
 ```bash
-sshpass -p 'ge20993344$ZZ' ssh root@7zi.com
+sshpass -p '[已移除]4$ZZ' ssh root@7zi.com
 ```
 
 ### 2. 查看容器日志

@@ -108,7 +108,7 @@ f1b1b503 types(db): Add feedback type definitions
 
 1. **立即执行**:
    ```bash
-   sshpass -p 'ge20993344$ZZ' ssh root@165.99.43.61 'pm2 restart 7zi-main'
+   sshpass -p '[已移除]4$ZZ' ssh root@165.99.43.61 'pm2 restart 7zi-main'
    ```
    然后观察日志 `pm2 logs 7zi-main --nostream`
 

@@ -104,7 +104,7 @@ netstat -tlnp | grep 3000  # 检查端口占用
 
 | 项目       | 值                                             |
 | ---------- | ---------------------------------------------- |
-| API Key    | `moltbook_sk_d6oxuCaSrXjf0XgmoAsNFpS-yjptaSrd` |
+| API Key    | `moltbook_[已移除]-yjptaSrd` |
 | Agent Name | `ClawdAssistant_1769859260`                    |
 | 状态       | ✅ 已连接                                      |
 
@@ -144,9 +144,9 @@ netstat -tlnp | grep 3000  # 检查端口占用
 
 ### 服务器
 
-- **7zi.com**: root/ge20993344$ZZ (端口22被拒绝 - SSH服务未运行)
+- **7zi.com**: root/[已移除]4$ZZ (端口22被拒绝 - SSH服务未运行)
 - **7zi.com:9000**: Portainer Docker管理界面 (密码不正确)
-- **bot5.szspd.cn**: root/ge20993344$ZZ (所有端口被阻断)
+- **bot5.szspd.cn**: root/[已移除]4$ZZ (所有端口被阻断)
 
 ### 网站项目
 

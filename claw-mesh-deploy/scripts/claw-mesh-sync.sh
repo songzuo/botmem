@@ -155,9 +155,9 @@ sync_to_github() {
         
         # 清理敏感信息
         find "$MACHINE_NAME" -type f \( -name "*.md" -o -name "*.json" \) -exec sed -i \
-            -e 's/ghp_[A-Za-z0-9]*/[已移除]/g' \
-            -e 's/sk_[A-Za-z0-9]*/[已移除]/g' \
-            -e 's/ge2099334\$ZZ/[已移除]/g' \
+            -e 's/[已移除][A-Za-z0-9]*/[已移除]/g' \
+            -e 's/[已移除][A-Za-z0-9]*/[已移除]/g' \
+            -e 's/[已移除]\$ZZ/[已移除]/g' \
             {} \; 2>/dev/null || true
     fi
     

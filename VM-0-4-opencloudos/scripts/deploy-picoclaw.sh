@@ -2,7 +2,7 @@
 # 部署 Picoclaw 到远程节点
 
 NODES=("7zi.com" "bot.szspd.cn" "bot4.szspd.cn" "bot5.szspd.cn" "bot6.szspd.cn")
-PASSWORD="ge2099334$ZZ"
+PASSWORD="[已移除]"
 LOCAL_PICOLAW="/usr/local/bin/picoclaw"
 REMOTE_PICOLAW="/usr/local/bin/picoclaw"
 

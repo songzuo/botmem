@@ -22,7 +22,7 @@ echo "[$(date)] Monitored nodes: ${NODES[@]}" | tee -a "$LOG"
 echo "[$(date)] === Checking SSH connection ===" | tee -a "$LOG"
 
 for node in "${NODES[@]}"; do
-    SSH_STATUS=$(sshpass -p "ge2099334\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "whoami" 2>&1)
+    SSH_STATUS=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "whoami" 2>&1)
     
     if echo "$SSH_STATUS" | grep -q "Permission denied"; then
         echo "[$(date)] ERROR $node SSH authentication failed" | tee -a "$LOG"
@@ -33,7 +33,7 @@ for node in "${NODES[@]}"; do
         ssh-keygen -R $node -f ~/.ssh/known_hosts 2>/dev/null
         
         # Option 2: Retest SSH
-        SSH_STATUS=$(sshpass -p "ge2099334\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "whoami" 2>&1)
+        SSH_STATUS=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "whoami" 2>&1)
         
         if echo "$SSH_STATUS" | grep -q "root"; then
             echo "[$(date)] OK $node SSH connection fixed" | tee -a "$LOG"
@@ -52,22 +52,22 @@ echo "[$(date)] === Checking service status ===" | tee -a "$LOG"
 
 for node in "${NODES[@]}"; do
     # Check SSH availability
-    SSH_STATUS=$(sshpass -p "ge2099334\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=3 root@$node "whoami" 2>&1)
+    SSH_STATUS=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=3 root@$node "whoami" 2>&1)
     
     if echo "$SSH_STATUS" | grep -q "root"; then
         # SSH normal, check services
         for service in "${SERVICES[@]}"; do
-            SERVICE_STATUS=$(sshpass -p "ge2099334\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "systemctl is-active --quiet $service" 2>&1)
+            SERVICE_STATUS=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "systemctl is-active --quiet $service" 2>&1)
             
             if [ "$SERVICE_STATUS" = "0" ]; then
                 echo "[$(date)] WARN $node $service has stopped" | tee -a "$LOG"
                 echo "[$(date)] INFO Attempting to automatically restart $node $service..." | tee -a "$LOG"
                 
                 # Attempt to restart service
-                RESTART_STATUS=$(sshpass -p "ge2099334\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$node "systemctl restart $service" 2>&1)
+                RESTART_STATUS=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$node "systemctl restart $service" 2>&1)
                 
                 # Check status after restart
-                SERVICE_STATUS=$(sshpass -p "ge2099334\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "systemctl is-active --quiet $service" 2>&1)
+                SERVICE_STATUS=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "systemctl is-active --quiet $service" 2>&1)
                 
                 if [ "$SERVICE_STATUS" = "0" ]; then
                     echo "[$(date)] ERROR $node $service automatic restart failed" | tee -a "$ALERT_LOG"
@@ -90,11 +90,11 @@ DISK_THRESHOLD=85
 
 for node in "${NODES[@]}"; do
     # Check SSH availability
-    SSH_STATUS=$(sshpass -p "ge2099334\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=3 root@$node "whoami" 2>&1)
+    SSH_STATUS=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=3 root@$node "whoami" 2>&1)
     
     if echo "$SSH_STATUS" | grep -q "root"; then
         # Get disk usage
-        DISK_USAGE=$(sshpass -p "ge2099334\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "df -h | awk '/\\// {print \$5}' | sed 's/%//' 2>/dev/null")
+        DISK_USAGE=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "df -h | awk '/\\// {print \$5}' | sed 's/%//' 2>/dev/null")
         
         for usage in $DISK_USAGE; do
             # Remove percentage sign
@@ -107,13 +107,13 @@ for node in "${NODES[@]}"; do
                 # Cleanup log files
                 echo "[$(date)] INFO Cleaning up log files..." | tee -a "$LOG"
                 
-                sshpass -p "ge2099334\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$node "find /var/log -name '*.log' -mtime +7 -delete" 2>/dev/null
+                sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$node "find /var/log -name '*.log' -mtime +7 -delete" 2>/dev/null
                 
                 # Cleanup temporary files
-                sshpass -p "ge2099334\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$node "find /tmp -type f -mtime +1 -delete" 2>/dev/null
+                sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$node "find /tmp -type f -mtime +1 -delete" 2>/dev/null
                 
                 # Cleanup system package cache
-                sshpass -p "ge2099334\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$node "apt-get clean -y" 2>/dev/null
+                sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$node "apt-get clean -y" 2>/dev/null
                 
                 echo "[$(date)] OK $node disk space has been cleaned up" | tee -a "$LOG"
             else
@@ -133,18 +133,18 @@ CPU_THRESHOLD=80
 
 for node in "${NODES[@]}"; do
     # Check SSH availability
-    SSH_STATUS=$(sshpass -p "ge2099334\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=3 root@$node "whoami" 2>&1)
+    SSH_STATUS=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=3 root@$node "whoami" 2>&1)
     
     if echo "$SSH_STATUS" | grep -q "root"; then
         # Check memory usage
-        MEMORY_USAGE=$(sshpass -p "ge2099334\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "free -h | awk '/Mem:/ {print \$3}' | sed 's/%//' 2>/dev/null")
+        MEMORY_USAGE=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "free -h | awk '/Mem:/ {print \$3}' | sed 's/%//' 2>/dev/null")
         
         if [ -n "$MEMORY_USAGE" ]; then
             if [ "${MEMORY_USAGE%\%}" -gt "$MEMORY_THRESHOLD" ]; then
                 echo "[$(date)] WARN $node memory usage: $MEMORY_USAGE% (exceeds threshold: $MEMORY_THRESHOLD%)" | tee -a "$ALERT_LOG"
                 
                 # Attempt to release memory
-                sshpass -p "ge2099334\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$node "sync && echo 3 > /proc/sys/vm/drop_caches" 2>/dev/null
+                sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$node "sync && echo 3 > /proc/sys/vm/drop_caches" 2>/dev/null
                 
                 echo "[$(date)] OK $node has attempted to release memory" | tee -a "$LOG"
             else
@@ -153,7 +153,7 @@ for node in "${NODES[@]}"; do
         fi
         
         # Check CPU load
-        CPU_LOAD=$(sshpass -p "ge2099334\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "uptime | awk '{print \\$NF}' | cut -d',' -f1" 2>/dev/null)
+        CPU_LOAD=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "uptime | awk '{print \\$NF}' | cut -d',' -f1" 2>/dev/null)
         
         if [ -n "$CPU_LOAD" ]; then
             CPU_LOAD_INT=$(echo "$CPU_LOAD" | cut -d'.' -f1)
@@ -162,7 +162,7 @@ for node in "${NODES[@]}"; do
                 echo "[$(date)] WARN $node CPU load: $CPU_LOAD (exceeds threshold: $CPU_THRESHOLD)" | tee -a "$ALERT_LOG"
                 
                 # Record high load processes
-                sshpass -p "ge2099334\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$node "ps aux --sort=-%cpu | head -10" > /tmp/$node-cpu-top-$(date +%s).log 2>/dev/null
+                sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$node "ps aux --sort=-%cpu | head -10" > /tmp/$node-cpu-top-$(date +%s).log 2>/dev/null
                 
                 echo "[$(date)] INFO High load processes have been recorded to /tmp/$node-cpu-top-$(date +%s).log" | tee -a "$LOG"
             else

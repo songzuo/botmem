@@ -159,7 +159,7 @@ echo "任务信息" >> /root/.openclaw/workspace/memory/shared-tasks.md
 | 内容 | 位置 | 学习重点 |
 |------|------|----------|
 | 自我驱动系统 | self-driving-system.sh | 问题闭环逻辑 |
-| 任务调度 | task_scheduler.py | 状态机设计 |
+| 任务调度 | ta[已移除].py | 状态机设计 |
 | 心跳机制 | heartbeat-manager.py | 定时自检 |
 | 健康监控 | cluster-health-check.sh | 阈值判断 |
 | 智能路由 | smart-router-full.js | Provider管理 |
@@ -358,7 +358,7 @@ echo "任务信息" >> /root/.openclaw/workspace/memory/shared-tasks.md
 
 ### SSH访问
 ```bash
-# 密码统一: ge2099334$ZZ
+# 密码统一: [已移除]
 ssh root@7zi.com
 ssh root@bot.szspd.cn
 ssh root@bot2.szspd.cn
@@ -392,7 +392,7 @@ Pico频道: picoclaw-cluster-2026
 ```
 /root/projects/workspace/
 ├── tools/
-│   ├── task_scheduler.py          # 任务调度
+│   ├── ta[已移除].py          # 任务调度
 │   ├── heartbeat-manager.py       # 心跳管理
 │   └── ...
 ├── scripts/
