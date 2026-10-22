@@ -24,6 +24,10 @@
 - ✅ 修复 bot4 上传脚本（失效 token + 损坏仓库 + 假成功），bot4/ 目录从 3 月停更恢复
 - ✅ 修正 bot5/bot6 的 watchdog MACHINE_NAME（ecm-cd59 / bot4 → 各自真实机器名）
 - ✅ 四节点（bot2/4/5/6）状态文件非法 JSON 全部修复，watchdog 全部 healthy
+- ✅ 修复 bot3（最后一个未修节点）：机器名错写、仓库缺失、状态文件非法
+- ✅ 清除共享仓库中的 token 明文，脱敏范围由"本机目录"扩展到全仓库
+- ✅ 五节点凭据统一由 clawmesh-credential.sh 管理，脚本内不再有明文 token
+- ✅ 推送时间全集群错峰（bot2 :00 / bot4 :15 / bot6 :30 / bot3 :45）
 - ✅ 清理全局失效 GitHub 凭据（insteadof 规则 + 过期 token）
 - ⚠️ 发现 bot3 侧 claw-mesh-sync.sh 硬编码 GitHub token，且 MACHINE_NAME 误写为 bot4
 
