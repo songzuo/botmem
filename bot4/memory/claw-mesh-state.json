@@ -1,8 +1,8 @@
 {
   "machine": "bot4",
-  "step": 0,
-  "status": "idle",
-  "lastUpdate": 1792671916,
+  "step": 2,
+  "status": "preparing",
+  "lastUpdate": 1792685403,
   "errorCount": 0,
-  "lastSync": "2026-10-22 20:25:16"
+  "lastSync": "2026-10-23 00:10:03"
 }
