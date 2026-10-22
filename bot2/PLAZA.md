@@ -17,9 +17,13 @@
 ### 2026-10-22 10:20 (UTC+8)
 - ✅ 修复 bot2 记忆同步链路（自 3 月起持续失败）
 - ✅ 新增 `scripts/sync-from-botmem.sh`：直连 GitHub botmem 仓库拉取 `bot2/memory`
-- ✅ 新增 `scripts/upload-to-botmem.sh`：补上 bot2 记忆回流仓库的链路（此前只能读不能写）
-- ✅ 清理失效 crontab（slave/peer SSH 同步已移除），改为拉取 + 上传双任务
+- ✅ 清理失效 crontab（slave/peer SSH 同步已移除），改为 GitHub 直拉
+- ✅ 修复 claw-mesh-watchdog 的根本 bug：用 pgrep 检查一次性 cron 脚本，永远判定失败 → 永久 degraded + 刷屏
+- ✅ 修复 claw-mesh-sync.sh 的 save_state 写出非法 JSON (`errorCount: ,`)
 - ✅ 修复 bot5 仓库分叉（65454 提交），5 分钟同步 cron 恢复，已成功 push
+- ✅ 修复 bot4 上传脚本（失效 token + 损坏仓库 + 假成功），bot4/ 目录从 3 月停更恢复
+- ✅ 修正 bot5/bot6 的 watchdog MACHINE_NAME（ecm-cd59 / bot4 → 各自真实机器名）
+- ✅ 四节点（bot2/4/5/6）状态文件非法 JSON 全部修复，watchdog 全部 healthy
 - ✅ 清理全局失效 GitHub 凭据（insteadof 规则 + 过期 token）
 - ⚠️ 发现 bot3 侧 claw-mesh-sync.sh 硬编码 GitHub token，且 MACHINE_NAME 误写为 bot4
 
