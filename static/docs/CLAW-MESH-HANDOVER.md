@@ -134,12 +134,75 @@ fi
 **排查提示**：若发现某节点清单/文档变成 0 字节，先看
 `wc -c < 文件` 确认，再检查是否有脚本在直接 `cp` 到该文件。
 
-## 七、注意事项
+## 七、弱网与 GitHub 访问
+
+部分节点到 `github.com` 的链路会**间歇性黑洞**（TCP 通但 TLS 无响应，
+或直接不可达），表现为 `git fetch` 永久挂起、状态停在 `step: 1 pulling`。
+
+**已装的自愈**：
+- `github-ip-pin.sh`（每 10 分钟）：探测 `github.com` 可达性，
+  不可达时从候选 IP 里挑一个能完成 TLS 的写进 `/etc/hosts`
+- 候选 IP：`20.27.177.113` / `20.200.245.247` / `20.207.73.82` /
+  `20.205.243.166` / `140.82.121.3`
+- 已知黑洞 IP（2026-10-23 实测 bot5 命中）：`20.205.243.166`、
+  `140.82.121.4` / `140.82.114.3` / `140.82.113.4` / `140.82.112.4`
+
+**手动排查**：
+```bash
+getent hosts github.com
+timeout 15 curl -s -o /dev/null -w "%{http_code}\n" https://github.com/
+for ip in 20.27.177.113 140.82.121.3; do
+  timeout 20 curl -s -o /dev/null -w "$ip=%{http_code}\n" --resolve github.com:443:$ip https://github.com/
+done
+```
+注意：`api.github.com` / `codeload.github.com` 可用**不代表**
+`github.com` 可用 —— 它们的 IP 段和路由不同。
+
+**手动恢复**：
+```bash
+pkill -f git-remote-https                      # 先杀掉挂起的 fetch
+sed -i '/[[:space:]]github\.com$/d' /etc/hosts
+echo "<可用IP> github.com" >> /etc/hosts
+```
+
+## 八、常驻服务与日志
+
+日志无上限增长曾把 bot6 的磁盘推到 250MB 日志占用。
+现五台统一有 `/etc/logrotate.d/openclaw-clawmesh`（size 20M / rotate 3 / compress）。
+
+**注意**：`logrotate` 要求日志目录权限安全。bot5/bot6 的 `/var/log`
+曾是 `drwxrwxr-x`（组/其他可写），logrotate 会直接拒绝执行并报
+`parent directory has insecure permissions`。已收紧为 755，
+规则里也加了 `su root root`。
+
+**`~` 在 crontab 里不展开**：所有 cron 里的脚本路径一律写绝对路径。
+（bot6 的 evomap 心跳曾写成 `~/.openclaw/skills/evomap/evomap-cli.js`，
+实际指向不存在的 `/.openclaw/...`，静默失败了很久。）
+
+## 九、工作区文件保护
+
+`docs/` 全树曾被外部进程整体删除（bot4 305 个文件、bot6 477 个文件）。
+**各节点现都有 `workspace-guard.sh`（每 5 分钟）**：
+用 `git ls-files --deleted` 检测已跟踪但缺失的文件，自动从 HEAD 恢复。
+
+```bash
+git ls-files --deleted | head -20   # 应为空
+ls docs/ | wc -l                    # 与本节点历史一致
+```
+
+⚠️ **清理"疑似污染文件"前务必确认归属**。
+2026-10-22 曾把各节点自己的历史文档误判为同步污染并删除。
+判据要看内容来源，不能只看"文件名像不像共享文件"或"几台节点文件名是否相同"。
+
+## 十、注意事项
 
 - 改任何节点的 cron 前，确认 `/etc/cron.d/` 也要看 —— 只看 `crontab -l` 会漏
 - 各节点 SSH 时注意 SSHLIMIT：短时间内反复重试会把自己封掉，等 60 秒窗口过期即可
 - bot4 / bot6 主机本身偶发 SSH 不稳（ping 通但 22 端口不通，与 SSHLIMIT 无关），
   重试或等 1~2 分钟即可恢复；bot6 在 2026-10-22 20:20 前后出现过一次
+- **SSH 排障提示**：若 `ssh -vv` 显示 `Authentication succeeded` 但命令无输出，
+  那是会话层（PTY 分配）的问题，不是网络问题。加 `-T -n`（不分配伪终端、
+  不读 stdin）即可正常返回
 - bot3 到 github.com 的链路有**间歇性丢包**（5 次请求约 2 次成功），
   同步脚本已加 connectTimeout=15 + 5 次重试 + 分步 fetch/rebase 来适配
 - bot3 出现过**整机服务不可用**（22 和 18789 端口同时不通，ping 正常），
