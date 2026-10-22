@@ -1,0 +1,11 @@
+{
+  "date": "2026-04-12",
+  "nodes": {
+    "7zi.com":        {"mem_pct":43, "di[已移除]":75, "load":"0.29", "updays":57, "docker":0},
+    "bot.szspd.cn":   {"mem_pct":52, "di[已移除]":62, "load":"0.00", "updays":17, "docker":0},
+    "bot2.szspd.cn":  {"mem_pct":82, "di[已移除]":75, "load":"2.31", "updays":64, "docker":0},
+    "bot3.szspd.cn":  {"mem_pct":67, "di[已移除]":76, "load":"0.42", "updays":19, "docker":3},
+    "bot4.szspd.cn":  {"mem_pct":51, "di[已移除]":90, "load":"0.09", "updays":26, "docker":1},
+    "bot5.szspd.cn":  {"mem_pct":54, "di[已移除]":40, "load":"2.65", "updays":8,  "docker":0}
+  }
+}
