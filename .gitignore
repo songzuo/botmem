@@ -60,6 +60,12 @@ claw-mesh-state.json
 heartbeat-state.json
 server-monitor.json
 **/memory/claw-mesh-state.json
+# 例外：各节点自己的状态文件按 botN/ 命名空间存放，需纳入版本管理
+!bot2/memory/claw-mesh-state.json
+!bot3/memory/claw-mesh-state.json
+!bot4/memory/claw-mesh-state.json
+!bot5/memory/claw-mesh-state.json
+!bot6/memory/claw-mesh-state.json
 **/memory/heartbeat-state.json
 
 # 生成的静态分析产物
