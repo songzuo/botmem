@@ -87,20 +87,20 @@ ssh root@bot4.szspd.cn "iptables -L INPUT -n --line-numbers | head -12"
 
 ## 6. 凭据泄露
 ```bash
-grep -rlE 'ghp_[A-Za-z0-9]{20,}' /root/.openclaw/cron/ 2>/dev/null | grep -v git-credential
+grep -rlE '[已移除][A-Za-z0-9]{20,}' /root/.openclaw/cron/ 2>/dev/null | grep -v git-credential
 ```
 应为空。凭据统一由 `clawmesh-credential.sh` 提供，脚本内不应有明文。
 仓库工作树也应无 token（`git clone` 后扫一遍）。
 
 **也要扫日志** —— git 报错会把带 token 的 URL 回显进日志：
 ```bash
-grep -ohE 'ghp_[A-Za-z0-9]{20,}' /var/log/*.log 2>/dev/null | sort -u
+grep -ohE '[已移除][A-Za-z0-9]{20,}' /var/log/*.log 2>/dev/null | sort -u
 ```
 2026-10-22 在 bot4 上发现 `/var/log/botmem-*.log`、`claw-mesh.log` 里
 有 1200+ 处失效 token 明文（已脱敏）。**写完脚本记得回头扫一遍日志。**
 
 **注意脱敏的自我破坏**：全仓库脱敏的 sed 会把**脚本自己**里的
-`GIT_TOKEN="ghp_..."` 就地改成 `"[已移除]"` → 下次运行 URL 变成
+`GIT_TOKEN="[已移除]..."` 就地改成 `"[已移除]"` → 下次运行 URL 变成
 `https://[已移除]@github.com/...` → clone/pull 全失败。
 2026-10-22 bot4 的 `upload-botmem-daily.sh` 就是这样坏的，而且它
 **push 失败也打印"✅ 每日上传完成"**。
