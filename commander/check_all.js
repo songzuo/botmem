@@ -1,3 +1,4 @@
+const { clusterPassword } = require('./utils/cluster-cred');
 /**
  * check_all.js - 综合检查脚本
  *
@@ -22,7 +23,7 @@ const serverConfig = {
   host: '7zi.com',
   port: 22,
   username: 'root',
-  password: 'ge2099334$ZZ'
+  password: clusterPassword()
 };
 
 // 检查是否启用完整健康检查

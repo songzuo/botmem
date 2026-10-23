@@ -1,6 +1,17 @@
 #!/usr/bin/expect -f
 set timeout 30
-set password "ge2099334\$ZZ"
+# 密码从环境变量读取，避免明文入库
+if {![info exists env(CLUSTER_SSH_PASSWORD)]} {
+    set pwfile "/root/.openclaw/cron/.secrets/cluster-ssh.env"
+    if {[file exists $pwfile]} {
+        set fh [open $pwfile r]
+        set content [read $fh]
+        close $fh
+        regexp {CLUSTER_SSH_PASSWORD=(.*)} $content -> match
+        if {[info exists match]} { set ::env(CLUSTER_SSH_PASSWORD) [string trim $match 1] }
+    }
+}
+set password $::env(CLUSTER_SSH_PASSWORD)
 
 spawn ssh -o StrictHostKeyChecking=no root@bot3.szspd.cn "echo 'SSH OK' && hostname && uname -a"
 expect {

@@ -11,9 +11,27 @@ import os
 
 # 使用环境变量或直接赋值密码
 # 为了避免预飞行检查错误，我们直接将密码赋值
-PASSWORD = "ge2099334" + "$ZZ"
 NODE = "bot.szspd.cn"
 TASK_ID = "recovery-bot.szspd.cn-1772317930"
+
+def _load_cluster_password():
+    """读取集群 SSH 密码。优先环境变量，其次凭据文件；不再硬编码在代码里。"""
+    pw = os.environ.get("CLUSTER_SSH_PASSWORD")
+    if pw:
+        return pw
+    for p in ("/root/.openclaw/cron/.secrets/cluster-ssh.env",
+              os.path.expanduser("~/.openclaw/cron/.secrets/cluster-ssh.env")):
+        try:
+            with open(p) as fh:
+                for line in fh:
+                    if line.strip().startswith("CLUSTER_SSH_PASSWORD="):
+                        return line.strip().split("=", 1)[1].strip().strip('"').strip("'")
+        except OSError:
+            continue
+    raise RuntimeError("未找到 CLUSTER_SSH_PASSWORD（环境变量或凭据文件）")
+
+PASSWORD = _load_cluster_password()
+
 
 def log(msg, level="INFO"):
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

@@ -1,3 +1,4 @@
+const { clusterPassword } = require('./utils/cluster-cred');
 /**
  * check_health.js - 站点健康检查脚本
  *
@@ -27,7 +28,7 @@ const defaultServerConfig = {
   host: '7zi.com',
   port: 22,
   username: 'root',
-  password: 'ge2099334$ZZ',
+  password: clusterPassword(),
   readyTimeout: 30000,
   compress: true
 };

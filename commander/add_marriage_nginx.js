@@ -1,3 +1,4 @@
+const { clusterPassword } = require('./utils/cluster-cred');
 const { Client } = require('ssh2');
 const conn = new Client();
 
@@ -44,6 +45,6 @@ echo "=== Marriage Nginx配置完成 ==="
   host: '7zi.com',
   port: 22,
   username: 'root',
-  password: 'ge2099334$ZZ',
+  password: clusterPassword(),
   readyTimeout: 30000
 });

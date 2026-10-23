@@ -1,3 +1,4 @@
+const { clusterPassword } = require('./utils/cluster-cred');
 const { Client } = require('ssh2');
 
 const conn = new Client();
@@ -132,7 +133,7 @@ NGINX_EOF`, (err, stream) => {
   host: '7zi.com',
   port: 22,
   username: 'root',
-  password: 'ge2099334$ZZ',
+  password: clusterPassword(),
   readyTimeout: 30000,
   compress: true
 });

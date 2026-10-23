@@ -1,3 +1,4 @@
+const { clusterPassword } = require('./utils/cluster-cred');
 const { Client } = require('ssh2');
 
 const conn = new Client();
@@ -35,7 +36,7 @@ ps aux | grep -E "vite|next dev|taro.*watch" | grep -v grep || echo "没有开�
   host: '7zi.com',
   port: 22,
   username: 'root',
-  password: 'ge2099334$ZZ',
+  password: clusterPassword(),
   readyTimeout: 30000,
   compress: true
 });

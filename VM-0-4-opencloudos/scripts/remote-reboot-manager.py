@@ -19,14 +19,14 @@ NODES = {
     "7zi.com": {
         "host": "7zi.com",
         "user": "root",
-        "password": "ge2099334$ZZ",
+        "password": _load_cluster_password(),
         "cloud": None,  # 需要配置云平台信息
         "reboot_method": "ssh",  # ssh, aliyun_api, tencent_api, volcengine_api, watchdog
     },
     "bot.szspd.cn": {
         "host": "bot.szspd.cn",
         "user": "root", 
-        "password": "ge2099334$ZZ",
+        "password": _load_cluster_password(),
         "cloud": "aliyun",  # 阿里云
         "instance_id": None,  # 需要填写实例ID
         "reboot_method": "ssh",
@@ -34,7 +34,7 @@ NODES = {
     "bot2.szspd.cn": {
         "host": "bot2.szspd.cn",
         "user": "root",
-        "password": "ge2099334$ZZ",
+        "password": _load_cluster_password(),
         "cloud": "aliyun",
         "instance_id": None,
         "reboot_method": "ssh",
@@ -42,7 +42,7 @@ NODES = {
     "bot3.szspd.cn": {
         "host": "bot3.szspd.cn",
         "user": "root",
-        "password": "ge2099334$ZZ",
+        "password": _load_cluster_password(),
         "cloud": "tencent",  # 腾讯云
         "instance_id": None,
         "reboot_method": "ssh",
@@ -50,7 +50,7 @@ NODES = {
     "bot4.szspd.cn": {
         "host": "bot4.szspd.cn",
         "user": "root",
-        "password": "ge2099334$ZZ",
+        "password": _load_cluster_password(),
         "cloud": "tencent",
         "instance_id": None,
         "reboot_method": "ssh",
@@ -58,7 +58,7 @@ NODES = {
     "bot5.szspd.cn": {
         "host": "bot5.szspd.cn",
         "user": "root",
-        "password": "ge2099334$ZZ",
+        "password": _load_cluster_password(),
         "cloud": "volcengine",  # 火山引擎
         "instance_id": None,
         "reboot_method": "ssh",
@@ -66,7 +66,7 @@ NODES = {
     "sandbox": {
         "host": "localhost",
         "user": "root",
-        "password": "ge2099334$ZZ",
+        "password": _load_cluster_password(),
         "cloud": None,
         "reboot_method": "local",
     },
@@ -301,6 +301,23 @@ main
             "state": self.state,
             "triggers": REBOOT_TRIGGERS,
         }
+
+
+def _load_cluster_password():
+    """读取集群 SSH 密码（环境变量或凭据文件），不再硬编码。"""
+    pw = os.environ.get("CLUSTER_SSH_PASSWORD")
+    if pw:
+        return pw
+    for pth in ("/root/.openclaw/cron/.secrets/cluster-ssh.env",
+                os.path.expanduser("~/.openclaw/cron/.secrets/cluster-ssh.env")):
+        try:
+            with open(pth) as fh:
+                for line in fh:
+                    if line.strip().startswith("CLUSTER_SSH_PASSWORD="):
+                        return line.strip().split("=", 1)[1].strip().strip('"').strip("'")
+        except OSError:
+            continue
+    raise RuntimeError("未找到 CLUSTER_SSH_PASSWORD（环境变量或凭据文件）")
 
 
 def main():

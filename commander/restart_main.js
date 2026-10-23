@@ -1,3 +1,4 @@
+const { clusterPassword } = require('./utils/cluster-cred');
 const { Client } = require('ssh2');
 
 const conn = new Client();
@@ -38,7 +39,7 @@ ss -tlnp | grep -E "3000|3010"
   host: '7zi.com',
   port: 22,
   username: 'root',
-  password: 'ge2099334$ZZ',
+  password: clusterPassword(),
   readyTimeout: 30000,
   compress: true
 });

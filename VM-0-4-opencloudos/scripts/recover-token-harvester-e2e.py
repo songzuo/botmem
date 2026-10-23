@@ -3,15 +3,34 @@
 恢复任务: token-harvester-e2e 任务恢复 (已在浏览器完成OAuth授权，获取到授权码，需要将token注入到CLIProxyAPI并验证模型可用)
 """
 
+import os
 import paramiko
 import time
 from datetime import datetime
 import subprocess
 import json
 
-PASSWORD = r"ge2099334$ZZ"
 NODE = "7zi.com"  # CLIProxyAPI 服务通常部署在 7zi.com 节点上
 TASK_ID = "token-harvester-e2e"
+
+def _load_cluster_password():
+    """读取集群 SSH 密码。优先环境变量，其次凭据文件；不再硬编码在代码里。"""
+    pw = os.environ.get("CLUSTER_SSH_PASSWORD")
+    if pw:
+        return pw
+    for p in ("/root/.openclaw/cron/.secrets/cluster-ssh.env",
+              os.path.expanduser("~/.openclaw/cron/.secrets/cluster-ssh.env")):
+        try:
+            with open(p) as fh:
+                for line in fh:
+                    if line.strip().startswith("CLUSTER_SSH_PASSWORD="):
+                        return line.strip().split("=", 1)[1].strip().strip('"').strip("'")
+        except OSError:
+            continue
+    raise RuntimeError("未找到 CLUSTER_SSH_PASSWORD（环境变量或凭据文件）")
+
+PASSWORD = _load_cluster_password()
+
 
 def log(msg, level="INFO"):
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

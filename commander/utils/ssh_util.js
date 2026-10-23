@@ -1,3 +1,4 @@
+const { clusterPassword } = require('./utils/cluster-cred');
 /**
  * SSH Utility Module for Commander Scripts
  *
@@ -14,7 +15,7 @@ const defaultServerConfig = {
   host: '7zi.com',
   port: 22,
   username: 'root',
-  password: 'ge2099334$ZZ',
+  password: clusterPassword(),
   readyTimeout: 30000,
   compress: true
 };

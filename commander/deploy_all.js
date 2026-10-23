@@ -1,3 +1,4 @@
+const { clusterPassword } = require('./utils/cluster-cred');
 const { Client } = require('ssh2');
 
 const conn = new Client();
@@ -49,7 +50,7 @@ ls -la /web/good /web/today /web/wechat /web/cv /web/sign /web/china /web/song /
   host: '7zi.com',
   port: 22,
   username: 'root',
-  password: 'ge2099334$ZZ',
+  password: clusterPassword(),
   readyTimeout: 30000,
   compress: true
 });

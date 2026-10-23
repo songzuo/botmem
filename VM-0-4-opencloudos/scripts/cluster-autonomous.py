@@ -3,13 +3,32 @@
 集群自治系统 - 清理重复进程 + 安装Claude Code + 启动自治工作
 """
 
+import os
 import paramiko
 import time
 from datetime import datetime
 import subprocess
 
-PASSWORD = "ge2099334$ZZ"
 NODES = ["7zi.com", "bot.szspd.cn", "bot2.szspd.cn", "bot3.szspd.cn", "bot4.szspd.cn", "bot5.szspd.cn"]
+
+def _load_cluster_password():
+    """读取集群 SSH 密码。优先环境变量，其次凭据文件；不再硬编码在代码里。"""
+    pw = os.environ.get("CLUSTER_SSH_PASSWORD")
+    if pw:
+        return pw
+    for p in ("/root/.openclaw/cron/.secrets/cluster-ssh.env",
+              os.path.expanduser("~/.openclaw/cron/.secrets/cluster-ssh.env")):
+        try:
+            with open(p) as fh:
+                for line in fh:
+                    if line.strip().startswith("CLUSTER_SSH_PASSWORD="):
+                        return line.strip().split("=", 1)[1].strip().strip('"').strip("'")
+        except OSError:
+            continue
+    raise RuntimeError("未找到 CLUSTER_SSH_PASSWORD（环境变量或凭据文件）")
+
+PASSWORD = _load_cluster_password()
+
 
 def log(msg, level="INFO"):
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
