@@ -186,7 +186,31 @@ grep -rnE '[A-Za-z0-9_]+\[已移除\]' --include='*.sh' .   # 应为空
 ```
 ⚠️ `\b` 没用 —— `_` 是单词字符，`\bsk_` 匹配不到 `disk_usage` 里的 `sk_`。
 
-## 19. 7zi.com 源站 165.99.43.61 SSH 超时（2026-10-23 起）
+## 19. 共享仓库里有明文 API 密钥（2026-10-24 处置，勿擅自重写历史）
+扫描发现 4 个文件含**真实可用**的 API 密钥（Coze / MiniMax / 第三方端点）：
+`7zi.com/memory/2026-07-30.md`、`bot6/memory/2026-05-04-security.md`、
+`bot6/memory/picoclaw-debug-20260331.md`、
+`xunshi-inspector/memory/cluster-confidential-knowledge-base.md`。
+
+- ✅ 工作区已脱敏（`fa0c20ac17`）
+- ⚠️ **git 历史里仍在** —— 彻底清除要重写历史 + 强制推送，**需主人决策**
+- ⚠️ **这些 key 应视为已泄露，建议在服务端轮换**
+
+区分真 key 与普通标识符（熵值 + 长度）见 `memory/2026-10-24.md` 的脚本。
+
+## 20. 文档里的字面量 token 模式要写成 `gh[p]_`（2026-10-24 教训）
+节点上仍跑着旧版脱敏脚本 `s/ghp_[A-Za-z0-9]*/[已移除]/g`。
+文档里若直接写 `ghp_[A-Za-z0-9]{20,}` 这种字面量模式，**会被旧脚本当成真 token 替换掉**。
+→ 文档里统一写 `gh[p]_` / `sk[_]_`（正则语义等价，旧脚本匹配不到）。
+→ 涉及 HEARTBEAT.md / MEMORY.md / memory/*.md / docs/CLAW-MESH-HANDOVER.md。
+
+## 21. 仓库改了 ≠ 节点生效（2026-10-24 踩过）
+`claw-mesh-deploy/README.md` 明确写着「改动需要手动部署到各节点」。
+2026-10-24 修好了仓库里的 `claw-mesh-deploy/scripts/claw-mesh-sync.sh`，
+**但 bot6 仍在跑旧脚本并继续破坏仓库**。
+→ 修完同步脚本，**必须逐节点确认本地副本已更新**（SSH 上去 grep 一下 pattern）。
+
+## 22. 7zi.com 源站 165.99.43.61 SSH 超时（2026-10-23 起）
 SSH Connection timed out（7zi.com 域名解析到 CF IP，22 端口 Network unreachable）。
 → `scripts/health-check.sh` 的 Nginx / PM2 / Docker / 磁盘 / 内存 检查全部失败，
   **这不是脚本 bug，是真实的源站不可达**。
