@@ -169,6 +169,29 @@ ls docs/ | wc -l                          # 应为 305
 - 升级前备份 `~/.openclaw/openclaw.json` 和 `~/.openclaw/cron/jobs.json`
 - 升完务必跑 `openclaw plugins list` + `openclaw doctor --non-interactive` 验证
 
+## 18. 脱敏 sed 会误伤标识符（2026-10-23 踩过，务必检查）
+`claw-mesh-sync.sh` 原来用 `s/sk_[A-Za-z0-9]*/[已移除]/g` 做全仓库脱敏。
+`sk_` 匹配到了 **`di`sk_**`usage`、`**ta**sk_**` 里面去 →
+`disk_usage` → `di[已移除]`，`task` → `ta[已移除]`。
+**17 个 shell 脚本的变量名被改坏，脚本直接语法错误，而且损坏被提交进了共享仓库。**
+
+正确写法（用连字符 + 长度下限 + 左侧边界）：
+```bash
+sed -i -E -e 's/(^|[^A-Za-z0-9_])ghp_[A-Za-z0-9]{20,}/\1[已移除]/g' \
+           -e 's/(^|[^A-Za-z0-9_])sk-[A-Za-z0-9_-]{20,}/\1[已移除]/g'
+```
+**自查命令**（改完脱敏逻辑必跑）：
+```bash
+grep -rnE '[A-Za-z0-9_]+\[已移除\]' --include='*.sh' .   # 应为空
+```
+⚠️ `\b` 没用 —— `_` 是单词字符，`\bsk_` 匹配不到 `disk_usage` 里的 `sk_`。
+
+## 19. 7zi.com 源站 165.99.43.61 SSH 超时（2026-10-23 起）
+SSH Connection timed out（7zi.com 域名解析到 CF IP，22 端口 Network unreachable）。
+→ `scripts/health-check.sh` 的 Nginx / PM2 / Docker / 磁盘 / 内存 检查全部失败，
+  **这不是脚本 bug，是真实的源站不可达**。
+→ TOOLS.md 里记的 7zi.com IP 可能已过期，需要重新确认源站地址。
+
 ## 已知遗留（需用户决策，勿擅自处理）
 - git 历史中可能仍残留旧 token —— 彻底清除需重写历史 + 强制推送
 - 仓库内 7.5 万个 node_modules 文件 —— 清理需重写历史
