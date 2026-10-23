@@ -165,7 +165,32 @@ sync_to_github() {
     # 步骤 3: 提交
     if [ $current_step -le 3 ]; then
         save_state 3 "committing"
-        git add -A
+        # 2026-10-24 修复: `git add -A` 会把工作副本里【所有】节点的目录都暂存。
+        # 各节点的 botmem 克隆里都留着别人上次推送的目录，
+        # 于是 bot3 的同步提交会把 bot5/ 里的文件一起提交（machine=bot3 写进 bot5/）。
+        # 改为只暂存本节点自己的目录。
+        git add "$MACHINE_NAME"/
+
+        # 不变量校验: 仓库里每个 botN/ 目录的 state.machine 必须等于目录名。
+        # 若某个目录里的 machine 与目录名不符，说明有节点把记忆写进了别人的目录
+        # （历史上 bot3/bot5 主机名互换，导致互相覆盖）。此时中止提交，避免扩散。
+        IDENTITY_ERR=0
+        for d in bot*/; do
+            dn=${d%/}
+            sf="$dn/memory/claw-mesh-state.json"
+            [ -f "$sf" ] || continue
+            sm=$(python3 -c "import json,sys;print(json.load(open(sys.argv[1])).get('machine',''))" "$sf" 2>/dev/null)
+            [ -z "$sm" ] && continue
+            if [ "$sm" != "$dn" ]; then
+                echo "[$MACHINE_NAME] ✗ 身份错位: 目录 $dn/ 内 machine=$sm" >&2
+                IDENTITY_ERR=1
+            fi
+        done
+        if [ "$IDENTITY_ERR" -ne 0 ]; then
+            echo "[$MACHINE_NAME] ✗ 检测到节点目录身份错位，中止提交（需人工修复 hostname /etc/hosts）" >&2
+            save_state 3 "identity_mismatch"
+            return 1
+        fi
         
         if git diff --staged --quiet; then
             log "INFO" "没有变化，跳过提交"

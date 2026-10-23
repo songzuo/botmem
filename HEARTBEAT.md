@@ -216,6 +216,31 @@ SSH Connection timed out（7zi.com 域名解析到 CF IP，22 端口 Network unr
   **这不是脚本 bug，是真实的源站不可达**。
 → TOOLS.md 里记的 7zi.com IP 可能已过期，需要重新确认源站地址。
 
+## 23. 节点互相写对方目录 —— `git add -A` 是元凶（2026-10-24 定位）
+
+**症状**：bot5 的同步提交里混进了 `bot2/memory/2026-10-24.md` 的改动；
+bot6 的提交里也混进了 `bot2/` 的文件。看起来像"节点在乱写别人"。
+
+**根因（两层）**：
+1. live 脚本的脱敏是**全仓库** `grep -rl` + `sed -i`（含 `botN/` 别人的目录）。
+   节点 A 的 sed 会把节点 B 的文件改写（`sk_` pattern 还会误伤标识符）。
+2. `git add -A` 把**整个工作副本**的改动都暂存 —— 包括刚被别的节点 sed 改坏的 `bot2/`。
+
+→ 修法（已落地）：`git add "$MACHINE_NAME"/` 只暂存本节点目录；
+  全仓库 sed 排除 `--exclude-dir=bot2..bot6`；
+  提交前加不变量校验：每个 `botN/` 内 state.machine 必须等于目录名，否则中止提交。
+
+**排查手法**（可复用）：
+```bash
+# 看某个提交实际改了哪些目录
+git show <sha> --name-only --format='' | grep -oE '^bot[0-9]+/' | sort -u
+# 对比提交自称的节点
+git log --format='%h|%s' | grep 'Claw-Mesh 同步' | \
+  while IFS='|' read c s; do echo "$c $(echo "$s" | sed 's/:.*//')"; done
+```
+**教训**：共享仓库里"谁在写谁"必须看**提交实际改了哪些路径**，
+不能只看 commit message 里的节点名 —— message 是脚本自报的，可以撒谎。
+
 ## 已知遗留（需用户决策，勿擅自处理）
 - git 历史中可能仍残留旧 token —— 彻底清除需重写历史 + 强制推送
 - 仓库内 7.5 万个 node_modules 文件 —— 清理需重写历史
