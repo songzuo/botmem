@@ -154,9 +154,9 @@ sync_to_github() {
         [ -f "$BOT4_DIR/PLAZA.md" ] && cp "$BOT4_DIR/PLAZA.md" "$MACHINE_NAME/"
         
         # 清理敏感信息
-        find "$MACHINE_NAME" -type f \( -name "*.md" -o -name "*.json" \) -exec sed -i \
-            -e 's/[已移除][A-Za-z0-9]*/[已移除]/g' \
-            -e 's/[已移除][A-Za-z0-9]*/[已移除]/g' \
+        find "$MACHINE_NAME" -type f \( -name "*.md" -o -name "*.json" \) -exec sed -i -E \
+            -e 's/(^|[^A-Za-z0-9_])ghp_[A-Za-z0-9]{20,}/\1[已移除]/g' \
+            -e 's/(^|[^A-Za-z0-9_])sk-[A-Za-z0-9_-]{20,}/\1[已移除]/g' \
             -e 's/[已移除]\$ZZ/[已移除]/g' \
             {} \; 2>/dev/null || true
     fi

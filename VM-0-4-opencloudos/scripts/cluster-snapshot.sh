@@ -1,6 +1,6 @@
 #!/bin/bash
 # 集群状态快照 - 一键获取全集群状态
-SSH_PASS='[已移除]'
+SSH_PASS='[已移除]$ZZ'
 SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=5"
 NODES="7zi.com bot.szspd.cn bot2.szspd.cn bot3.szspd.cn bot4.szspd.cn bot5.szspd.cn"
 

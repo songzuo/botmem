@@ -235,11 +235,11 @@ check_docker() {
     fi
 
     # 检查 Docker 磁盘使用
-    local docker_di[已移除]
-    docker_di[已移除]=$(sshpass -p '[已移除]4$ZZ' ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@${SERVER_IP} "docker system df --format '{{.Size}}' 2>&1 | head -1" || echo "")
+    local docker_disk_usage
+    docker_disk_usage=$(sshpass -p '[已移除]4$ZZ' ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@${SERVER_IP} "docker system df --format '{{.Size}}' 2>&1 | head -1" || echo "")
 
-    if [ -n "$docker_di[已移除]" ]; then
-        record_check "INFO" "Docker磁盘" "使用量: $docker_di[已移除]"
+    if [ -n "$docker_disk_usage" ]; then
+        record_check "INFO" "Docker磁盘" "使用量: $docker_disk_usage"
     fi
 }
 
@@ -251,20 +251,20 @@ check_disk() {
     log "INFO" "=== 检查磁盘空间 ==="
 
     # 获取根分区使用率
-    local di[已移除]
-    di[已移除]=$(sshpass -p '[已移除]4$ZZ' ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@${SERVER_IP} "df -h / | awk 'NR==2 {print \$5}' | tr -d '%'" 2>&1)
+    local disk_usage
+    disk_usage=$(sshpass -p '[已移除]4$ZZ' ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@${SERVER_IP} "df -h / | awk 'NR==2 {print \$5}' | tr -d '%'" 2>&1)
 
-    if [ -z "$di[已移除]" ]; then
+    if [ -z "$disk_usage" ]; then
         record_check "FAIL" "磁盘检查" "无法获取磁盘使用率"
         return
     fi
 
-    if [ "$di[已移除]" -lt "$ALERT_THRESHOLD_DISK" ]; then
-        record_check "PASS" "磁盘空间" "使用率: ${di[已移除]}%"
-    elif [ "$di[已移除]" -lt 95 ]; then
-        record_check "WARN" "磁盘空间" "使用率: ${di[已移除]}% (接近告警阈值)"
+    if [ "$disk_usage" -lt "$ALERT_THRESHOLD_DISK" ]; then
+        record_check "PASS" "磁盘空间" "使用率: ${disk_usage}%"
+    elif [ "$disk_usage" -lt 95 ]; then
+        record_check "WARN" "磁盘空间" "使用率: ${disk_usage}% (接近告警阈值)"
     else
-        record_check "FAIL" "磁盘空间" "使用率: ${di[已移除]}% (严重告警)"
+        record_check "FAIL" "磁盘空间" "使用率: ${disk_usage}% (严重告警)"
     fi
 
     # 获取 inode 使用情况

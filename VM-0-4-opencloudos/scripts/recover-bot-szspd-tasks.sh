@@ -15,12 +15,12 @@ log() {
 }
 
 # 更新任务状态函数
-update_ta[已移除]() {
-    local ta[已移除]="$1"
+update_task_status() {
+    local task_id="$1"
     local status="${2:-running}"
     local progress_msg="${3:-任务正在恢复}"
     
-    log "更新任务状态 - $ta[已移除]: $status"
+    log "更新任务状态 - $task_id: $status"
     
     TASKS_FILE="/root/.openclaw/workspace/state/tasks.json"
     
@@ -36,15 +36,15 @@ from datetime import datetime
 with open("$TASKS_FILE", 'r') as f:
     tasks_data = json.load(f)
 
-if "$ta[已移除]" in tasks_data['tasks']:
-    tasks_data['tasks']["$ta[已移除]"]['status'] = "$status"
-    tasks_data['tasks']["$ta[已移除]"]['updated_at'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
-    tasks_data['tasks']["$ta[已移除]"]['blocked_reason'] = ""
+if "$task_id" in tasks_data['tasks']:
+    tasks_data['tasks']["$task_id"]['status'] = "$status"
+    tasks_data['tasks']["$task_id"]['updated_at'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+    tasks_data['tasks']["$task_id"]['blocked_reason'] = ""
     
-    if 'progress_log' not in tasks_data['tasks']["$ta[已移除]"]:
-        tasks_data['tasks']["$ta[已移除]"]['progress_log'] = []
+    if 'progress_log' not in tasks_data['tasks']["$task_id"]:
+        tasks_data['tasks']["$task_id"]['progress_log'] = []
     
-    tasks_data['tasks']["$ta[已移除]"]['progress_log'].append({
+    tasks_data['tasks']["$task_id"]['progress_log'].append({
         "time": datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"),
         "msg": "$progress_msg"
     })
@@ -56,7 +56,7 @@ if "$ta[已移除]" in tasks_data['tasks']:
 
     print("✅ 任务状态已更新")
 else:
-    print("⚠️ 未找到任务 $ta[已移除]")
+    print("⚠️ 未找到任务 $task_id")
 END
 }
 
@@ -65,7 +65,7 @@ check_ssh_connection() {
     local node="$1"
     
     log "检查 $node 的SSH连接..."
-    SSH_TEST=$(sshpass -p '[已移除]' ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "whoami" 2>&1)
+    SSH_TEST=$(sshpass -p '[已移除]$ZZ' ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "whoami" 2>&1)
     
     if echo "$SSH_TEST" | grep -q "root"; then
         log "✅ SSH连接正常 - $node"
@@ -83,13 +83,13 @@ check_system_resources() {
     log "检查 $node 的系统资源..."
     
     log "内存使用情况:"
-    sshpass -p '[已移除]' ssh -o StrictHostKeyChecking=no root@$node "free -h" 2>&1
+    sshpass -p '[已移除]$ZZ' ssh -o StrictHostKeyChecking=no root@$node "free -h" 2>&1
     
     log "CPU使用情况:"
-    sshpass -p '[已移除]' ssh -o StrictHostKeyChecking=no root@$node "top -bn1 | head -10" 2>&1
+    sshpass -p '[已移除]$ZZ' ssh -o StrictHostKeyChecking=no root@$node "top -bn1 | head -10" 2>&1
     
     log "磁盘使用情况:"
-    sshpass -p '[已移除]' ssh -o StrictHostKeyChecking=no root@$node "df -h" 2>&1
+    sshpass -p '[已移除]$ZZ' ssh -o StrictHostKeyChecking=no root@$node "df -h" 2>&1
 }
 
 # 检查OpenClaw服务
@@ -101,15 +101,15 @@ check_openclaw_services() {
     
     for service in "${SERVICES[@]}"; do
         log "检查 $service 服务..."
-        STATUS=$(sshpass -p '[已移除]' ssh -o StrictHostKeyChecking=no root@$node "systemctl is-active $service" 2>&1)
+        STATUS=$(sshpass -p '[已移除]$ZZ' ssh -o StrictHostKeyChecking=no root@$node "systemctl is-active $service" 2>&1)
         
         if echo "$STATUS" | grep -q "active"; then
             log "✅ $service 服务正在运行"
         else
             log "⚠️ $service 服务未运行，正在尝试启动..." "WARNING"
-            sshpass -p '[已移除]' ssh -o StrictHostKeyChecking=no root@$node "systemctl start $service" 2>&1
+            sshpass -p '[已移除]$ZZ' ssh -o StrictHostKeyChecking=no root@$node "systemctl start $service" 2>&1
             sleep 2
-            NEW_STATUS=$(sshpass -p '[已移除]' ssh -o StrictHostKeyChecking=no root@$node "systemctl is-active $service" 2>&1)
+            NEW_STATUS=$(sshpass -p '[已移除]$ZZ' ssh -o StrictHostKeyChecking=no root@$node "systemctl is-active $service" 2>&1)
             
             if echo "$NEW_STATUS" | grep -q "active"; then
                 log "✅ $service 服务启动成功"
@@ -125,16 +125,16 @@ check_evomap_process() {
     local node="$1"
     
     log "检查 $node 的evomap进程..."
-    PS_RESULT=$(sshpass -p '[已移除]' ssh -o StrictHostKeyChecking=no root@$node "ps -eo pid,lstart,cmd --sort=start_time | grep -E 'evomap|openclaw-evomap' | grep -v grep" 2>&1)
+    PS_RESULT=$(sshpass -p '[已移除]$ZZ' ssh -o StrictHostKeyChecking=no root@$node "ps -eo pid,lstart,cmd --sort=start_time | grep -E 'evomap|openclaw-evomap' | grep -v grep" 2>&1)
     
     if [ -n "$PS_RESULT" ]; then
         log "evomap进程正在运行:"
         echo "$PS_RESULT"
     else
         log "⚠️ 未找到evomap进程，正在尝试启动..." "WARNING"
-        sshpass -p '[已移除]' ssh -o StrictHostKeyChecking=no root@$node "cd /root/openclaw-evomap && nohup node openclaw-evomap.js > /tmp/evomap.log 2>&1 &"
+        sshpass -p '[已移除]$ZZ' ssh -o StrictHostKeyChecking=no root@$node "cd /root/openclaw-evomap && nohup node openclaw-evomap.js > /tmp/evomap.log 2>&1 &"
         sleep 3
-        NEW_PS_RESULT=$(sshpass -p '[已移除]' ssh -o StrictHostKeyChecking=no root@$node "ps -eo pid,lstart,cmd --sort=start_time | grep -E 'evomap|openclaw-evomap' | grep -v grep" 2>&1)
+        NEW_PS_RESULT=$(sshpass -p '[已移除]$ZZ' ssh -o StrictHostKeyChecking=no root@$node "ps -eo pid,lstart,cmd --sort=start_time | grep -E 'evomap|openclaw-evomap' | grep -v grep" 2>&1)
         
         if [ -n "$NEW_PS_RESULT" ]; then
             log "✅ evomap进程已成功启动:"
@@ -147,19 +147,19 @@ check_evomap_process() {
 
 # 恢复单个任务
 recover_task() {
-    local ta[已移除]="$1"
+    local task_id="$1"
     local node="$2"
     
     log "="*50
-    log "开始恢复任务: $ta[已移除]"
+    log "开始恢复任务: $task_id"
     log "="*50
     
     # 1. 更新任务状态为运行中
-    update_ta[已移除] "$ta[已移除]" "running" "任务已恢复，正在执行节点检查"
+    update_task_status "$task_id" "running" "任务已恢复，正在执行节点检查"
     
     # 2. 检查SSH连接
     if ! check_ssh_connection "$node"; then
-        log "❌ 无法建立SSH连接，任务 $ta[已移除] 恢复失败" "ERROR"
+        log "❌ 无法建立SSH连接，任务 $task_id 恢复失败" "ERROR"
         return 1
     fi
     
@@ -174,10 +174,10 @@ recover_task() {
     
     # 6. 完成任务
     log "="*50
-    log "任务恢复完成: $ta[已移除]"
+    log "任务恢复完成: $task_id"
     log "="*50
     
-    update_ta[已移除] "$ta[已移除]" "completed" "节点自我恢复成功"
+    update_task_status "$task_id" "completed" "节点自我恢复成功"
     return 0
 }
 
