@@ -87,14 +87,14 @@ ssh root@bot4.szspd.cn "iptables -L INPUT -n --line-numbers | head -12"
 
 ## 6. 凭据泄露
 ```bash
-grep -rlE 'ghp_[A-Za-z0-9]{20,}' /root/.openclaw/cron/ 2>/dev/null | grep -v git-credential
+grep -rlE '[已移除][A-Za-z0-9]{20,}' /root/.openclaw/cron/ 2>/dev/null | grep -v git-credential
 ```
 应为空。凭据统一由 `clawmesh-credential.sh` 提供，脚本内不应有明文。
 仓库工作树也应无 token（`git clone` 后扫一遍）。
 
 **也要扫日志** —— git 报错会把带 token 的 URL 回显进日志：
 ```bash
-grep -ohE 'ghp_[A-Za-z0-9]{20,}' /var/log/*.log 2>/dev/null | sort -u
+grep -ohE '[已移除][A-Za-z0-9]{20,}' /var/log/*.log 2>/dev/null | sort -u
 ```
 2026-10-22 在 bot4 上发现 `/var/log/botmem-*.log`、`claw-mesh.log` 里
 有 1200+ 处失效 token 明文（已脱敏）。**写完脚本记得回头扫一遍日志。**
