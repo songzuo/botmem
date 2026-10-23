@@ -730,3 +730,23 @@ memory 备份连续失败 **568 次**（job execution timed out），static 备�
 - 集群：bot2/3/4/5/6 共享仓库 songzuo/botmem，system crontab 跑备份
 - **未解**：bot6 sshd 全端口 refused（机器活着、同步正常，需带外通道）；
   bot2↔bot4 双向 SSH 公钥缺失 + 密码失效
+
+---
+
+## ⚠️ 教训六：脱敏 sed 误伤标识符（2026-10-23 实战，17 个脚本中招）
+`claw-mesh-sync.sh` 用 `s/sk_[A-Za-z0-9]*/[已移除]/g` 做全仓库脱敏。
+`sk_` 匹配到 **`di`sk_**`usage` / **`ta**sk_** 里面去 →
+`disk_usage` → `di[已移除]`，`task` → `ta[已移除]`。
+**17 个 shell 脚本变量名被改坏、语法错误，且损坏被 commit 进共享仓库。**
+
+正确写法：
+```bash
+sed -i -E -e 's/(^|[^A-Za-z0-9_])ghp_[A-Za-z0-9]{20,}/\1[已移除]/g' \
+           -e 's/(^|[^A-Za-z0-9_])sk-[A-Za-z0-9_-]{20,}/\1[已移除]/g'
+```
+三个要点：① OpenAI key 是 `sk-` 连字符不是 `sk_` ② 长度下限 20 ③ 左侧不能是标识符字符。
+**`\b` 没用** —— `_` 是单词字符，`\bsk_` 匹配不到 `disk_usage` 里的 `sk_`。
+自查：`grep -rnE '[A-Za-z0-9_]+\[已移除\]' --include='*.sh' .` 应为空。
+
+这与「全仓库脱敏把自己脚本里的 token 改成 `[已移除]`」是同一类错误：
+**批量文本改写脚本必须先在副本上验证，再全量应用；改完必须用语法检查 + 内容检查兜底。**
