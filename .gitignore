@@ -1,81 +1,10 @@
-# Dependencies
-node_modules/
-**/node_modules/
+# Python 编译产物
+__pycache__/
+*.pyc
+*.pyo
 
-# Coverage directories
-coverage/
-**/coverage/
-
-# Test reports
-*.lcov
-.nyc_output/
-test-results/
-
-# Lock files (optional - uncomment if you prefer not to commit them)
-# package-lock.json
-# **/package-lock.json
-
-# Temporary files
-*.tmp
-*.temp
-*.log
-
-# Generated reports and analysis
-code-cleanup-*.js
-code-cleanup-report.json
-health_report.json
-TEST_SUMMARY.md
-BUGFIX_REPORT.md
-OPTIMIZATION_REPORT.md
-TASK_REPORT.md
-
-# Test results and reports
-bot6/projects/docs/coverage/
-bot6/user-api/coverage/
-xunshi-inspector/coverage/
-xunshi-inspector/reports/
-
-# Temporary test configs (if they're generated)
-**/jest.config.js
-**/jest.config.json
-
-# Build outputs
-dist/
-build/
-*.min.js
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# ===== botmem 整理 (2026-09-21) =====
-# 环境与密钥：绝不入库
-.env
-.env.*
-!.env.example
-!.env.*.example
-
-# 运行时状态文件（每次同步都会变，历史噪音源）
-claw-mesh-state.json
-heartbeat-state.json
-server-monitor.json
-**/memory/claw-mesh-state.json
-# 例外：各节点自己的状态文件按 botN/ 命名空间存放，需纳入版本管理
-!bot2/memory/claw-mesh-state.json
-!bot3/memory/claw-mesh-state.json
-!bot4/memory/claw-mesh-state.json
-!bot5/memory/claw-mesh-state.json
-!bot6/memory/claw-mesh-state.json
-**/memory/heartbeat-state.json
-
-# 生成的静态分析产物
-jscpd-report.json
-benchmark-results.json
-test-complexity-analysis.json
-unused-exports-analysis.json
-react19-detailed-analysis.json
-react19-fix-plan-detailed.json
-
-# Next.js 构建产物
-.next/
-**/.next/
+# 凭据文件（绝不入库）
+.openclaw/cron/.secrets/
+*.env
+.git-credential
+.git-credentials
