@@ -170,6 +170,14 @@ sync_to_github() {
         # 于是 bot3 的同步提交会把 bot5/ 里的文件一起提交（machine=bot3 写进 bot5/）。
         # 改为只暂存本节点自己的目录。
         git add "$MACHINE_NAME"/
+        # 2026-10-24 修复: bot2 会把本机 HEARTBEAT.md / 交接说明写入 static/，
+        # 但 git add 只暂存 $MACHINE_NAME/ → static/ 从未进仓库，永远是旧版。
+        # 后果: 下一次同步把 static/ 的旧清单分发回本机，覆盖掉本机已更新的
+        # HEARTBEAT.md（实测第 18-23 节被抹掉）。
+        # 修复: bot2 额外暂存 static/。
+        if [ "$MACHINE_NAME" = "bot2" ] && [ -d static ]; then
+            git add static/
+        fi
 
         # 不变量校验: 仓库里每个 botN/ 目录的 state.machine 必须等于目录名。
         # 若某个目录里的 machine 与目录名不符，说明有节点把记忆写进了别人的目录
