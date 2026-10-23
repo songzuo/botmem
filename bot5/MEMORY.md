@@ -674,3 +674,30 @@ ALERT_EMAIL_RECIPIENTS=
 ---
 
 *此文件记录项目的重要信息和决策，随项目进展持续更新。*
+
+---
+
+## 2026-10-23 - 巡检与修复（bot5 / ecm-cd59）
+
+### 修复项
+1. **GitHub 链路不稳 → 同步大面积失败**（今日 48/109 轮失败）
+   - 根因叠加：① 路由黑洞（部分 IP TLS 握手挂起）；② HTTP/2 framing 错误
+   - 修复：`http.version=HTTP/1.1`（global）；`github-ip-pin.sh` 改用**真实
+     `git ls-remote`** 判定可用性（curl 判定与 git 行为不一致，会导致每 10 分钟
+     无谓改 /etc/hosts）；`claw-mesh-sync.sh` 的 fetch 改为最多重试 3 次
+   - 教训：**健康检查的探针必须与真实业务路径一致**，否则会做出错误动作
+2. **cron「system-monitoring」连续 469 次 error**
+   - 根因：`plugins.entries.feishu.enabled=false`，实际生效的 `@larksuite/openclaw-lark`
+     被标 disabled（not in allowlist）→ 渠道未加载 → `Channel is required`
+   - 修复：`openclaw plugins enable openclaw-lark` + 重启 gateway +
+     `openclaw cron edit <id> --channel feishu --to <open_id> --announce --best-effort-deliver`
+   - 验证：手动 run → status=ok，deliveryStatus=delivered
+3. **凭据明文**：工作区 `.git/config` 的 remote URL 内嵌 token → 改回无凭据 URL，
+   由 `credential.helper=store`（`/root/.git-credentials`，权限 600）提供
+4. **.git 垃圾包**：删除 33 个陈旧 `tmp_pack_*`（388M），`.git` 988M → 618M
+
+### 方法论沉淀
+- 「同步成功」不等于健康：失效 cron、渠道未加载、探针失真、凭据明文都会在
+  同步日志一片绿的同时长期存在
+- 探针要验证**真实端点**（git info/refs 而非首页 HTTP 200）
+- 改完脚本要回头扫日志里的明文 token
