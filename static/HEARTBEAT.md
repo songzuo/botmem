@@ -143,6 +143,32 @@ ls docs/ | wc -l                          # 应为 305
 ```
 **提交前务必看 diff 规模** —— 18 万行删除绝不该静默提交进去。
 
+## 16. 插件加载失败排查手册（2026-10-23 实战）
+每次 `openclaw plugins list` 里状态是 `error`，或启动刷
+`plugin id mismatch (manifest uses "X", entry hints "Y")`，按这三条查：
+
+1. **目录结构**：插件必须是 `/root/.openclaw/extensions/<插件名>/` 独立目录，
+   里面放 `index.ts` + `package.json` + `openclaw.plugin.json`。
+   文件直接躺在 `extensions/` 根目录下会被当成单文件插件，idHint 变成 "index" → id mismatch。
+2. **SDK 子路径**：新版 OpenClaw 把 `plugin-sdk` 拆成几十个子路径，
+   主入口 `openclaw/plugin-sdk` 只剩很少的导出。
+   - `createDedupeCache` / `readRequestBodyWithLimit` / `isRequestBodyLimitError` / `withFileLock` → `plugin-sdk/infra-runtime`
+   - `normalizeE164` → `plugin-sdk/text-runtime`
+   - `defineChannelPluginEntry` → `plugin-sdk/core`
+   用 `grep -c '<符号名>' dist/plugin-sdk/<子路径>.js` 确认符号在哪个文件。
+3. **registerHttpRoute 必须带 auth**：`{ path, handler, auth: "plugin" }`，
+   缺了 doctor 会报 `http route registration missing or invalid auth`。
+
+依赖装不上时（如 `Cannot find module '@sinclair/typebox'`）：本机 `extensions/node_modules`
+里可能有 743 个**空目录**（历史遗留），`npm install` 会报 `edgesOut` 错误。
+绕法：`ln -s <openclaw>/node_modules/@sinclair/typebox extensions/node_modules/@sinclair/typebox`。
+
+## 17. OpenClaw 升级注意（2026-10-23）
+- 本机 Node 22.22.0，**不能**升到 OpenClaw 2026.10.x（要求 Node >=24.22.1）
+- 可升到的 2026.3.x 系列无 Node 版本限制，已升到 **2026.3.24**
+- 升级前备份 `~/.openclaw/openclaw.json` 和 `~/.openclaw/cron/jobs.json`
+- 升完务必跑 `openclaw plugins list` + `openclaw doctor --non-interactive` 验证
+
 ## 已知遗留（需用户决策，勿擅自处理）
 - git 历史中可能仍残留旧 token —— 彻底清除需重写历史 + 强制推送
 - 仓库内 7.5 万个 node_modules 文件 —— 清理需重写历史
