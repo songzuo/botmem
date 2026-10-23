@@ -685,3 +685,48 @@ git push --force        # 使用 --force-with-lease 替代
 - ✅ 已创建 `memory/2026-04-23.md`
 - ✅ 已创建 `memory/2026-04-24.md`
 - ✅ 已创建 `memory/2026-04-25.md` (本文件)
+
+---
+
+## 📅 2026-10-23 运维教训沉淀（Claw-Mesh 集群巡检）
+
+### ⚠️ 教训一：备份脚本的 `rm -rf` + 部分复制 = 静默删数据
+`backup-memory.sh` 只复制 `memory/*.md` 顶层文件，却 `rm -rf` 整个 memory 目录；
+`backup-static.sh` 同理删掉 `openclaw-knowledge-base.md` 和 `tools/` 5 个脚本。
+**而且删除被 commit 进了 git** —— 脚本最后那行 "✅ completed" 完全掩盖了破坏。
+→ 改用 `cp -r "$SRC/." "$DST/"` 覆盖式复制；
+→ push 必须按真实退出码判断，失败不能打印 completed；
+→ **改备份脚本后必须手动跑一次 + `git show --stat HEAD` 看清楚删了什么。**
+
+### ⚠️ 教训二：openclaw cron 的 agentTurn payload 不可用于"跑脚本"
+本质是"让模型去执行一条 shell 命令"，模型限流/401 时任务直接死：
+memory 备份连续失败 **568 次**（job execution timed out），static 备份报 `All models failed (3)`。
+→ **凡是跑已存在脚本的定时任务，一律用系统 crontab**，不依赖模型、不受 rate limit 影响。
+→ 备份类任务用 openclaw cron 的 agentTurn = 把数据备份交给运气。
+
+### ⚠️ 教训三：第三方插件的三个坑（OpenClaw 2026.3.x）
+1. **目录结构**：插件必须独立成目录 `extensions/<name>/{index.ts,package.json,openclaw.plugin.json}`；
+   文件直躺根目录会被当单文件插件 → `plugin id mismatch (manifest uses "X", entry hints "index")`。
+2. **SDK 子路径**：新版把 `plugin-sdk` 拆成几十个子路径，主入口只剩很少导出。
+   `createDedupeCache`/`readRequestBodyWithLimit`/`withFileLock` → `plugin-sdk/infra-runtime`；
+   `normalizeE164` → `plugin-sdk/text-runtime`；`defineChannelPluginEntry` → `plugin-sdk/core`。
+3. **`registerHttpRoute` 必须传 `auth`**，否则 doctor 报 `http route registration missing or invalid auth`。
+→ 排查口诀：`openclaw plugins list` 看状态是不是 `error`（不是看启动时的 config warning）。
+
+### ⚠️ 教训四：Node 版本会成为升级天花板
+本机 Node 22.22.0 → OpenClaw 2026.10.x 要求 Node ≥24.22.1，装不上。
+可升 2026.3.x 系列无限制（已升 2026.3.24）。
+→ 升级前先 `npm view openclaw@<ver> engines` 确认 Node 要求。
+
+### ⚠️ 教训五：Sync 成功 ≠ 集群健康
+2026-10-22 / 10-23 连续两天出现：同步全部成功，但
+失效 cron、插件从未加载、备份脚本在删数据、bot6 sshd 未监听，全都同时存在。
+→ 巡检必须逐项过（cron 脚本是否存在、插件是否 loaded、doctor 是否 0 error、
+  被删文件是否恢复、凭据是否明文），不能只看"同步成功"。
+
+### 工具链现状（2026-10-23）
+- OpenClaw **2026.3.24**，Node 22.22.0，doctor Errors: 0
+- 插件全 loaded：sms-gateway / openilink / telegram
+- 集群：bot2/3/4/5/6 共享仓库 songzuo/botmem，system crontab 跑备份
+- **未解**：bot6 sshd 全端口 refused（机器活着、同步正常，需带外通道）；
+  bot2↔bot4 双向 SSH 公钥缺失 + 密码失效
