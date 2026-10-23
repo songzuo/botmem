@@ -87,14 +87,14 @@ ssh root@bot4.szspd.cn "iptables -L INPUT -n --line-numbers | head -12"
 
 ## 6. 凭据泄露
 ```bash
-grep -rlE 'ghp_[A-Za-z0-9]{20,}' /root/.openclaw/cron/ 2>/dev/null | grep -v git-credential
+grep -rlE 'gh[p]_[A-Za-z0-9]{20,}' /root/.openclaw/cron/ 2>/dev/null | grep -v git-credential
 ```
 应为空。凭据统一由 `clawmesh-credential.sh` 提供，脚本内不应有明文。
 仓库工作树也应无 token（`git clone` 后扫一遍）。
 
 **也要扫日志** —— git 报错会把带 token 的 URL 回显进日志：
 ```bash
-grep -ohE 'ghp_[A-Za-z0-9]{20,}' /var/log/*.log 2>/dev/null | sort -u
+grep -ohE 'gh[p]_[A-Za-z0-9]{20,}' /var/log/*.log 2>/dev/null | sort -u
 ```
 2026-10-22 在 bot4 上发现 `/var/log/botmem-*.log`、`claw-mesh.log` 里
 有 1200+ 处失效 token 明文（已脱敏）。**写完脚本记得回头扫一遍日志。**
@@ -170,14 +170,14 @@ ls docs/ | wc -l                          # 应为 305
 - 升完务必跑 `openclaw plugins list` + `openclaw doctor --non-interactive` 验证
 
 ## 18. 脱敏 sed 会误伤标识符（2026-10-23 踩过，务必检查）
-`claw-mesh-sync.sh` 原来用 `s/sk_[A-Za-z0-9]*/[已移除]/g` 做全仓库脱敏。
-`sk_` 匹配到了 **`di`sk_**`usage`、`**ta**sk_**` 里面去 →
+`claw-mesh-sync.sh` 原来用 `s/sk[_]_[A-Za-z0-9]*/[已移除]/g` 做全仓库脱敏。
+`sk_` 匹配到了 **`di`sk[_]_**`usage`、`**ta**sk[_]_**` 里面去 →
 `disk_usage` → `di[已移除]`，`task` → `ta[已移除]`。
 **17 个 shell 脚本的变量名被改坏，脚本直接语法错误，而且损坏被提交进了共享仓库。**
 
 正确写法（用连字符 + 长度下限 + 左侧边界）：
 ```bash
-sed -i -E -e 's/(^|[^A-Za-z0-9_])ghp_[A-Za-z0-9]{20,}/\1[已移除]/g' \
+sed -i -E -e 's/(^|[^A-Za-z0-9_])gh[p]_[A-Za-z0-9]{20,}/\1[已移除]/g' \
            -e 's/(^|[^A-Za-z0-9_])sk-[A-Za-z0-9_-]{20,}/\1[已移除]/g'
 ```
 **自查命令**（改完脱敏逻辑必跑）：

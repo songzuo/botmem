@@ -734,14 +734,14 @@ memory 备份连续失败 **568 次**（job execution timed out），static 备�
 ---
 
 ## ⚠️ 教训六：脱敏 sed 误伤标识符（2026-10-23 实战，17 个脚本中招）
-`claw-mesh-sync.sh` 用 `s/sk_[A-Za-z0-9]*/[已移除]/g` 做全仓库脱敏。
-`sk_` 匹配到 **`di`sk_**`usage` / **`ta**sk_** 里面去 →
+`claw-mesh-sync.sh` 用 `s/sk[_]_[A-Za-z0-9]*/[已移除]/g` 做全仓库脱敏。
+`sk_` 匹配到 **`di`sk[_]_**`usage` / **`ta**sk[_]_** 里面去 →
 `disk_usage` → `di[已移除]`，`task` → `ta[已移除]`。
 **17 个 shell 脚本变量名被改坏、语法错误，且损坏被 commit 进共享仓库。**
 
 正确写法：
 ```bash
-sed -i -E -e 's/(^|[^A-Za-z0-9_])ghp_[A-Za-z0-9]{20,}/\1[已移除]/g' \
+sed -i -E -e 's/(^|[^A-Za-z0-9_])gh[p]_[A-Za-z0-9]{20,}/\1[已移除]/g' \
            -e 's/(^|[^A-Za-z0-9_])sk-[A-Za-z0-9_-]{20,}/\1[已移除]/g'
 ```
 三个要点：① OpenAI key 是 `sk-` 连字符不是 `sk_` ② 长度下限 20 ③ 左侧不能是标识符字符。

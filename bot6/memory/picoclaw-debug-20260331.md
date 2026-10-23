@@ -76,7 +76,7 @@ cat > /root/.picoclaw/config.json << "EOF"
       "model_name": "MiniMax-M2.5",
       "model": "MiniMax-M2.5",
       "api_base": "https://api.minimax.chat/v1",
-      "api_key": "sk-cp--HJ367Hzkp0OAqaY88Wzzcxp1Z9VSdMi7HDiWzp78sdqrnIXH9nmNVuoGiiHxpyoS0PSzb_V5R31ZEchtAGTODFDfGeR-xk8eW_I2GLxvDOotOh7Bjc1QA8",
+      "api_key": "[已移除]",
       "api_type": "openai"
     }
   ],
@@ -98,7 +98,7 @@ cat > /root/.picoclaw/config.json << "EOF"
   },
   "providers": {
     "minimax": {
-      "api_key": "sk-cp--HJ367Hzkp0OAqaY88Wzzcxp1Z9VSdMi7HDiWzp78sdqrnIXH9nmNVuoGiiHxpyoS0PSzb_V5R31ZEchtAGTODFDfGeR-xk8eW_I2GLxvDOotOh7Bjc1QA8",
+      "api_key": "[已移除]",
       "api_base": "https://api.minimax.chat/v1"
     }
   }

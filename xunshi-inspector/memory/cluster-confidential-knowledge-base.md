@@ -112,12 +112,12 @@
 - ~~`sk-sp-4d4f86d364934d48b80423f72b5495d1`~~ ❌ 已删除
 
 ### NewCLI (共享Key)
-- ~~`sk-ant-oat01-FLSPC7gvHvAn7sKUcwxXo5RVdNGwU_apQ6fQO3w72OPPbPN21rxo4w9EcGgRXkWsjfP4vEKHfflenh5hJROSdJYKi7K9qAA`~~ ❌ 已删除
+- ~~`[已移除]`~~ ❌ 已删除
 
 ### 其他
-- ~~SiliconFlow: `sk-tkzfpovkbzxpumqpnxsecrqzkjdythmlqgecbljqzhrfehwa`~~ ❌ 已删除
+- ~~SiliconFlow: `[已移除]`~~ ❌ 已删除
 - ~~Qiniu: `sk-67421f9e478a7ee81fa98ea06a5bceda4958db419dec37c432057916f4b05961`~~ ❌ 已删除
-- ~~MiniMax: `sk-cp--HJ367Hzkp0OAqaY88Wzzcxp1Z9VSdMi7HDiWzp78sdqrnIXH9nmNVuoGiiHxpyoS0PSzb_V5R31ZEchtAGTODFDfGeR-xk8eW_I2GLxvDOotOh7Bjc1QA8`~~ ❌ 已删除
+- ~~MiniMax: `[已移除]`~~ ❌ 已删除
 
 ---
 
