@@ -1,8 +1,8 @@
 {
   "machine": "bot2",
-  "step": 0,
-  "status": "healthy",
-  "lastUpdate": 1792771817,
+  "step": 2,
+  "status": "preparing",
+  "lastUpdate": 1792774397,
   "errorCount": 0,
-  "lastSync": "2026-10-24 00:10:17"
+  "lastSync": "2026-10-24 00:53:17"
 }
