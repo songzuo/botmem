@@ -103,20 +103,20 @@
 > ⚠️ **已删除所有明文Keys** - 如需访问，请使用安全的密钥管理器
 
 ### VolcEngine (Coding Plan -免费)
-- ~~`4e051cf9-b27b-41eb-9540-2890ad94a271`~~ ❌ 已删除
+- ~~`[VOLCENGINE_KEY_REDACTED]`~~ ❌ 已删除
 - ~~`aab2bcb7-753d-4d59-8f6c-91953feec979`~~ ❌ 已删除
 - ~~`cc2edbb6-ceec-4702-aaf1-011ca035f3f4`~~ ❌ 已删除
 
 ### Alibaba (Coding Plan - 优惠)
-- ~~`sk-sp-365714cef25a45df8e9b3948641695e6`~~ ❌ 已删除
-- ~~`sk-sp-4d4f86d364934d48b80423f72b5495d1`~~ ❌ 已删除
+- ~~`[DASHSCOPE_KEY_REDACTED]`~~ ❌ 已删除
+- ~~`[DASHSCOPE_KEY_REDACTED]`~~ ❌ 已删除
 
 ### NewCLI (共享Key)
 - ~~`[已移除]`~~ ❌ 已删除
 
 ### 其他
 - ~~SiliconFlow: `[已移除]`~~ ❌ 已删除
-- ~~Qiniu: `sk-67421f9e478a7ee81fa98ea06a5bceda4958db419dec37c432057916f4b05961`~~ ❌ 已删除
+- ~~Qiniu: `[KEY_REDACTED]`~~ ❌ 已删除
 - ~~MiniMax: `[已移除]`~~ ❌ 已删除
 
 ---

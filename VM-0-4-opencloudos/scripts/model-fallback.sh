@@ -32,13 +32,13 @@ test_model() {
     # 简单测试
     if [[ "$provider" == "volcengine-2" ]]; then
         curl -s -X POST "https://ark.cn-beijing.volces.com/api/coding/v1/chat/completions" \
-            -H "Authorization: Bearer 4e051cf9-b27b-41eb-9540-2890ad94a271" \
+            -H "Authorization: Bearer [VOLCENGINE_KEY_REDACTED]" \
             -H "Content-Type: application/json" \
             -d '{"model":"doubao-seed-code","messages":[{"role":"user","content":"hi"}],"max_tokens":10}' \
             2>/dev/null | grep -q "choices" && return 0
     elif [[ "$provider" == "alibaba" ]]; then
         curl -s -X POST "https://coding.dashscope.aliyuncs.com/v1/chat/completions" \
-            -H "Authorization: Bearer sk-sp-365714cef25a45df8e9b3948641695e6" \
+            -H "Authorization: Bearer [DASHSCOPE_KEY_REDACTED]" \
             -H "Content-Type: application/json" \
             -d '{"model":"qwen3.5-plus","messages":[{"role":"user","content":"hi"}],"max_tokens":10}' \
             2>/dev/null | grep -q "choices" && return 0
