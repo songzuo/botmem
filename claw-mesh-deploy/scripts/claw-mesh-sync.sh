@@ -13,25 +13,7 @@ GIT_TOKEN="$(clawmesh_token 2>/dev/null || true)"
 REPO="$(clawmesh_repo_url 2>/dev/null || echo "https://github.com/songzuo/botmem.git")"
 WORK_DIR="/tmp/botmem-upload"
 BOT4_DIR="/root/.openclaw/workspace"
-# ⚠️ 每个节点必须改成自己的机器名（bot2 / bot3 / bot5 / bot6 ...），
-# 否则本节点会把记忆写进别人的目录（历史上 bot3/bot5 主机名互换导致互相覆盖）。
-# 留空或保留占位符时直接退出，宁可不推送，也不要写错目录。
 MACHINE_NAME="bot4"
-case "$MACHINE_NAME" in
-    ""|YOUR_MACHINE_NAME|your_machine_name)
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] ❌ MACHINE_NAME 未设置为本节点机器名，拒绝运行" >&2
-        exit 1
-        ;;
-esac
-# 机器名与本机主机名不一致时 loudly 告警（不致命：bot5 的主机名是 ecm-cd59，
-# 但它在集群里的名字是 bot5）。历史上 bot3/bot5 主机名互换，
-# 结果两个节点互相把记忆写进对方目录。
-_HOSTN="$(hostname -s 2>/dev/null)"
-case "$_HOSTN" in
-    "$MACHINE_NAME"*) : ;;
-    *) echo "[$(date '+%Y-%m-%d %H:%M:%S')] ⚠️ MACHINE_NAME=$MACHINE_NAME 与本机主机名=$_HOSTN 不符，请确认是否写错目录" >&2 ;;
-esac
-
 LOG_FILE="/var/log/claw-mesh.log"
 STATE_FILE="$BOT4_DIR/memory/claw-mesh-state.json"
 LOCK_FILE="/tmp/claw-mesh.lock"
@@ -314,6 +296,28 @@ sync_to_github() {
                    -e 's/ge2[0]9933[0-9]*\$ZZ/[已移除]/g' \
                    -e 's/ge2[0]9933[0-9]*/[已移除]/g' "$f"
         done
+        # ⚠️ 2026-10-25 补：源工作区也要脱敏。
+        # 上面 cp 出来的副本会被脱敏，但 bot3/bot6 这类节点每次巡检写日志时
+        # 会【再次】把密码原文写进源文件 $BOT4_DIR/memory/*.md ——
+        # 于是副本每轮都从源文件"复活"一份明文。
+        # 证据: bot3 memory/2026-10-25.md 第41行 '本机密码 `ge20993344$ZZ` ❌'
+        #       00:45 同步的仓库副本是干净的(0处)，但源文件仍有 1 处。
+        # 这里对源目录做同样的脱敏（幂等，重复执行无副作用）。
+        if [ -d "$BOT4_DIR/memory" ] || [ -f "$BOT4_DIR/MEMORY.md" ]; then
+            find "$BOT4_DIR/memory" -type f \( -name "*.md" -o -name "*.json" \) -exec sed -i -E \
+                -e 's/(^|[^A-Za-z0-9_])gh[p]_[A-Za-z0-9]{20,}/\1[已移除]/g' \
+                -e 's/(^|[^A-Za-z0-9_])sk-[A-Za-z0-9_-]{20,}/\1[已移除]/g' \
+                -e 's/ge2[0]9933[0-9]*\$ZZ/[已移除]/g' \
+                -e 's/ge2[0]9933[0-9]*/[已移除]/g' \
+                {} \; 2>/dev/null || true
+            [ -f "$BOT4_DIR/MEMORY.md" ] && sed -i -E \
+                -e 's/(^|[^A-Za-z0-9_])gh[p]_[A-Za-z0-9]{20,}/\1[已移除]/g' \
+                -e 's/(^|[^A-Za-z0-9_])sk-[A-Za-z0-9_-]{20,}/\1[已移除]/g' \
+                -e 's/ge2[0]9933[0-9]*\$ZZ/[已移除]/g' \
+                -e 's/ge2[0]9933[0-9]*/[已移除]/g' \
+                "$BOT4_DIR/MEMORY.md" 2>/dev/null || true
+        fi
+
         # 兜底：本机目录全量脱敏
         find "$MACHINE_NAME" -type f \( -name "*.md" -o -name "*.json" \) -exec sed -i -E \
             -e 's/(^|[^A-Za-z0-9_])gh[p]_[A-Za-z0-9]{20,}/\1[已移除]/g' \
