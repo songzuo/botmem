@@ -400,7 +400,7 @@ ALERT_EMAIL_RECIPIENTS=
 **故障恢复工具**
 - `api-failure-recovery.sh` - API 故障自动恢复
 - `self_check_and_repair.py` - 自检和修复
-- `ta[已移除].py` - 任务调度器
+- `task_scheduler.py` - 任务调度器
 
 ### inspector 的监控架构
 - `scripts/inspector.ps1` - PowerShell 监控脚本

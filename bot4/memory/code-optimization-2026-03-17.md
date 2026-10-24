@@ -162,8 +162,8 @@ Multiple copies of the same utility modules exist in different directories:
 ### Evidence
 ```bash
 # Task scheduler duplicates
-/root/.openclaw/workspace/VM-0-4-opencloudos/scripts/ta[已移除].py
-/root/.openclaw/workspace/botmem/VM-0-4-opencloudos/scripts/ta[已移除].py
+/root/.openclaw/workspace/VM-0-4-opencloudos/scripts/task_scheduler.py
+/root/.openclaw/workspace/botmem/VM-0-4-opencloudos/scripts/task_scheduler.py
 # These files are BIT-FOR-BIT IDENTICAL (diff returned no output)
 
 # Commander duplicates (entire directory)
@@ -195,7 +195,7 @@ Create a shared modules directory:
 │   └── (commander scripts)
 ├── tools/
 │   ├── api-failure-recovery.py
-│   ├── ta[已移除].py
+│   ├── task_scheduler.py
 │   └── self_check_and_repair.py
 └── skills/
     └── (shared skills)
