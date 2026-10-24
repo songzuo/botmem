@@ -245,17 +245,6 @@ git log --format='%h|%s' | grep 'Claw-Mesh 同步' | \
 **教训**：共享仓库里"谁在写谁"必须看**提交实际改了哪些路径**，
 不能只看 commit message 里的节点名 —— message 是脚本自报的，可以撒谎。
 
-## 已知遗留（需用户决策，勿擅自处理）
-- git 历史中可能仍残留旧 token —— 彻底清除需重写历史 + 强制推送
-- 仓库内 7.5 万个 node_modules 文件 —— 清理需重写历史
-- bot5 每 5 分钟推送一次，频率高于其他节点
-- **跨节点 SSH 从 bot4 全部被拒**（bot4 → bot2/3/5/6 `Permission denied (publickey)`）。
-  需在其它节点把 bot4 的公钥加进 `~/.ssh/authorized_keys`。
-  bot4 公钥指纹：`selfadm-bot4 SHA256:HVsRFkhJH6LJBZsPD3XbDVtyoHO45Ow3sjVx64NTtQM`
-
-## 推送时间（已错峰，勿改成同一时刻）
-bot2 `:00` / bot4 `:15` / bot6 `:30` / bot3 `:45` / bot5 `*/5`
-
 ## 24. 仓库里的修复 ≠ 节点上的脚本（2026-10-24 再次验证）
 第 21 节说的是"改了仓库要手动部署到各节点"。2026-10-24 10:53 再次证实：
 仓库 `claw-mesh-deploy/scripts/claw-mesh-sync.sh` 早已修好（`git add "$MACHINE_NAME"/`、
@@ -280,3 +269,64 @@ git show <sha> --name-only --format='' | grep -oE '^bot[0-9]+/' | sort -u
 顺序反了的现象：代码看起来完全正确，仓库里的 state 却永远还是 `step:2/preparing`。
 → 验证方式：跑完同步后 `git show origin/main:botN/memory/claw-mesh-state.json`
   必须是 `step:0 / healthy`。
+
+## 26. push 失败时不要用过期 origin/main 去 reset（2026-10-24 08:15 事故）
+2026-10-24 08:15，`upload-botmem.sh` 三次 push 全败
+（`fetch first` → `non-fast-forward` → `non-fast-forward`），
+**bot4 那一轮的 memory 全部丢失**（本地提交被 reset 掉，且没有重新提交）。
+
+根因三处：
+1. `git fetch origin ... || true` 把**网络失败吞掉**，
+   紧接着 `git reset --hard origin/main` 用的是**过期**的 origin/main；
+2. `git checkout -B main origin/main` **无条件**把分支指针拽回远端，
+   即使 rebase 已经成功，本地提交也被抹掉；
+3. 重试只有 3 次，而并发写入方（bot5 每 5 分钟 + bot2 + 7zi backup）足以抢赢 3 次。
+
+修法：
+- fetch 必须成功才继续；失败就等 15 秒重试，**绝不 reset**；
+- 只有 `git symbolic-ref HEAD` 失败（真 detached）才重建分支；
+- rebase 冲突才放弃本地提交，且**必须重新复制文件再提交**（不能只放弃）；
+- 重试次数 3 → 8。
+
+**自查**：
+```bash
+grep -n "fetch origin.*|| true" /root/.openclaw/cron/upload-botmem*.sh   # 应无匹配
+grep -n "checkout -B main" /root/.openclaw/cron/upload-botmem*.sh          # 只允许在 detached 分支里
+```
+**通用教训**：共享仓库并发写入时，"push 失败"要区分**网络失败**和**冲突**，
+两者处理方式相反；把 fetch 失败当成功继续走，是最隐蔽的数据丢失来源。
+
+### 26.1 另一种更隐蔽的根因：detached HEAD（2026-10-24 bot3 停摆 6h25m）
+bot3 在 08:45 之后整整停摆 6h25m，12:45 槽位整轮缺失。
+它自己的 reflog 给出了铁证：
+```
+HEAD@{08:15:08}: rebase (start): checkout origin/main   ← rebase 后留在 detached
+HEAD@{05:52:30}: checkout: moving from main to origin/main
+```
+在 detached HEAD 下，`git reset --hard origin/main` **只移动 HEAD 指针**，
+**不更新 `refs/heads/main`** → `git push origin main` 推的是陈旧的本地 main 分支
+→ 远端已前进 → 永远 `fetch first` 被拒。
+**加多少次重试都没用** —— 问题不在重试次数，在分支状态。
+
+**排查第一步**（任何 push 失败都先做这个）：
+```bash
+git -C /tmp/botmem-upload/botmem status -sb   # 出现 "## HEAD (no branch)" 就是 detached
+git -C /tmp/botmem-upload/botmem symbolic-ref -q HEAD || echo DETACHED
+```
+**修复**：`git checkout -B main origin/main`（四节点脚本 + upload-botmem.sh 都已注入）。
+注意：`checkout -B` 会**无条件**拽回远端指针，所以只在确认 detached 时才用，
+否则会抹掉刚 rebase 成功本地提交（见第 26 节开头）。
+
+**教训**：**"push 被拒就加重试次数"是治标不治本**。
+先分清四种根因：网络失败 / 并发冲突 / detached HEAD / 凭据失效，再对症下药。
+
+## 已知遗留（需用户决策，勿擅自处理）
+- git 历史中可能仍残留旧 token —— 彻底清除需重写历史 + 强制推送
+- 仓库内 7.5 万个 node_modules 文件 —— 清理需重写历史
+- bot5 每 5 分钟推送一次，频率高于其他节点
+- **跨节点 SSH 从 bot4 全部被拒**（bot4 → bot2/3/5/6 `Permission denied (publickey)`）。
+  需在其它节点把 bot4 的公钥加进 `~/.ssh/authorized_keys`。
+  bot4 公钥指纹：`selfadm-bot4 SHA256:HVsRFkhJH6LJBZsPD3XbDVtyoHO45Ow3sjVx64NTtQM`
+
+## 推送时间（已错峰，勿改成同一时刻）
+bot2 `:00` / bot4 `:15` / bot6 `:30` / bot3 `:45` / bot5 `*/5`
