@@ -300,7 +300,7 @@ sync_to_github() {
         # 上面 cp 出来的副本会被脱敏，但 bot3/bot6 这类节点每次巡检写日志时
         # 会【再次】把密码原文写进源文件 $BOT4_DIR/memory/*.md ——
         # 于是副本每轮都从源文件"复活"一份明文。
-        # 证据: bot3 memory/2026-10-25.md 第41行 '本机密码 `ge20993344$ZZ` ❌'
+        # 证据: bot3 memory/2026-10-25.md 第41行 '本机密码 `[SSH_PASSWORD_REDACTED]` ❌'
         #       00:45 同步的仓库副本是干净的(0处)，但源文件仍有 1 处。
         # 这里对源目录做同样的脱敏（幂等，重复执行无副作用）。
         if [ -d "$BOT4_DIR/memory" ] || [ -f "$BOT4_DIR/MEMORY.md" ]; then
