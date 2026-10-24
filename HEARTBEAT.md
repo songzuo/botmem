@@ -13,8 +13,9 @@
 
 集群节点：bot2 / bot3 / bot4 / bot5 / bot6，共享仓库 `songzuo/botmem`。
 
-**先确认自己在哪台**：`hostname` —— 不同节点的 HEARTBEAT.md 内容相同，
-但"本机"可能指 bot2（本文件原本这么写）或 bot4（bot4 上实际如此）。
+**先确认自己在哪台**：`hostname` + `curl -s ifconfig.me` ——
+⚠️ **本机是 bot3**（hostname=VM-0-4-opencloudos，公网 159.75.149.84 = bot3.szspd.cn）。
+"本机"指 bot3，**不是 bot2 也不是 bot4**。bot6 是另一台独立机器 109.123.246.140。
 清单第 2/3/4/5 项要 SSH 到**其他**节点，先排除本机。
 
 **核心提醒：不要只看"同步是否成功"。** 2026-10-22 的经验是，
