@@ -1,0 +1,13 @@
+{
+  "lastChecks": {
+    "email": null,
+    "calendar": null,
+    "weather": null,
+    "crypto": 1789856040
+  },
+  "lastHeartbeat": 1789856040,
+  "crypto": {
+    "bitcoin": { "usd": 80988 },
+    "ethereum": { "usd": 2622 }
+  }
+}

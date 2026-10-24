@@ -1,0 +1,96 @@
+[00:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[00:00] status=CRITICAL_30 lag=$5.0
+[00:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[00:30] status=CRITICAL_30 lag=$5.0
+[01:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[01:00] status=CRITICAL_30 lag=$5.0
+[01:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[01:30] status=CRITICAL_30 lag=$5.0
+[02:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[02:00] status=CRITICAL_30 lag=$5.0
+[02:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[02:30] status=CRITICAL_30 lag=$5.0
+[03:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[03:00] status=CRITICAL_30 lag=$5.0
+[03:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[03:30] status=CRITICAL_30 lag=$5.0
+[04:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[04:00] status=CRITICAL_30 lag=$5.0
+[04:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[04:30] status=CRITICAL_30 lag=$5.0
+[05:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[05:00] status=CRITICAL_30 lag=$5.0
+[05:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[05:30] status=CRITICAL_30 lag=$5.0
+[06:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[06:00] status=CRITICAL_30 lag=$5.0
+[06:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[06:30] status=CRITICAL_30 lag=$5.0
+[07:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[07:00] status=CRITICAL_30 lag=$5.0
+[07:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[07:30] status=CRITICAL_30 lag=$5.0
+[08:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[08:00] status=CRITICAL_30 lag=$5.0
+[08:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[08:30] status=CRITICAL_30 lag=$5.0
+[09:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[09:00] status=CRITICAL_30 lag=$5.0
+[09:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[09:30] status=CRITICAL_30 lag=$5.0
+[10:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[10:00] status=CRITICAL_30 lag=$5.0
+[10:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[10:30] status=CRITICAL_30 lag=$5.0
+[11:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[11:00] status=CRITICAL_30 lag=$5.0
+[11:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[11:30] status=CRITICAL_30 lag=$5.0
+[12:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[12:00] status=CRITICAL_30 lag=$5.0
+[12:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[12:30] status=CRITICAL_30 lag=$5.0
+[13:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[13:00] status=CRITICAL_30 lag=$5.0
+[13:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[13:30] status=CRITICAL_30 lag=$5.0
+[14:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[14:00] status=CRITICAL_30 lag=$5.0
+[14:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[14:30] status=CRITICAL_30 lag=$5.0
+[15:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=ERR_SCAN
+[15:00] status=CRITICAL_30 lag=$5.0
+[15:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[15:30] status=CRITICAL_30 lag=$5.0
+[16:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[16:00] status=CRITICAL_30 lag=$5.0
+[16:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[16:30] status=CRITICAL_30 lag=$5.0
+[17:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[17:00] status=CRITICAL_30 lag=$5.0
+[17:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[17:30] status=CRITICAL_30 lag=$5.0
+[18:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[18:00] status=CRITICAL_30 lag=$5.0
+[18:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[18:30] status=CRITICAL_30 lag=$5.0
+[19:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[19:00] status=CRITICAL_30 lag=$5.0
+[19:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[19:30] status=CRITICAL_30 lag=$5.0
+[20:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[20:00] status=CRITICAL_30 lag=$5.0
+[20:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[20:30] status=CRITICAL_30 lag=$5.0
+[21:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[21:00] status=CRITICAL_30 lag=$5.0
+[21:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[21:30] status=CRITICAL_30 lag=$5.0
+[22:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[22:00] status=CRITICAL_30 lag=$5.0
+[22:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[22:30] status=CRITICAL_30 lag=$5.0
+[23:00] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[23:00] status=CRITICAL_30 lag=$5.0
+[23:30] 30min bal=$0 today=$0 h1=$0 pos=0() scan=NO_SIGNALS
+[23:30] status=CRITICAL_30 lag=$5.0

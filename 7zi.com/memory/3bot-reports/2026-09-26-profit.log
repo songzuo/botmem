@@ -1,0 +1,8 @@
+=== [2026-09-26_2300] HK Bot Profit Snapshot ===
+  anti-v3          start=706.04  daily_pnl= -4.787  trades=4    pos=0
+  martin-mini      start=713.49  daily_pnl= +0.000  trades=0    pos=1
+  24h  : realized= +0.000  comm= +0.000  funding=+0.000  net= +0.000  (n=0)
+  8h   : realized= +0.000  comm= +0.000  funding=+0.000  net= +0.000  (n=0)
+  4h   : realized= +0.000  comm= +0.000  funding=+0.000  net= +0.000  (n=0)
+DECISION: 数据不足 (SKIP 改后仅 2257.3h, 0 笔), 维持 POSITION_RISK_PCT=0.010
+---
