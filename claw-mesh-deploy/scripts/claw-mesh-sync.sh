@@ -286,21 +286,21 @@ sync_to_github() {
         # 文件改写了，再被 `git add -A` 一起提交 —— 2026-10-24 00:45 的
         # "bot5 同步" 提交里就混进了 bot2/memory/2026-10-24.md 的损坏。
         # 本节点只该改自己的目录 + 共享区，不能碰别人的。
-        grep -rlE 'gh[p]_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9_-]{20,}|ge2[0]99334' . \
+        grep -rlE 'gh[p]_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9_-]{20,}|ge2[0]9933[0-9]*' . \
             --include='*.md' --include='*.json' --include='*.sh' \
             --exclude-dir=.git --exclude-dir=static \
             --exclude-dir=bot2 --exclude-dir=bot3 --exclude-dir=bot4 \
             --exclude-dir=bot5 --exclude-dir=bot6 2>/dev/null | while read -r f; do
             sed -i -E -e 's/(^|[^A-Za-z0-9_])gh[p]_[A-Za-z0-9]{20,}/\1[已移除]/g' \
                    -e 's/(^|[^A-Za-z0-9_])sk-[A-Za-z0-9_-]{20,}/\1[已移除]/g' \
-                   -e 's/ge2[0]99334\$ZZ/[已移除]/g' \
-                   -e 's/ge2[0]99334/[已移除]/g' "$f"
+                   -e 's/ge2[0]9933[0-9]*\$ZZ/[已移除]/g' \
+                   -e 's/ge2[0]9933[0-9]*/[已移除]/g' "$f"
         done
         # 兜底：本机目录全量脱敏
         find "$MACHINE_NAME" -type f \( -name "*.md" -o -name "*.json" \) -exec sed -i -E \
             -e 's/(^|[^A-Za-z0-9_])gh[p]_[A-Za-z0-9]{20,}/\1[已移除]/g' \
             -e 's/(^|[^A-Za-z0-9_])sk-[A-Za-z0-9_-]{20,}/\1[已移除]/g' \
-            -e 's/ge2[0]99334\$ZZ/[已移除]/g' \
+            -e 's/ge2[0]9933[0-9]*\$ZZ/[已移除]/g' \
             {} \; 2>/dev/null || true
     fi
     
