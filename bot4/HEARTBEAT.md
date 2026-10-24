@@ -320,6 +320,22 @@ git -C /tmp/botmem-upload/botmem symbolic-ref -q HEAD || echo DETACHED
 **教训**：**"push 被拒就加重试次数"是治标不治本**。
 先分清四种根因：网络失败 / 并发冲突 / detached HEAD / 凭据失效，再对症下药。
 
+## 27. 脱敏脚本会毁掉"已停用"的脚本（2026-10-24 发现）
+`upload-botmem-weekly.sh` 早在 3 月改成 daily 就不再挂 cron，
+但文件本体被脱敏脚本改坏到无法使用：
+- `GIT_TOKEN="[已移除]"` → clone URL 变成 `https://[已移除]@github.com/...`
+- 脱敏 pattern 被就地改成 `s/[已移除][A-Za-z0-9]*/[已移除]/g` → 正则完全退化
+- `git push` 之后无条件打印"每周上传完成" → **假成功**
+
+**教训**：**停用的脚本同样是地雷** —— 哪天有人挂回 cron 就会静默失败。
+→ 修脚本时要**全量覆盖**（包括不再被调用的），
+→ 并且所有上传脚本的结尾都必须按 `git push` 的真实退出码判成败。
+
+**自查**：
+```bash
+grep -rn 'GIT_TOKEN="\[已移除\]"\|s/\[已移除\]' /root/.openclaw/cron/*.sh   # 应为空
+```
+
 ## 已知遗留（需用户决策，勿擅自处理）
 - git 历史中可能仍残留旧 token —— 彻底清除需重写历史 + 强制推送
 - 仓库内 7.5 万个 node_modules 文件 —— 清理需重写历史
