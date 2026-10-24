@@ -3,7 +3,7 @@
 
 NODE="bot.szspd.cn"
 TASK_ID="recovery-bot.szspd.cn-1772317930"
-PASSWORD="[已移除]\$ZZ"
+PASSWORD="[已移除]"
 
 # 日志函数
 log() {

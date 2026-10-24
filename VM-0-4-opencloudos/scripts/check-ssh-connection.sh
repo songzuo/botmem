@@ -2,7 +2,7 @@
 # 检查SSH连接
 NODE1="bot.szspd.cn"
 NODE2="bot2.szspd.cn"
-PASSWORD="[已移除]\$ZZ"
+PASSWORD="[已移除]"
 
 log() {
     local level="${2:-INFO}"

@@ -133,7 +133,7 @@ set -e
 
 HOST="bot5.szspd.cn"
 USER="root"
-PASS="[已移除]\$ZZ"
+PASS="[已移除]"
 PORT=3000
 
 cd /root/.openclaw/workspace/7zi-frontend

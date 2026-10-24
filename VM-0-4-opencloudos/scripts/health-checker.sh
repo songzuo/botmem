@@ -17,7 +17,7 @@ while true; do
 
     # 检查7zi.com
     {
-        export SSHPASS="[已移除]\$ZZ"
+        export SSHPASS="[已移除]"
         sshpass -e ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@7zi.com "
             echo '{'
             echo '  \"node\": \"7zi.com\",'
@@ -38,7 +38,7 @@ while true; do
 
     # 检查bot2.szspd.cn
     {
-        export SSHPASS="[已移除]\$ZZ"
+        export SSHPASS="[已移除]"
         sshpass -e ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@bot2.szspd.cn "
             echo '{'
             echo '  \"node\": \"bot2.szspd.cn\",'

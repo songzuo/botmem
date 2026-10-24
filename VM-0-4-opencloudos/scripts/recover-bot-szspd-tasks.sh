@@ -5,7 +5,7 @@ TASK1_ID="recovery-bot.szspd.cn-1772534013"
 TASK2_ID="recovery-bot2.szspd.cn-1772534023"
 NODE1="bot.szspd.cn"
 NODE2="bot2.szspd.cn"
-PASSWORD="[已移除]\$ZZ"
+PASSWORD="[已移除]"
 
 # 日志函数
 log() {

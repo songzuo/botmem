@@ -264,7 +264,7 @@ END
 import subprocess
 
 result = subprocess.run(
-    ['sshpass', '-p', '[已移除]\$ZZ', 'ssh', 
+    ['sshpass', '-p', '[已移除]', 'ssh', 
      '-o', 'StrictHostKeyChecking=no', '-o', 'ConnectTimeout=5',
      f'root@{node_name}', 'echo "Success"'],
     capture_output=True,
@@ -289,7 +289,7 @@ END
 import subprocess
 
 result = subprocess.run(
-    ['sshpass', '-p', '[已移除]\$ZZ', 'ssh', 
+    ['sshpass', '-p', '[已移除]', 'ssh', 
      '-o', 'StrictHostKeyChecking=no', '-o', 'ConnectTimeout=10',
      f'root@{node_name}', 'uname -a; hostname; uptime'],
     capture_output=True,

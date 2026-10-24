@@ -33,7 +33,7 @@ self_diagnose() {
     echo "[$(date)] Self-diagnosis: $node" | tee -a "$LOG"
     
     # 1. Diagnose SSH connection
-    SSH_DIAG=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "whoami" 2>&1)
+    SSH_DIAG=$(sshpass -p "[已移除]" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "whoami" 2>&1)
     
     if echo "$SSH_DIAG" | grep -q "Permission denied"; then
         echo "[$(date)] ERROR SSH connection failed: authentication problem" | tee -a "$LOG"
@@ -99,7 +99,7 @@ self_fix() {
     echo "[$(date)] Self-repair: $node" | tee -a "$LOG"
     
     # 1. Fix SSH authentication issues
-    SSH_DIAG=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "whoami" 2>&1)
+    SSH_DIAG=$(sshpass -p "[已移除]" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "whoami" 2>&1)
     
     if echo "$SSH_DIAG" | grep -q "Permission denied"; then
         echo "[$(date)] INFO SSH authentication failed, attempting self-repair..." | tee -a "$LOG"
@@ -108,7 +108,7 @@ self_fix() {
         ssh-keygen -R $node -f ~/.ssh/known_hosts 2>/dev/null
         
         # Option 2: Re-establish connection
-        SSH_DIAG=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "whoami" 2>&1)
+        SSH_DIAG=$(sshpass -p "[已移除]" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 root@$node "whoami" 2>&1)
         
         if echo "$SSH_DIAG" | grep -q "root"; then
             echo "[$(date)] OK SSH connection fixed" | tee -a "$LOG"
@@ -122,15 +122,15 @@ self_fix() {
     SERVICES=("openclaw-gateway" "docker" "nginx" "cron")
     
     for service in "${SERVICES[@]}"; do
-        SERVICE_STATUS=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no root@$node "systemctl is-active --quiet $service" 2>&1)
+        SERVICE_STATUS=$(sshpass -p "[已移除]" ssh -o StrictHostKeyChecking=no root@$node "systemctl is-active --quiet $service" 2>&1)
         
         if [ "$SERVICE_STATUS" != "0" ]; then
             echo "[$(date)] WARN Service $service has stopped" | tee -a "$LOG"
             
             # Attempt to restart
-            RESTART_STATUS=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no root@$node "systemctl restart $service" 2>&1)
+            RESTART_STATUS=$(sshpass -p "[已移除]" ssh -o StrictHostKeyChecking=no root@$node "systemctl restart $service" 2>&1)
             
-            SERVICE_STATUS=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no root@$node "systemctl is-active --quiet $service" 2>&1)
+            SERVICE_STATUS=$(sshpass -p "[已移除]" ssh -o StrictHostKeyChecking=no root@$node "systemctl is-active --quiet $service" 2>&1)
             
             if [ "$SERVICE_STATUS" = "0" ]; then
                 echo "[$(date)] OK Service $service has been automatically restarted" | tee -a "$LOG"
@@ -142,7 +142,7 @@ self_fix() {
     done
     
     # 3. Fix disk space issues
-    DISK_USAGE=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no root@$node "df -h | awk '/\\// {print \$5}' | sed 's/%//' 2>/dev/null")
+    DISK_USAGE=$(sshpass -p "[已移除]" ssh -o StrictHostKeyChecking=no root@$node "df -h | awk '/\\// {print \$5}' | sed 's/%//' 2>/dev/null")
     
     for usage in $DISK_USAGE; do
         if [ "${usage%\%}" -gt "85" ]; then
@@ -150,27 +150,27 @@ self_fix() {
             
             # Auto cleanup
             echo "[$(date)] INFO Cleaning up log files..." | tee -a "$LOG"
-            sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no root@$node "find /var/log -name '*.log' -mtime +7 -delete" 2>/dev/null
+            sshpass -p "[已移除]" ssh -o StrictHostKeyChecking=no root@$node "find /var/log -name '*.log' -mtime +7 -delete" 2>/dev/null
             
             echo "[$(date)] INFO Cleaning up temporary files..." | tee -a "$LOG"
-            sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no root@$node "find /tmp -type f -mtime +1 -delete" 2>/dev/null
+            sshpass -p "[已移除]" ssh -o StrictHostKeyChecking=no root@$node "find /tmp -type f -mtime +1 -delete" 2>/dev/null
             
             echo "[$(date)] INFO Cleaning up system package cache..." | tee -a "$LOG"
-            sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no root@$node "apt-get clean -y" 2>/dev/null
+            sshpass -p "[已移除]" ssh -o StrictHostKeyChecking=no root@$node "apt-get clean -y" 2>/dev/null
             
             echo "[$(date)] OK Disk space has been cleaned up" | tee -a "$LOG"
         fi
     done
     
     # 4. Fix memory issues
-    MEMORY_USAGE=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no root@$node "free -h | awk '/Mem:/ {print \$3}' | sed 's/%//' 2>/dev/null")
+    MEMORY_USAGE=$(sshpass -p "[已移除]" ssh -o StrictHostKeyChecking=no root@$node "free -h | awk '/Mem:/ {print \$3}' | sed 's/%//' 2>/dev/null")
     
     if [ "${MEMORY_USAGE%\%}" -gt "80" ]; then
         echo "[$(date)] WARN Memory usage: $MEMORY_USAGE% (exceeds threshold 80%)" | tee -a "$LOG"
         
         # Release memory
         echo "[$(date)] INFO Releasing memory..." | tee -a "$LOG"
-        sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no root@$node "sync && echo 3 > /proc/sys/vm/drop_caches" 2>/dev/null
+        sshpass -p "[已移除]" ssh -o StrictHostKeyChecking=no root@$node "sync && echo 3 > /proc/sys/vm/drop_caches" 2>/dev/null
         
         echo "[$(date)] OK Memory has been released" | tee -a "$LOG"
     fi
@@ -347,7 +347,7 @@ while true; do
         echo "[$(date)] Checking node: $node" | tee -a "$LOG"
         
         # Test SSH connection
-        SSH_STATUS=$(sshpass -p "[已移除]\$ZZ" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=3 root@$node "whoami" 2>&1)
+        SSH_STATUS=$(sshpass -p "[已移除]" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=3 root@$node "whoami" 2>&1)
         
         if echo "$SSH_STATUS" | grep -q "root"; then
             echo "[$(date)] OK Node $node online, executing autonomous capabilities" | tee -a "$LOG"
