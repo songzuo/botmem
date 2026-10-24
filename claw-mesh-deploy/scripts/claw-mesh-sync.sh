@@ -169,6 +169,29 @@ sync_to_github() {
         # 各节点的 botmem 克隆里都留着别人上次推送的目录，
         # 于是 bot3 的同步提交会把 bot5/ 里的文件一起提交（machine=bot3 写进 bot5/）。
         # 改为只暂存本节点自己的目录。
+        # 仓库里的 state 副本必须反映"同步已完成"。
+        # 根因: 步骤 2 复制 memory/ 时，state 刚被 save_state 2 "preparing" 覆盖；
+        #       步骤 5 的 save_state 0 "idle" 发生在 commit 之后 —— 来不及进仓库。
+        #       结果: 仓库里所有节点的 state 恒为 step 2 / preparing，
+        #       巡检靠这份副本判断健康度，等于永远拿不到有效健康信号。
+        # 修复: commit 前把最终状态写进本节点的副本。
+        FINAL_STATE="$WORK_DIR/botmem/$MACHINE_NAME/memory/claw-mesh-state.json"
+        if [ -d "$(dirname "$FINAL_STATE")" ]; then
+            FS_ERR=$(grep -o '"errorCount": [0-9]*' "$STATE_FILE" 2>/dev/null | cut -d' ' -f2 | head -1)
+            [ -z "$FS_ERR" ] && FS_ERR=0
+            if [ "$FS_ERR" -eq 0 ] 2>/dev/null; then FS_STATUS="healthy"; else FS_STATUS="degraded"; fi
+            cat > "$FINAL_STATE" << EOF
+{
+  "machine": "$MACHINE_NAME",
+  "step": 0,
+  "status": "$FS_STATUS",
+  "lastUpdate": $(date +%s),
+  "errorCount": $FS_ERR,
+  "lastSync": "$(date '+%Y-%m-%d %H:%M:%S')"
+}
+EOF
+        fi
+
         git add "$MACHINE_NAME"/
         # 2026-10-24 修复: bot2 会把本机 HEARTBEAT.md / 交接说明写入 static/，
         # 但 git add 只暂存 $MACHINE_NAME/ → static/ 从未进仓库，永远是旧版。
