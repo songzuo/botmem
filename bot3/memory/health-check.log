@@ -1,0 +1,29 @@
+=== 健康检查日志 2026-07-05 17:55 UTC ===
+
+【SSH连通性】
+✅ bot.szspd.cn - 在线
+✅ bot2.szspd.cn - 在线
+✅ bot3.szspd.cn - 在线
+✅ bot4.szspd.cn - 在线
+✅ bot5.szspd.cn - 在线
+❌ 7zi.com - 离线 (网络不可达)
+
+【备注】
+- 7zi.com (165.99.43.61) 主站点服务器离线
+- 需人工介入排查网络/服务器状态
+
+
+=== 集群健康检查 2026-09-23 03:54 UTC ===
+SSH连通性:
+  7zi.com: ❌ 失败
+  bot.szspd.cn: ❌ 失败
+  bot2.szspd.cn: ❌ 失败
+  bot3.szspd.cn: ✅ 正常
+  bot4.szspd.cn: ✅ 正常
+  bot5.szspd.cn: ✅ 正常
+
+本机状态:
+  内存: 77% 使用
+  磁盘: 77% 使用 (9.4G 可用)
+
+备注: 3台服务器(7zi.com/bot/bot2)连接失败，可能是网络或密码问题

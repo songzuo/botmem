@@ -1,0 +1,9 @@
+[2026-09-04 15:54 UTC] 集群健康检查
+- 7zi.com: SSH FAIL (网络不可达)
+- bot.szspd.cn: OK (内存55%, 磁盘55%, 无evomap)
+- bot2.szspd.cn: OK (内存47%, 磁盘80%⚠️, 无evomap)
+- bot3.szspd.cn: OK (内存58%, 磁盘84%⚠️, evomap运行中x2)
+- bot4.szspd.cn: OK (内存51%, 磁盘76%, 无evomap)
+- bot5.szspd.cn: OK (内存58%, 磁盘66%, 无evomap)
+
+⚠️ 需关注: bot2/bot3磁盘使用率>80%，7zi.com网络不可达
