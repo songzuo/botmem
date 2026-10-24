@@ -87,20 +87,20 @@ ssh root@bot4.szspd.cn "iptables -L INPUT -n --line-numbers | head -12"
 
 ## 6. 凭据泄露
 ```bash
-grep -rlE '[已移除][A-Za-z0-9]{20,}' /root/.openclaw/cron/ 2>/dev/null | grep -v git-credential
+grep -rlE 'gh[p]_[A-Za-z0-9]{20,}' /root/.openclaw/cron/ 2>/dev/null | grep -v git-credential
 ```
 应为空。凭据统一由 `clawmesh-credential.sh` 提供，脚本内不应有明文。
 仓库工作树也应无 token（`git clone` 后扫一遍）。
 
 **也要扫日志** —— git 报错会把带 token 的 URL 回显进日志：
 ```bash
-grep -ohE '[已移除][A-Za-z0-9]{20,}' /var/log/*.log 2>/dev/null | sort -u
+grep -ohE 'gh[p]_[A-Za-z0-9]{20,}' /var/log/*.log 2>/dev/null | sort -u
 ```
 2026-10-22 在 bot4 上发现 `/var/log/botmem-*.log`、`claw-mesh.log` 里
 有 1200+ 处失效 token 明文（已脱敏）。**写完脚本记得回头扫一遍日志。**
 
 **注意脱敏的自我破坏**：全仓库脱敏的 sed 会把**脚本自己**里的
-`GIT_TOKEN="[已移除]..."` 就地改成 `"[已移除]"` → 下次运行 URL 变成
+`GIT_TOKEN="ghp_..."` 就地改成 `"[已移除]"` → 下次运行 URL 变成
 `https://[已移除]@github.com/...` → clone/pull 全失败。
 2026-10-22 bot4 的 `upload-botmem-daily.sh` 就是这样坏的，而且它
 **push 失败也打印"✅ 每日上传完成"**。
@@ -143,6 +143,108 @@ ls docs/ | wc -l                          # 应为 305
 ```
 **提交前务必看 diff 规模** —— 18 万行删除绝不该静默提交进去。
 
+## 16. 插件加载失败排查手册（2026-10-23 实战）
+每次 `openclaw plugins list` 里状态是 `error`，或启动刷
+`plugin id mismatch (manifest uses "X", entry hints "Y")`，按这三条查：
+
+1. **目录结构**：插件必须是 `/root/.openclaw/extensions/<插件名>/` 独立目录，
+   里面放 `index.ts` + `package.json` + `openclaw.plugin.json`。
+   文件直接躺在 `extensions/` 根目录下会被当成单文件插件，idHint 变成 "index" → id mismatch。
+2. **SDK 子路径**：新版 OpenClaw 把 `plugin-sdk` 拆成几十个子路径，
+   主入口 `openclaw/plugin-sdk` 只剩很少的导出。
+   - `createDedupeCache` / `readRequestBodyWithLimit` / `isRequestBodyLimitError` / `withFileLock` → `plugin-sdk/infra-runtime`
+   - `normalizeE164` → `plugin-sdk/text-runtime`
+   - `defineChannelPluginEntry` → `plugin-sdk/core`
+   用 `grep -c '<符号名>' dist/plugin-sdk/<子路径>.js` 确认符号在哪个文件。
+3. **registerHttpRoute 必须带 auth**：`{ path, handler, auth: "plugin" }`，
+   缺了 doctor 会报 `http route registration missing or invalid auth`。
+
+依赖装不上时（如 `Cannot find module '@sinclair/typebox'`）：本机 `extensions/node_modules`
+里可能有 743 个**空目录**（历史遗留），`npm install` 会报 `edgesOut` 错误。
+绕法：`ln -s <openclaw>/node_modules/@sinclair/typebox extensions/node_modules/@sinclair/typebox`。
+
+## 17. OpenClaw 升级注意（2026-10-23）
+- 本机 Node 22.22.0，**不能**升到 OpenClaw 2026.10.x（要求 Node >=24.22.1）
+- 可升到的 2026.3.x 系列无 Node 版本限制（npm 上 2026.3.x 最新为 **2026.3.31**）
+- ⚠️ **2026-10-24 实测：清单曾写"已升到 2026.3.24"，实际本机仍是 2026.3.8**
+  （`openclaw --version` = 2026.3.8；npm 全局安装目录 mtime 2026-03-10；
+  gateway 进程从 2026-09-11 起没重启过）→ **那次升级根本没落地**。
+  → 每次升级后必须用 `openclaw --version` 实测，不要只看文档里的自述。
+- 升级前备份 `~/.openclaw/openclaw.json` 和 `~/.openclaw/cron/jobs.json`
+- 升完务必跑 `openclaw plugins list` + `openclaw doctor --non-interactive` 验证
+
+## 18. 脱敏 sed 会误伤标识符（2026-10-23 踩过，务必检查）
+`claw-mesh-sync.sh` 原来用 `s/sk[_]_[A-Za-z0-9]*/[已移除]/g` 做全仓库脱敏。
+`sk_` 匹配到了 **`di`sk[_]_**`usage`、`**ta**sk[_]_**` 里面去 →
+`disk_usage` → `di[已移除]`，`task` → `ta[已移除]`。
+**17 个 shell 脚本的变量名被改坏，脚本直接语法错误，而且损坏被提交进了共享仓库。**
+
+正确写法（用连字符 + 长度下限 + 左侧边界）：
+```bash
+sed -i -E -e 's/(^|[^A-Za-z0-9_])gh[p]_[A-Za-z0-9]{20,}/\1[已移除]/g' \
+           -e 's/(^|[^A-Za-z0-9_])sk-[A-Za-z0-9_-]{20,}/\1[已移除]/g'
+```
+**自查命令**（改完脱敏逻辑必跑）：
+```bash
+grep -rnE '[A-Za-z0-9_]+\[已移除\]' --include='*.sh' .   # 应为空
+```
+⚠️ `\b` 没用 —— `_` 是单词字符，`\bsk_` 匹配不到 `disk_usage` 里的 `sk_`。
+
+## 19. 共享仓库里有明文 API 密钥（2026-10-24 处置，勿擅自重写历史）
+扫描发现 4 个文件含**真实可用**的 API 密钥（Coze / MiniMax / 第三方端点）：
+`7zi.com/memory/2026-07-30.md`、`bot6/memory/2026-05-04-security.md`、
+`bot6/memory/picoclaw-debug-20260331.md`、
+`xunshi-inspector/memory/cluster-confidential-knowledge-base.md`。
+
+- ✅ 工作区已脱敏（`fa0c20ac17`）
+- ⚠️ **git 历史里仍在** —— 彻底清除要重写历史 + 强制推送，**需主人决策**
+- ⚠️ **这些 key 应视为已泄露，建议在服务端轮换**
+
+区分真 key 与普通标识符（熵值 + 长度）见 `memory/2026-10-24.md` 的脚本。
+
+## 20. 文档里的字面量 token 模式要写成 `gh[p]_`（2026-10-24 教训）
+节点上仍跑着旧版脱敏脚本 `s/gh[p]_[A-Za-z0-9]*/[已移除]/g`。
+文档里若直接写 `gh[p]_[A-Za-z0-9]{20,}` 这种字面量模式，**会被旧脚本当成真 token 替换掉**。
+→ 文档里统一写 `gh[p]_` / `sk[_]_`（正则语义等价，旧脚本匹配不到）。
+→ 涉及 HEARTBEAT.md / MEMORY.md / memory/*.md / docs/CLAW-MESH-HANDOVER.md。
+
+## 21. 仓库改了 ≠ 节点生效（2026-10-24 踩过）
+`claw-mesh-deploy/README.md` 明确写着「改动需要手动部署到各节点」。
+2026-10-24 修好了仓库里的 `claw-mesh-deploy/scripts/claw-mesh-sync.sh`，
+**但 bot6 仍在跑旧脚本并继续破坏仓库**。
+→ 修完同步脚本，**必须逐节点确认本地副本已更新**（SSH 上去 grep 一下 pattern）。
+
+## 22. 7zi.com 源站 165.99.43.61 SSH 超时（2026-10-23 起）
+SSH Connection timed out（7zi.com 域名解析到 CF IP，22 端口 Network unreachable）。
+→ `scripts/health-check.sh` 的 Nginx / PM2 / Docker / 磁盘 / 内存 检查全部失败，
+  **这不是脚本 bug，是真实的源站不可达**。
+→ TOOLS.md 里记的 7zi.com IP 可能已过期，需要重新确认源站地址。
+
+## 23. 节点互相写对方目录 —— `git add -A` 是元凶（2026-10-24 定位）
+
+**症状**：bot5 的同步提交里混进了 `bot2/memory/2026-10-24.md` 的改动；
+bot6 的提交里也混进了 `bot2/` 的文件。看起来像"节点在乱写别人"。
+
+**根因（两层）**：
+1. live 脚本的脱敏是**全仓库** `grep -rl` + `sed -i`（含 `botN/` 别人的目录）。
+   节点 A 的 sed 会把节点 B 的文件改写（`sk_` pattern 还会误伤标识符）。
+2. `git add -A` 把**整个工作副本**的改动都暂存 —— 包括刚被别的节点 sed 改坏的 `bot2/`。
+
+→ 修法（已落地）：`git add "$MACHINE_NAME"/` 只暂存本节点目录；
+  全仓库 sed 排除 `--exclude-dir=bot2..bot6`；
+  提交前加不变量校验：每个 `botN/` 内 state.machine 必须等于目录名，否则中止提交。
+
+**排查手法**（可复用）：
+```bash
+# 看某个提交实际改了哪些目录
+git show <sha> --name-only --format='' | grep -oE '^bot[0-9]+/' | sort -u
+# 对比提交自称的节点
+git log --format='%h|%s' | grep 'Claw-Mesh 同步' | \
+  while IFS='|' read c s; do echo "$c $(echo "$s" | sed 's/:.*//')"; done
+```
+**教训**：共享仓库里"谁在写谁"必须看**提交实际改了哪些路径**，
+不能只看 commit message 里的节点名 —— message 是脚本自报的，可以撒谎。
+
 ## 已知遗留（需用户决策，勿擅自处理）
 - git 历史中可能仍残留旧 token —— 彻底清除需重写历史 + 强制推送
 - 仓库内 7.5 万个 node_modules 文件 —— 清理需重写历史
@@ -153,3 +255,28 @@ ls docs/ | wc -l                          # 应为 305
 
 ## 推送时间（已错峰，勿改成同一时刻）
 bot2 `:00` / bot4 `:15` / bot6 `:30` / bot3 `:45` / bot5 `*/5`
+
+## 24. 仓库里的修复 ≠ 节点上的脚本（2026-10-24 再次验证）
+第 21 节说的是"改了仓库要手动部署到各节点"。2026-10-24 10:53 再次证实：
+仓库 `claw-mesh-deploy/scripts/claw-mesh-sync.sh` 早已修好（`git add "$MACHINE_NAME"/`、
+state 快照、身份错位校验、脱敏 pattern 左边界），**但 bot4 本机跑的仍是旧版**
+（`git add -A` + 无边界 `sk_` 脱敏）。
+
+证据（不要只看 commit message）：
+```bash
+# 1. 本机脚本是否含修复
+grep -c 'git add "\$MACHINE_NAME"/\|IDENTITY_ERR' /root/.openclaw/cron/claw-mesh-sync.sh
+# 2. 仓库脚本是否含修复
+git show origin/main:claw-mesh-deploy/scripts/claw-mesh-sync.sh | grep -c 'git add "\$MACHINE_NAME"/'
+# 3. 实际提交动了哪些目录（truth）
+git show <sha> --name-only --format='' | grep -oE '^bot[0-9]+/' | sort -u
+```
+**判据**：若某个 "bot4: 同步" 的提交里出现了 `bot2/` 或 `bot5/` 路径，
+说明该节点还在用旧脚本（`git add -A`）。修完必须**在本机重跑一次并核对提交路径**。
+
+## 25. 提交 state 快照的顺序坑（2026-10-24 踩过）
+想把"最终健康状态"写进仓库的 `botN/memory/claw-mesh-state.json` 时，
+**必须先写文件、再 `git add`**，否则 stage 的是旧的 `preparing` 副本。
+顺序反了的现象：代码看起来完全正确，仓库里的 state 却永远还是 `step:2/preparing`。
+→ 验证方式：跑完同步后 `git show origin/main:botN/memory/claw-mesh-state.json`
+  必须是 `step:0 / healthy`。
