@@ -13,7 +13,25 @@ GIT_TOKEN="$(clawmesh_token 2>/dev/null || true)"
 REPO="$(clawmesh_repo_url 2>/dev/null || echo "https://github.com/songzuo/botmem.git")"
 WORK_DIR="/tmp/botmem-upload"
 BOT4_DIR="/root/.openclaw/workspace"
+# ⚠️ 每个节点必须改成自己的机器名（bot2 / bot3 / bot5 / bot6 ...），
+# 否则本节点会把记忆写进别人的目录（历史上 bot3/bot5 主机名互换导致互相覆盖）。
+# 留空或保留占位符时直接退出，宁可不推送，也不要写错目录。
 MACHINE_NAME="bot4"
+case "$MACHINE_NAME" in
+    ""|YOUR_MACHINE_NAME|your_machine_name)
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] ❌ MACHINE_NAME 未设置为本节点机器名，拒绝运行" >&2
+        exit 1
+        ;;
+esac
+# 机器名与本机主机名不一致时 loudly 告警（不致命：bot5 的主机名是 ecm-cd59，
+# 但它在集群里的名字是 bot5）。历史上 bot3/bot5 主机名互换，
+# 结果两个节点互相把记忆写进对方目录。
+_HOSTN="$(hostname -s 2>/dev/null)"
+case "$_HOSTN" in
+    "$MACHINE_NAME"*) : ;;
+    *) echo "[$(date '+%Y-%m-%d %H:%M:%S')] ⚠️ MACHINE_NAME=$MACHINE_NAME 与本机主机名=$_HOSTN 不符，请确认是否写错目录" >&2 ;;
+esac
+
 LOG_FILE="/var/log/claw-mesh.log"
 STATE_FILE="$BOT4_DIR/memory/claw-mesh-state.json"
 LOCK_FILE="/tmp/claw-mesh.lock"
