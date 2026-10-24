@@ -545,7 +545,7 @@ Permission denied, please try again.
 **解决方案:**
 ```bash
 # 确认密码正确（注意 $ 符号需要转义）
-sshpass -p '[已移除]4$ZZ' ssh root@7zi.com "echo 'OK'"
+sshpass -p '[已移除]' ssh root@7zi.com "echo 'OK'"
 
 # 或使用 SSH 密钥认证
 ssh-copy-id root@7zi.com

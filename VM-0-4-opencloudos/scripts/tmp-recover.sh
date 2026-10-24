@@ -12,7 +12,7 @@ import time
 from datetime import datetime
 import subprocess
 
-PASSWORD = "[已移除]$ZZ"
+PASSWORD = "[已移除]"
 NODE = "bot.szspd.cn"
 TASK_ID = "recovery-bot.szspd.cn-1772317930"
 

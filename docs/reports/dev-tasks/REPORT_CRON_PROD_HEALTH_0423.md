@@ -40,7 +40,7 @@ Content-Type: text/html; charset=utf-8
 - **结论**: 上游服务正常运行
 
 ### 4. SSH 连接 ❌
-- **尝试**: `sshpass -p '[已移除]4$ZZ' ssh root@7zi.com`
+- **尝试**: `sshpass -p '[已移除]' ssh root@7zi.com`
 - **结果**: 连接超时/失败
 - **可能原因**: 
   - 服务器 SSH 端口未开放

@@ -35,7 +35,7 @@ model "auto" not found in model_list or providers
 
 ```bash
 # 在服务器上执行
-sshpass -p '[已移除]4$ZZ' ssh root@165.99.43.61 '
+sshpass -p '[已移除]' ssh root@165.99.43.61 '
 cat > /root/.picoclaw/config.json << "EOF"
 {
   "session": {
@@ -109,7 +109,7 @@ EOF
 
 ```bash
 # 重启服务
-sshpass -p '[已移除]4$ZZ' ssh root@165.99.43.61 'systemctl restart picoclaw.service'
+sshpass -p '[已移除]' ssh root@165.99.43.61 'systemctl restart picoclaw.service'
 ```
 
 ---

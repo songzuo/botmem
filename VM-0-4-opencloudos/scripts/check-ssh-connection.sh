@@ -15,7 +15,7 @@ check_ssh() {
     log "检查 $node 的SSH连接..."
     
     # 使用 sshpass 检查连接
-    SSH_RESULT=$(sshpass -p '[已移除]$ZZ' ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$node "uptime" 2>&1)
+    SSH_RESULT=$(sshpass -p '[已移除]' ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$node "uptime" 2>&1)
     
     if [ $? -eq 0 ]; then
         log "✅ SSH连接正常 - $node"

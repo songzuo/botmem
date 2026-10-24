@@ -164,10 +164,10 @@ journalctl --vacuum-size=100M
 
 ```bash
 # 7zi.com
-sshpass -p '[已移除]4$ZZ' ssh root@165.99.43.61
+sshpass -p '[已移除]' ssh root@165.99.43.61
 
 # bot5.szspd.cn
-sshpass -p '[已移除]4$ZZ' ssh root@182.43.36.134
+sshpass -p '[已移除]' ssh root@182.43.36.134
 ```
 
 ---

@@ -2,7 +2,7 @@
 # 在已有 picoclaw 二进制文件的节点上启用服务
 
 NODES=("7zi.com" "bot.szspd.cn" "bot4.szspd.cn" "bot5.szspd.cn" "bot6.szspd.cn")
-PASSWORD="[已移除]$ZZ"
+PASSWORD="[已移除]"
 
 echo "=== 启用 Picoclaw 服务 ==="
 

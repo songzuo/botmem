@@ -144,9 +144,9 @@ netstat -tlnp | grep 3000  # 检查端口占用
 
 ### 服务器
 
-- **7zi.com**: root/[已移除]4$ZZ (端口22被拒绝 - SSH服务未运行)
+- **7zi.com**: root/[已移除] (端口22被拒绝 - SSH服务未运行)
 - **7zi.com:9000**: Portainer Docker管理界面 (密码不正确)
-- **bot5.szspd.cn**: root/[已移除]4$ZZ (所有端口被阻断)
+- **bot5.szspd.cn**: root/[已移除] (所有端口被阻断)
 
 ### 网站项目
 

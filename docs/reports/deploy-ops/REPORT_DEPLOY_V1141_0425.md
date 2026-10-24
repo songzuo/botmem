@@ -137,11 +137,11 @@ rsync -avz --delete \
 
 ```bash
 # SSH 连接
-sshpass -p '[已移除]4$ZZ' ssh root@165.99.43.61
+sshpass -p '[已移除]' ssh root@165.99.43.61
 
 # 检查 PM2 状态
-sshpass -p '[已移除]4$ZZ' ssh root@165.99.43.61 "pm2 status"
+sshpass -p '[已移除]' ssh root@165.99.43.61 "pm2 status"
 
 # 查看错误日志
-sshpass -p '[已移除]4$ZZ' ssh root@165.99.43.61 "pm2 logs 7zi-main --nostream --lines 50"
+sshpass -p '[已移除]' ssh root@165.99.43.61 "pm2 logs 7zi-main --nostream --lines 50"
 ```

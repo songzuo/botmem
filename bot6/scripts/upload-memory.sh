@@ -68,7 +68,7 @@ echo "🔒 清理敏感信息..."
 find . -type f \( -name "*.md" -o -name "*.json" -o -name "*.ts" -o -name "*.js" \) -exec sed -i \
   -e 's/sk-REDACTED[A-Za-z0-9_-]*/sk-REDACTED/g' \
   -e 's/ghp-REDACTED[A-Za-z0-9]*/ghp-REDACTED/g' \
-  -e 's/[已移除]4\$ZZ/PASSWORD-REDACTED/g' \
+  -e 's/[已移除]\$ZZ/PASSWORD-REDACTED/g' \
   -e 's/API-KEY-REDACTED/API-KEY-REDACTED/g' \
   {} \; 2>/dev/null || true
 
